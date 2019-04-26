@@ -1,0 +1,377 @@
+---
+title: "Introduçao ao R<br>Aula 1"
+output: 
+  xaringan::moon_reader:
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE, max.print = 30, digits = 4)
+knitr::opts_chunk$set(fig.align = "center", fig.width = 10, fig.height = 6)
+library(tidyverse)
+set.seed(123)
+simbioticos <- tibble(
+  Age = round(rnorm(30, 40, 5)), 
+  vitDin = rnorm(30, 2, 0.3), 
+  GRUPO = sample(c("Cão", "Gato"), 30, TRUE),
+  `Sex M/F` = sample(c("H", "M"), 30, TRUE)
+)
+
+```
+
+# Apresentações
+
+* Tomás de Siervi Barcellos
+
+* <a>Economista</a> do Ministério da Agricultura, Pecuária e Abastecimento
+  
+* Brinco com <a>R</a> há `r lubridate::year(Sys.Date()) - 2016` anos
+
+<br>
+
+
+---
+
+# Percurso
+
+1. [Noções](#13) de **R**
+
+2. Como [visualizar](#75) os dados?
+
+3. Como [importar](#30) os dados?
+
+4. Como [transformar](#35) os dados?
+
+---
+
+class: inverse, center, middle
+
+# Para que aprender <a>R</a>?
+
+---
+
+# Aprender R para
+
+1. Computação estatística
+
+```{r}
+t.test(extra ~ group, data = sleep)
+```
+
+---
+
+# Aprender R para
+
+1. Computação estatística
+
+2. Gráficos
+
+```{r, fig.align="center", fig.height=4, fig.width=9, warning = FALSE}
+ggplot(simbioticos, aes(Age, vitDin, col = GRUPO)) +
+  geom_point(size = 2) + geom_smooth(method = "lm", se = FALSE)
+```
+
+---
+class: center, inverse
+background-image: url(www/decepcao.gif)
+background-size: 100%
+background-position: 50% 75%
+
+# Mas tem que aprender a programar?
+
+<br>
+
+---
+
+# Aprender R para
+
+1. Computação estatística
+
+2. Gráficos
+
+3. Pesquisa reprodutível
+
+---
+class: inverse, center, middle
+
+# <a>RStudio</a>
+
+---
+background-image: url(https://raw.githubusercontent.com/hadley/r4ds/master/diagrams/rstudio-editor.png)
+background-size: cover
+
+---
+
+# Atalhos úteis
+
+<br><br>
+
+|Teclas | O que faz |
+|-------|-----------|
+| Ctrl + Enter | Executa a linha atual do script |
+| Alt + - | Inclui o operador de atribuição (<-) |
+| Ctrl + Shift + M | Inclui o `pipe` (%>%) |
+| Ctrl + 1 | Muda foco para o script |
+| Ctrl + 2 | Muda foco para o console |
+| Alt + Shit + K | Mostra todos os atalhos |
+
+---
+
+# Como pedir ajuda?
+
+<br><br>
+
+* google: copiar e colar mensagens erros
+
+* [stackoverflow](pt.stackoverflow.com) em português: descrever o problema
+
+* R: função <a>help(problema)</a> ou <a>?problema</a>
+
+---
+class: inverse, center, middle
+
+# <a>Noções de **R**</a>
+
+---
+background-image: url(https://media.giphy.com/media/fQZX2aoRC1Tqw/giphy.gif)
+background-size: 100%
+class: inverse
+
+---
+
+# Noções de <a>R</a>
+
+> Tudo que existe é um objeto. Tudo o que acontece é o chamado de uma função.
+
+.pull-right[
+  John Chambers, criador do **R**
+]
+
+<br>
+
+ou 
+
+> Tudo o que é existe é um subjetivo. Tudo o que acontece é um verbo.
+
+---
+
+# Noções de <a>R</a>: objetos
+
+```{r}
+2 + 2
+
+numero <- 2
+numero
+
+numero + numero
+
+sum(numero, numero, 25)
+```
+
+---
+
+# Noções de <a>R</a>: objetos
+
+```{r}
+"meu nome é tomás"
+
+nome <- "tomás"
+nome
+
+paste(nome, "voou por", numero, "horas hoje")
+```
+
+---
+
+# Noções de <a>R</a>: erros
+
+<br>
+
+.center[
+  ### <a>**ATENÇÃO**</a>: Os comandos devem fazer sentido
+]
+
+<br>
+
+```{r, error = TRUE}
+nome + numero
+```
+
+
+---
+
+# Noções de <a>R</a>: erros
+
+.center[
+  ### <a>**ATENÇÃO**</a>: Lembre-se de terminar os comandos
+]
+
+<!-- ![erro](www/erro.png) -->
+
+O <a>+</a> no console indica que o <a>R</a> ainda está esperando instruções.
+Isso pode significar que você enviou apenas parte do comando. 
+
+Aperte <a>ESQ</a> e insira o comando novamente. Certifique-se que o comando 
+foi devidamente encerrado
+
+---
+
+# Noções de <a>R</a>: objetos
+
+```{r}
+set.seed(123)
+valores <- rnorm(n = 100, mean = 10, sd = 2)
+valores
+```
+
+---
+
+# Noções de <a>R</a>: comparação
+
+```{r, eval = FALSE}
+# maior
+2 + 2 > 4
+
+# maior ou igual
+2 + 2 >= 4
+
+# menor
+numero < 5
+
+# menor ou igual
+numero <= 5
+
+# igual
+numero == 2
+
+# diferente
+numero != 2
+```
+
+---
+
+# Noções de <a>R</a>: operadores lógicos
+
+```{r}
+TRUE | FALSE
+TRUE & FALSE
+all(1:5 > 2)
+any(1:5 <= 2)
+```
+
+---
+
+# Noções de <a>R</a>: o data.frame
+
+```{r}
+# prefira a função data_frame() do pacote tibble
+dados <- data.frame(
+  nome = c("tomás", "sandra"), 
+  profissao = c("economista", "nutricionista"), 
+  altura = c(1.75, 1.65)
+)
+dados
+
+str(dados)
+```
+
+---
+
+# Noções de <a>R</a>: o data.frame
+
+Podemos usar <a>[</a> ou <a>$</a> ou <a>[[</a> para extrair valores de 
+um <a>data.frame</a>.
+
+```{r}
+# Com [ extraímos um conjunto de linhas e colunas
+dados[2, 1:2]
+
+# Com "$" extraímos uma variável por seu nome
+dados$nome
+
+# Com [[ extraímos uma variável por seu nome ou posição (número)
+dados[[3]]
+```
+
+---
+
+# Noções de <a>R</a>: funções
+
+```{r}
+# O menor valor
+min(valores)
+
+# A média dos valores
+mean(valores)
+
+# O valor "do meio"
+median(valores)
+
+# O maior valor
+max(valores)
+```
+
+---
+
+# Noções de <a>R</a>: funções
+
+```{r}
+# O desvio padrão dos valores
+sd(valores)
+
+# A variância dos valores
+var(valores)
+
+# Um resumo dos valores
+summary(valores)
+```
+
+---
+
+# Noções de <a>R</a>: funções
+
+O <a>R</a> nos permite criar nossas próprias funções
+
+```{r}
+quadrado <- function(x) {
+  x ^ 2
+}
+
+quadrado(5)
+quadrado(valores)
+```
+
+---
+
+# Exercícios
+
+Utilize o vetor <a>exercicio</a> para responder as perguntas abaixo
+
+```{r}
+set.seed(123)
+exercicio <- rnorm(100, 50, 10)
+```
+
+<br>
+
+> 1. Qual a <a>soma</a> do conjunto?
+
+> 2. Qual a <a>média</a> do conjunto?
+
+> 3. Qual o <a>desvio padrão</a> do conjunto de dados?
+
+> 4. Qual é o <a>maior</a> valor? E o <a>menor</a>?
+
+> 5. Quantos valores estão <a>acima de 50</a>?
+
+> 6. Existem valores <a>menores de 30</a>?
+
+> 7. Todos os valores estão <a>abaixo de 80</a>?
+
+
+
+

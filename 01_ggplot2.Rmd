@@ -1,0 +1,109 @@
+---
+title: "Introduçao ao R<br>Aula2"
+output: 
+  xaringan::moon_reader:
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE, max.print = 30, digits = 4)
+knitr::opts_chunk$set(fig.align = "center", fig.width = 10, fig.height = 6)
+library(tidyverse)
+set.seed(123)
+simbioticos <- tibble(
+  Age = round(rnorm(30, 40, 5)), 
+  vitDin = rnorm(30, 2, 0.3), 
+  GRUPO = sample(c("Cão", "Gato"), 30, TRUE),
+  `Sex M/F` = sample(c("H", "M"), 30, TRUE)
+)
+
+```
+
+---
+class: inverse, center, middle
+
+# como <a>visualizar</a> os dados?
+
+---
+background-image: url(www/data-science.png)
+background-size: 100%
+class: center
+
+# <a>Ciclo</a> de análise de dados
+
+---
+
+# <a>ggplot2</a>: sintaxe
+
+```{r, eval = FALSE}
+ggplot(um_data_frame, aes(estética1 = variável1,
+                          estética2 = variável2,
+                          estética3 = variável3)) +
+  geometria(estética4 = "atributo1") +
+  facetas +
+  tema
+```
+
+---
+
+# pontos
+
+```{r, warning = FALSE}
+ggplot(simbioticos, aes(Age, vitDin, col = GRUPO)) +
+  geom_point(size = 2)
+```
+
+---
+
+# pontos + regressão
+
+```{r, warning = FALSE}
+ggplot(simbioticos, aes(Age, vitDin, col = GRUPO)) +
+  geom_point(size = 2) + 
+  geom_smooth(method = "lm", se = FALSE)  
+```
+
+---
+
+# barras
+
+```{r, warning = FALSE}
+ggplot(simbioticos, aes(GRUPO)) +
+  geom_bar()
+```
+
+---
+
+# barras (colunas)
+
+```{r, warning = FALSE, fig.height = 5}
+dado_gg <- simbioticos %>% group_by(`Sex M/F`) %>% 
+  summarise(media = mean(vitDin, na.rm = TRUE))
+ggplot(dado_gg, aes(`Sex M/F`, media)) +
+  geom_col()
+```
+
+---
+
+# histograma
+
+```{r, warning = FALSE}
+ggplot(simbioticos, aes(Age)) +
+  geom_histogram(binwidth = 5, col = "white")
+```
+
+---
+
+# boxplot
+
+```{r, warning = FALSE}
+ggplot(simbioticos, aes(`Sex M/F`, vitDin)) +
+  geom_boxplot()
+```
+
+
+
