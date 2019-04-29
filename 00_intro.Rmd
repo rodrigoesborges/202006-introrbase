@@ -25,18 +25,18 @@ simbioticos <- tibble(
 
 # Apresentações
 
-* Tomás de Siervi Barcellos
-
-* <a>Economista</a> do Ministério da Agricultura, Pecuária e Abastecimento
-  
-* Brinco com <a>R</a> há `r lubridate::year(Sys.Date()) - 2016` anos
-
 <br>
 
 
+* Tomás de Siervi Barcellos
+
+* <a>Coordenador de Inovação</a> do Ministério da Agricultura, Pecuária e Abastecimento
+  
+* Dedicado ao estudo do <a>R</a> há `r lubridate::year(Sys.Date()) - 2016` anos
+
 ---
 
-# Percurso
+# Percurso do curso
 
 1. [Noções](#13) de **R**
 
@@ -45,6 +45,22 @@ simbioticos <- tibble(
 3. Como [importar](#30) os dados?
 
 4. Como [transformar](#35) os dados?
+
+---
+
+# Percurso de hoje
+
+1. Motivação
+
+2. Objetos
+
+3. Vetores
+
+4. Comparações lógicas e numéricas
+
+5. Funções
+
+6. Controle de fluxo
 
 ---
 
@@ -72,7 +88,7 @@ t.test(extra ~ group, data = sleep)
 
 ```{r, fig.align="center", fig.height=4, fig.width=9, warning = FALSE}
 ggplot(simbioticos, aes(Age, vitDin, col = GRUPO)) +
-  geom_point(size = 2) + geom_smooth(method = "lm", se = FALSE)
+  geom_point(size = 2) + geom_smooth(method = "lm", se = FALSE) + theme_classic()
 ```
 
 ---
@@ -95,10 +111,15 @@ background-position: 50% 75%
 
 3. Pesquisa reprodutível
 
+![](www/crtl_c.jpg)
+
+
 ---
 class: inverse, center, middle
 
 # <a>RStudio</a>
+
+[download](https://www.rstudio.com/products/rstudio/download/)
 
 ---
 background-image: url(https://raw.githubusercontent.com/hadley/r4ds/master/diagrams/rstudio-editor.png)
@@ -134,7 +155,7 @@ background-size: cover
 ---
 class: inverse, center, middle
 
-# <a>Noções de **R**</a>
+# <a>Introdução ao **R**</a>
 
 ---
 background-image: url(https://media.giphy.com/media/fQZX2aoRC1Tqw/giphy.gif)
@@ -143,7 +164,7 @@ class: inverse
 
 ---
 
-# Noções de <a>R</a>
+# Introdução ao <a>R</a>
 
 > Tudo que existe é um objeto. Tudo o que acontece é o chamado de uma função.
 
@@ -159,35 +180,136 @@ ou
 
 ---
 
-# Noções de <a>R</a>: objetos
+# objetos
 
-```{r}
-2 + 2
+Objetos são nomes que guardam informações.
 
-numero <- 2
-numero
+Nomes devem começar com letra. Após essa letra podem ter números, letras, 
+"." ou "_". 
 
-numero + numero
-
-sum(numero, numero, 25)
-```
-
----
-
-# Noções de <a>R</a>: objetos
-
-```{r}
-"meu nome é tomás"
-
-nome <- "tomás"
+```{r, eval=FALSE}
 nome
-
-paste(nome, "voou por", numero, "horas hoje")
+nome_valido # usaremos esse tipo como convenção
+2nome_invalido
+nome.valido
+nome_valido2
 ```
 
 ---
 
-# Noções de <a>R</a>: erros
+# objetos
+
+```{r, error = TRUE}
+horas <- 20
+horas
+
+ofertante <- "Enap"
+Ofertante
+ofertante
+```
+
+---
+
+# vetores
+
+Conjunto ordenado de valores.
+
+```{r}
+c(1, 6, 11, 16, 21)
+1:5
+```
+
+---
+
+# vetores
+
+Com `subsetting` podem escolher partes do vetor
+
+```{r}
+vetor <- c(1, 6, 11, 16, 21)
+
+vetor[1]
+vetor[c(2, 4)]
+vetor[-1]
+vetor[-c(2, 4)]
+```
+
+---
+
+# objetos: tipos
+
+```{r}
+class(horas) # numéricos
+class(ofertante) # caracteres (strings)
+```
+
+---
+
+# objetos: tipos
+
+```{r}
+iris[1:5, ]
+class(iris) # data.frame (bases de dados)
+```
+
+---
+
+# objetos
+
+```{r}
+20 + 20
+
+horas + horas
+
+sum(horas, horas, 25)
+```
+
+---
+
+# objetos
+
+```{r}
+"É assim que incluímos texto no R"
+
+paste(ofertante, "oferece curso de R com duração de", horas, "horas")
+```
+
+---
+
+# erros: sintaxe
+
+.center[
+  ### <a>**ATENÇÃO**</a>: certifique-se que os comandos estão escritos corretamente
+]
+
+
+```{r, error = TRUE}
+lingua <- "português"
+Iingua
+Lingua
+lingua
+```
+
+
+---
+
+# erros: sintaxe
+
+.center[
+  ### <a>**ATENÇÃO**</a>: Lembre-se de terminar os comandos
+]
+
+![erro](www/erro.png)
+
+O <a>+</a> no console indica que o <a>R</a> ainda está esperando instruções.
+Isso pode significar que você enviou apenas parte do comando. 
+
+Aperte <a>ESQ</a> e insira o comando novamente. Certifique-se que o comando 
+foi devidamente encerrado
+
+---
+
+# erros: semântica
 
 <br>
 
@@ -198,39 +320,14 @@ paste(nome, "voou por", numero, "horas hoje")
 <br>
 
 ```{r, error = TRUE}
-nome + numero
+ofertante + horas
 ```
 
+**Leia as mensagens**: elas ajudam a identificar erros.
 
 ---
 
-# Noções de <a>R</a>: erros
-
-.center[
-  ### <a>**ATENÇÃO**</a>: Lembre-se de terminar os comandos
-]
-
-<!-- ![erro](www/erro.png) -->
-
-O <a>+</a> no console indica que o <a>R</a> ainda está esperando instruções.
-Isso pode significar que você enviou apenas parte do comando. 
-
-Aperte <a>ESQ</a> e insira o comando novamente. Certifique-se que o comando 
-foi devidamente encerrado
-
----
-
-# Noções de <a>R</a>: objetos
-
-```{r}
-set.seed(123)
-valores <- rnorm(n = 100, mean = 10, sd = 2)
-valores
-```
-
----
-
-# Noções de <a>R</a>: comparação
+# comparação
 
 ```{r, eval = FALSE}
 # maior
@@ -240,99 +337,101 @@ valores
 2 + 2 >= 4
 
 # menor
-numero < 5
+horas < 5
 
 # menor ou igual
-numero <= 5
+horas <= 5
 
 # igual
-numero == 2
+horas == 2
 
 # diferente
-numero != 2
+horas != 2
 ```
 
 ---
 
-# Noções de <a>R</a>: operadores lógicos
+# operadores lógicos
 
 ```{r}
 TRUE | FALSE
 TRUE & FALSE
 all(1:5 > 2)
 any(1:5 <= 2)
+c(2, 10) %in% 1:5
 ```
 
 ---
 
-# Noções de <a>R</a>: o data.frame
+# valores especiais
 
 ```{r}
-# prefira a função data_frame() do pacote tibble
-dados <- data.frame(
-  nome = c("tomás", "sandra"), 
-  profissao = c("economista", "nutricionista"), 
-  altura = c(1.75, 1.65)
-)
-dados
-
-str(dados)
+NA # Not Available / "Não sei"
+NaN  # Not a Number: 1/0
+Inf  # Infinito
+NULL # Vazio
 ```
 
 ---
 
-# Noções de <a>R</a>: o data.frame
-
-Podemos usar <a>[</a> ou <a>$</a> ou <a>[[</a> para extrair valores de 
-um <a>data.frame</a>.
+# valores especiais: NA
 
 ```{r}
-# Com [ extraímos um conjunto de linhas e colunas
-dados[2, 1:2]
-
-# Com "$" extraímos uma variável por seu nome
-dados$nome
-
-# Com [[ extraímos uma variável por seu nome ou posição (número)
-dados[[3]]
+nas <- c(1, NA, 3)
+nas == 1
+nas == NA
+is.na(nas)
 ```
 
 ---
 
-# Noções de <a>R</a>: funções
+# Operações vetoriais
 
 ```{r}
-# O menor valor
-min(valores)
+x <- 1:10
+y <- 1:2
 
-# A média dos valores
-mean(valores)
-
-# O valor "do meio"
-median(valores)
-
-# O maior valor
-max(valores)
+x + 3 # reciclagem
+y * 7
+x + 1:3
 ```
 
 ---
 
-# Noções de <a>R</a>: funções
+# Coerção
+
+O <a>R</a> tenta resolver a heterogeneidade de vetores igualando-os pelo tipo 
+mais complexo.
+
+A complexidade segue esta ordem: caracter > numérico > inteiro > lógico
 
 ```{r}
-# O desvio padrão dos valores
-sd(valores)
+c(FALSE, TRUE, 1L) # inteiro > lógico
 
-# A variância dos valores
-var(valores)
+c(1L, 2.4, 3.5) # numérico > inteiro
 
-# Um resumo dos valores
-summary(valores)
+c(1, 2, 3, "texto") # caracter > numérico
 ```
 
 ---
 
-# Noções de <a>R</a>: funções
+# funções
+
+Funções são mini-programas que abstraem as complexidades da tarefa executada.
+
+As funções podem ser "chamadas" usando o nome ou a ordem dos argumentos.
+
+```{r}
+seq(from = 1, to = 10, by = 3) # usando o nome
+ 
+seq(1, 10, 3) # usando a ordem
+
+seq(by = 3, 1, 10) # usando mistura de nome e ordem
+```
+
+---
+
+# funções
 
 O <a>R</a> nos permite criar nossas próprias funções
 
@@ -342,7 +441,21 @@ quadrado <- function(x) {
 }
 
 quadrado(5)
-quadrado(valores)
+quadrado(c(5, 10)) # vetorizado
+```
+
+---
+
+# Controles de fluxo
+
+```{r, eval = FALSE}
+if(idade >= 18) {
+  "Pode fazer autoescola"
+} else if(idade >=16 & emancipado) {
+  "Pode fazer autoescola"
+} else {
+  "Não pode fazer autoescola"
+}
 ```
 
 ---
