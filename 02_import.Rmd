@@ -1,5 +1,5 @@
 ---
-title: "Introduçao ao R<br>Aula 2"
+title: "Introdução ao R<br>Aula 2"
 output: 
   xaringan::moon_reader:
     lib_dir: libs
@@ -11,15 +11,41 @@ output:
 ---
 
 ```{r, include=FALSE}
-simbioticos <- tibble::tibble(
+library(tidyverse)
+simbioticos <- tibble(
   Age = round(rnorm(30, 40, 5)), 
   vitDin = rnorm(30, 2, 0.3), 
   GRUPO = sample(c("Cão", "Gato"), 30, TRUE),
   `Sex M/F` = sample(c("H", "M"), 30, TRUE)
 )
-writexl::write_xlsx(simbioticos, "simbioticos.xlsx")
+writexl::write_xlsx(simbioticos, "dados/simbioticos.xlsx")
 ```
 
+# Percurso do curso
+
+1. [Noções](#13) de **R**
+
+2. Como [visualizar](#75) os dados?
+
+3. Como [importar](#30) os dados?
+
+4. Como [transformar](#35) os dados?
+
+---
+
+# Percurso de hoje
+
+1. Pacotes
+
+2. Ler arquivos de texto
+
+3. Ler e escrever arquivos do excel
+
+4. Ler e escrever arquivos de outros softwares estatísticos
+
+5. Ler informações de bancos de dados
+
+---
 
 # Pacotes
 
@@ -35,13 +61,18 @@ install.packages("tidyverse")
 
 <br>
 
-Para usar as funcionalidades de um pacote temos pedir ao <a>R</a> que carregue 
+Para usar as funcionalidades de um pacote devemos pedir ao <a>R</a> que carregue 
 o pacote com a função <a>library()</a>. Isso geralmente é feito no início do 
 script.
 
 ```{r, eval = FALSE}
 library(tidyverse)
 ```
+
+---
+background-image: url(www/kongfu.jpg)
+background-size: 100%
+class: center
 
 ---
 class: inverse, center, middle
@@ -57,72 +88,209 @@ class: center
 
 ---
 
+# O que é importar os dados?
+
+1. Existência da informação em arquivo - fora do R - <a>persistente</a>
+
+2. Trazer a informação do arquivo para dentro da memória RAM - dentro do R - 
+<a>volátil</a>
+
+# O que é exportar os dados?
+
+1. Existência da informação na memória RAM - dentro do R  - <a>volátil</a>
+
+2. Levar a informação para um arquivo no Disco Rígido (HD) - fora do R - 
+<a>persistente</a>
+
+---
+background-image: url(www/getwd.jpg)
+background-size: 100%
+class: center
+
+---
+
+# Importação e exportação: como se referir aos <a>arquivos</a>
+
+```{r, eval = FALSE}
+# Caminho absoluto
+"c:/meu_usuario/pasta_maluca/subpasta/arquivo.txt"
+
+# Caminho relativo
+# Na pasta que estou tem um arquivo com esse nome
+"arquivo.txt"
+```
+
+Prefira usar caminhos relativos:
+
+1. Menos digitação
+2. Tira proveito do contexto em que estamos inseridos.
+
+```{r}
+# Estou rodando o R daqui:
+getwd()
+```
+
+---
+
 # Importação: <a>arquivos de texto</a> (.csv, .txt)
 
 ```{r, eval = FALSE}
-# Separado por virgula
-virgula <- read_csv("nome_do_arquivo.csv")
+# Separado por virgula (,)
+virgula <- read_csv("nome_do_arquivo.csv", skip = 4)
 
-# Separado por "tab""
-tab <- read_tsv("tabela.tsv")
+# Separado por ponto e virgula (;)
+ponto_e_virgula <- read_csv2("nome_do_arquivo.csv", skip = 4)
+
+# Separado por "tab" (\t)
+tab <- read_tsv("tabela.tsv", locale = locale(decimal_mark = ","))
 
 # Separado por qualquer outra coisa que especificar
-outra_coisa <- read_delim("dados.txt", "|")
+outra_coisa <- read_delim("dados.txt", delim = "|", n_max = 100)
 ```
-
-<br>
-
-Toda função <a>read\_\*</a> tem sua correspondente <a>write\_\*</a>.
 
 ---
 
-# Importação: <a>excel</a>
+# Exportação: <a>arquivos de texto</a> (.csv, .txt)
+ 
+
+```{r, eval = FALSE}
+# Separado por virgula
+write_csv(tabela, "nome_do_arquivo.csv")
+
+# Separado por ponto e virgula
+write_csv2(tabela, "nome_do_arquivo.csv")
+
+# Separado por "tab"
+write_tsv(mtcars, "mtcars.tsv", na = 99999)
+
+# Separado por qualquer outra coisa que especificar
+write_delim(iris, "iris.txt", "|")
+```
+
+---
+
+# Importação e exportação: <a>excel</a>
+
+### Importação
 
 ```{r, eval = FALSE}
 library(readxl)
-read_excel("planilha.xlsx")
+read_excel("planilha.xlsx", sheet = 2)
 
-# ou especificando a estensão
 # excel 2007 ou supeior
-read_xlsx("recente.xlsx")
+read_xlsx("recente.xlsx", sheet = "planilha1", na = 9999)
 
 # excel 2003 ou inferior
-read_xls("antiga.xls")
+read_xls("antiga.xls", col_names = c("nome", "idade"), 
+         col_types = c("text", "numeric"))
 ```
 
-Para importar [os dados](simbioticos.xlsx) que usaremos hoje:
+### Exportação
 
-```{r}
-simbioticos <- readxl::read_xlsx("simbioticos.xlsx", na = "99999")
-str(simbioticos, max.level = 0)
+```{r, eval = FALSE}
+library(writexl)
+write_xlsx(tabela, "nome_do_arquivo.xlsx")
 ```
 
 ---
 
-# Importação: <a>outros softwares</a> estatísticos.
+# Importação e exportação: <a>outros softwares</a> estatísticos.
 
 ```{r, eval = FALSE}
 library(haven)
 
 # SAS
 read_sas("banco_do_sas.sas7bdat")
+write_sas(iris, "iris.sas7bdat")
 
 # SPSS
 read_sav("arquivo_do_spss.sav")
+write_sav(mtcars, "mtcars.sav")
 
 # Stata
 read_dta("banco_stata.dta")
+write_dta(tabela, "tabela.dta")
 ```
 
-<br>
+---
 
-Toda função <a>read\_\*</a> tem sua correspondente <a>write\_\*</a>.
+# Importação e exportação: <a>binários do R</a>.
+
+## Exportar
+
+```{r, eval = FALSE}
+write_rds(mtcars, "mtcars.rds")
+saveRDS(iris, "iris.rds") # R base
+```
+
+## Importar
+
+```{r, eval = FALSE}
+iris_rds <- read_rds("iris.rds")
+mtcars_rds <- readRDS("mtcars.rds") # R base
+```
+
+---
+
+# Importação: <a>bancos de dados</a>.
+
+```{r, eval = FALSE}
+# Oracle
+string_conexao <- paste(
+      "(DESCRIPTION=",
+      "(ADDRESS=(PROTOCOL=tcp)(HOST=", host, ")(PORT=", port, "))",
+        "(CONNECT_DATA=(SID=", sid, ")))", sep = ""
+)
+con <- dbConnect(ROracle::Oracle(), username = "usuario",
+                 password = "senha", dbname = string_conexao)
+# MySQL
+con <- dbConnect(RMySQL::MySQL(), dbname = "nome_banco")
+# PostGress
+con <- dbConnect(RPostgreSQL::PostgreSQL(), dbname="nome_banco")
+# SQLite
+con <- dbConnect(RSQLite::SQLite(), "dados/dados.sqlite")
+```
+
+Mais informações podem ser encontradas [aqui](https://db.rstudio.com).
 
 ---
 
 # Importação: <a>bancos de dados</a>.
 
 ```{r}
-# a fazer
+library(DBI)
+# criar conexao
+con <- dbConnect(RSQLite::SQLite(), "dados/dados.sqlite")
+dbListTables(con)
 ```
 
+---
+
+# Importação: <a>bancos de dados</a>.
+
+```{r}
+# Carga parcial do banco
+tabela <- tbl(con, "mtcars")
+tabela
+```
+
+---
+
+# Importação: <a>bancos de dados</a>.
+
+```{r}
+# trazer dados para a memória
+tabela_completa <- collect(tabela)
+tabela_completa
+```
+
+<!-- --- -->
+
+<!-- # Exportação: <a>excel</a> -->
+
+<!-- Para importar [os dados](dados/simbioticos.xlsx) que usaremos hoje: -->
+
+<!-- ```{r} -->
+<!-- simbioticos <- readxl::read_xlsx("dados/simbioticos.xlsx", na = "99999") -->
+<!-- str(simbioticos, max.level = 0) -->
+<!-- ``` -->
