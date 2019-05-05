@@ -1,0 +1,128 @@
+---
+title: "Introduçao ao R<br>Aula 2"
+output: 
+  xaringan::moon_reader:
+    lib_dir: libs
+    nature:
+      ratio: 16:9
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r, include=FALSE}
+simbioticos <- tibble::tibble(
+  Age = round(rnorm(30, 40, 5)), 
+  vitDin = rnorm(30, 2, 0.3), 
+  GRUPO = sample(c("Cão", "Gato"), 30, TRUE),
+  `Sex M/F` = sample(c("H", "M"), 30, TRUE)
+)
+writexl::write_xlsx(simbioticos, "simbioticos.xlsx")
+```
+
+
+# Pacotes
+
+Os pacotes são a forma na qual o <a>R</a> é extendido. Para instalar um pacote 
+usamos a função <a>install.packages()</a> informando entre aspas o nome do 
+pacote que desejamos instalar.
+
+```{r, eval = FALSE}
+# O "tidyverse" inclui alguns pacotes muito usados no R
+# como "ggplot2", "dplyr", "tidyr" e "readr"
+install.packages("tidyverse")
+```
+
+<br>
+
+Para usar as funcionalidades de um pacote temos pedir ao <a>R</a> que carregue 
+o pacote com a função <a>library()</a>. Isso geralmente é feito no início do 
+script.
+
+```{r, eval = FALSE}
+library(tidyverse)
+```
+
+---
+class: inverse, center, middle
+
+# Como <a>importar</a> os dados
+
+---
+background-image: url(www/data-science.png)
+background-size: 100%
+class: center
+
+# <a>Ciclo</a> de análise de dados
+
+---
+
+# Importação: <a>arquivos de texto</a> (.csv, .txt)
+
+```{r, eval = FALSE}
+# Separado por virgula
+virgula <- read_csv("nome_do_arquivo.csv")
+
+# Separado por "tab""
+tab <- read_tsv("tabela.tsv")
+
+# Separado por qualquer outra coisa que especificar
+outra_coisa <- read_delim("dados.txt", "|")
+```
+
+<br>
+
+Toda função <a>read\_\*</a> tem sua correspondente <a>write\_\*</a>.
+
+---
+
+# Importação: <a>excel</a>
+
+```{r, eval = FALSE}
+library(readxl)
+read_excel("planilha.xlsx")
+
+# ou especificando a estensão
+# excel 2007 ou supeior
+read_xlsx("recente.xlsx")
+
+# excel 2003 ou inferior
+read_xls("antiga.xls")
+```
+
+Para importar [os dados](simbioticos.xlsx) que usaremos hoje:
+
+```{r}
+simbioticos <- readxl::read_xlsx("simbioticos.xlsx", na = "99999")
+str(simbioticos, max.level = 0)
+```
+
+---
+
+# Importação: <a>outros softwares</a> estatísticos.
+
+```{r, eval = FALSE}
+library(haven)
+
+# SAS
+read_sas("banco_do_sas.sas7bdat")
+
+# SPSS
+read_sav("arquivo_do_spss.sav")
+
+# Stata
+read_dta("banco_stata.dta")
+```
+
+<br>
+
+Toda função <a>read\_\*</a> tem sua correspondente <a>write\_\*</a>.
+
+---
+
+# Importação: <a>bancos de dados</a>.
+
+```{r}
+# a fazer
+```
+

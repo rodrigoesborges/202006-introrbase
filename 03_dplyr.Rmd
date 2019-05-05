@@ -1,0 +1,257 @@
+---
+title: "Introduçao ao R<br>Aula 3"
+output: 
+  xaringan::moon_reader:
+    lib_dir: libs
+    nature:
+      ratio: 16:9
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+class: inverse, center, middle
+
+# Como <a>transformar</a> os dados
+
+---
+background-image: url(www/data-science.png)
+background-size: 100%
+class: center
+
+# <a>Ciclo</a> de análise de dados
+
+---
+
+```{r, include = FALSE}
+library(tidyverse)
+simbioticos <- tibble::tibble(
+  `Subject ID` = 1:30,
+  Age = round(rnorm(30, 40, 5)), 
+  vitDin = rnorm(30, 2, 0.3), 
+  GRUPO = sample(c("Cão", "Gato"), 30, TRUE),
+  `Sex M/F` = sample(c("H", "M"), 30, TRUE),
+  IMC_inicial= round(rnorm(30, 40, 5)), 
+  IMC_av1 = rnorm(30, 2, 0.3), 
+  IMC_av2 = round(rnorm(30, 40, 5))
+)
+```
+
+
+# %>% (pipe)
+
+O <a>pipe</a> está baseado na pintura do artista belga Magritt.
+
+```{r}
+valores <- rnorm(10, 10, 2)
+mean(abs(diff(valores)))
+```
+
+<br>
+
+Vejamos a mesma operação com o <a>pipe</a>
+
+```{r}
+# Ceci n'est pas une "operador"
+valores %>% 
+  diff() %>% 
+  abs() %>% 
+  mean()
+```
+
+---
+
+# select
+
+Use <a>select()</a> para escolher as variáveis (colunas)
+
+```{r}
+dim(simbioticos) # c(linhas, colunas)
+
+simb <- simbioticos %>% 
+  select(`Subject ID`, GRUPO , `Sex M/F`, Age, vitDin)
+
+head(simb)
+```
+
+---
+
+# filter
+
+Use <a>filter()</a> para escolher as observações (linhas)
+
+```{r}
+simb %>% 
+  filter(Age > 90)
+
+simb %>% 
+  filter(Age == max(Age))
+```
+
+---
+
+# arrange
+
+Use <a>arrange()</a> para reordenar as observações (linhas)
+
+```{r}
+simb %>% 
+  arrange(Age, desc(vitDin))
+```
+
+---
+
+# mutate
+
+Use <a>mutate()</a> para criar novas variáveis baseadas nas variáveis existentes
+
+```{r}
+simb %>% 
+  mutate(Age_final = Age + 5)
+```
+
+---
+
+# group_by
+
+Use <a>group_by()</a> para agrupar os dados e realizar operações para cada grupo
+
+É usado em conjunto com outros verbos. Ele qualifica os demais verbos 
+e as ações passam a ocorrer separadamente para cada grupo
+
+```{r}
+simb %>% 
+  group_by(GRUPO) %>% 
+  filter(vitDin == max(vitDin, na.rm = TRUE))
+```
+
+---
+
+# summarise
+
+Use <a>summarise()</a> para criar resumos dos dados. As funções passadas devem 
+retornar um único valor
+
+```{r}
+simb %>% 
+  summarise(mediaDin = mean(vitDin, na.rm = TRUE))
+
+simb %>% 
+  group_by(GRUPO) %>% 
+  summarise(mediaDin = mean(vitDin, na.rm = TRUE))
+```
+
+---
+
+# Exercícios
+
+<br>
+
+> 1. <a>Quantos</a> pacientes possuiam vitamina D inicial 
+<a>maior do que 50</a>?
+
+> 2. <a>Quantos</a> pacientes tinham idade <a>inferior a 70</a> anos?
+
+> 3. Qual o <a>ID</a> do paciente com <a>maior altura</a>?
+
+> 4. Qual o <a>sexo</a> no pacitente <a>mais baixo</a>?
+
+> 5. Que <a>grupo</a> de pacientes possui a <a>maior idade média</a>?
+
+> 6. Qual o <a>paciente mais velho</a> que teve <a>aumento de vitamina D</a>?
+
+> 7. Qual foi a <a>variação média de altura</a> em cada grupo?
+
+---
+class: inverse, center, middle
+
+# Como <a>organizar</a> os dados
+
+---
+background-image: url(www/data-science.png)
+background-size: 100%
+class: center
+
+# <a>Ciclo</a> de análise de dados
+
+---
+
+# <a>Principios</a>
+
+<br><br>
+
+1. Cada <a>variável</a> tem sua própria <a>coluna</a>
+
+2. Cada <a>observação</a> tem sua própria <a>linha</a>
+
+3. Cada <a>unidade observacional</a> tem sua própria <a>tabela</a>
+
+---
+background-image: url(www/original-dfs-tidy.png)
+background-size: 85%
+background-position: 50% 90%
+
+# <a>Formas</a> de uma tabela
+
+---
+background-image: url(www/tidyr-spread-gather.gif)
+background-size: 60%
+background-position: 50% 100%
+
+# <a>Transformações</a> de uma tabela
+
+---
+
+# <a>Juntar</a>
+
+```{r}
+simb2 <- simbioticos %>% 
+  select(`Subject ID`, IMC_inicial, IMC_av1, IMC_av2)
+simb2
+```
+
+---
+# <a>Juntar</a>
+
+```{r}
+simb_tidy <- gather(simb2, key = periodo, 
+                    value = IMC, -`Subject ID`)
+simb_tidy
+```
+
+---
+
+# <a>Juntar</a>
+
+```{r, eval = FALSE}
+simb_tidy <- gather(simb2, key = periodo, 
+                    value = IMC, -`Subject ID`)
+simb_tidy
+```
+
+### Como ler
+
+<a>"Quero juntar os dados de **simb2** em **periodo** e **IMC**. Vou juntar
+todas as colunas, exceto 'Subject ID' "</a>
+
+```{r, eval = FALSE}
+# Não tenha vergonha de pedir ajuda ao R
+?gather 
+```
+
+---
+
+# <a>Espalhar</a>
+
+```{r}
+spread(simb_tidy, periodo, IMC) %>% head()
+```
+
+### Como ler
+
+<a>"Quero espalhar o **IMC** contido **simb_tidy** de acordo com os **períodos**."</a>
+
+```{r, eval = FALSE}
+# Não tenha vergonha de pedir ajuda ao R
+?spread 
+```
