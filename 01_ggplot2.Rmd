@@ -1,9 +1,10 @@
 ---
-title: "Introduçao ao R<br>Aula 2"
+title: "Introdução ao R<br>Aula 4"
 output: 
   xaringan::moon_reader:
     lib_dir: libs
     nature:
+      ratio: 16:9
       highlightStyle: github
       highlightLines: true
       countIncrementalSlides: false
@@ -15,13 +16,48 @@ library(dplyr)
 library(knitr)
 library(tidyr)
 options(scipen = 999)
-anscombe_tidy <- anscombe %>% gather() %>%
-  separate(col = key, c('variavel', 'conjunto'), sep = 1) %>%
-  group_by(variavel) %>% mutate(row = 1:n()) %>%
-  spread(variavel, value) %>% select(-row)
+knitr::opts_chunk$set(
+  warning = FALSE, message = FALSE, fig.align = "center", fig.height = 5
+)
 
-dados <- readRDS('pam2.RDS')
+anscombe_tidy <- anscombe %>% 
+  gather() %>%
+  separate(col = key, c('variavel', 'conjunto'), sep = 1) %>%
+  group_by(variavel) %>% 
+  mutate(row = 1:n()) %>%
+  spread(variavel, value) %>% 
+  select(-row)
+
+dados <- readRDS('dados/pam2.RDS')
 ```
+
+# Percurso do curso
+
+1. [Noções](#13) de **R**
+
+2. Como [visualizar](#75) os dados?
+
+3. Como [importar](#30) os dados?
+
+4. Como [transformar](#35) os dados?
+
+---
+
+# Percurso de hoje
+
+1. Motivação
+
+2. Objetos
+
+3. Vetores
+
+4. Comparações lógicas e numéricas
+
+5. Funções
+
+6. Controle de fluxo
+
+---
 
 ## Visualização de dados 
 
@@ -43,7 +79,7 @@ ggplot(dados, aes(cultura, area_variacao)) +
 ## Quarteto de Anscombe
 
 ```{r, echo = FALSE}
-kable(anscombe[, c(1,5,2,6,3,7,4,8)])
+knitr::kable(anscombe[, c(1,5,2,6,3,7,4,8)], "html")
 ```
 
 ---
@@ -133,7 +169,7 @@ Lembre-se que tabelas do tipo _long_ são mais amigáveis ao ggplot2.
 
 ```{r carga}
 # importa dados
-dados <- readRDS('pam2.RDS')
+dados <- readRDS('dados/pam2.RDS')
 feijao <- filter(dados, cultura == "Feijão")
 # conhecer sua estrutura e campos
 str(dados)
@@ -232,7 +268,10 @@ alpha | Transparência
 
 ## Aspectos Estéticos - Variáveis contínuas
 
-![](www/decod_continuas.png)
+.center[
+  ![](www/decod_continuas.png)
+]
+
 
 Fonte: www.datacamp.com
 
@@ -264,7 +303,10 @@ shape | Forma
 
 ## Atributos Estéticos - Variáveis categóricas
 
-![](www/decod_categoricas.png)
+.center[
+  ![](www/decod_categoricas.png)
+]
+
 
 Fonte: www.datacamp.com
 

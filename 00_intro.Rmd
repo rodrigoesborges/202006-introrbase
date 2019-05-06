@@ -1,9 +1,10 @@
 ---
-title: "Introduçao ao R<br>Aula 1"
+title: "Introdução ao R<br>Aula 1"
 output: 
   xaringan::moon_reader:
     lib_dir: libs
     nature:
+      ratio: 16:9
       highlightStyle: github
       highlightLines: true
       countIncrementalSlides: false
@@ -92,7 +93,7 @@ ggplot(simbioticos, aes(Age, vitDin, col = GRUPO)) +
 ```
 
 ---
-class: center, inverse
+class: center, inverse, bottom
 background-image: url(www/decepcao.gif)
 background-size: 100%
 background-position: 50% 75%
@@ -158,11 +159,6 @@ class: inverse, center, middle
 # <a>Introdução ao **R**</a>
 
 ---
-background-image: url(https://media.giphy.com/media/fQZX2aoRC1Tqw/giphy.gif)
-background-size: 100%
-class: inverse
-
----
 
 # Introdução ao <a>R</a>
 
@@ -212,7 +208,7 @@ ofertante
 
 # vetores
 
-Conjunto ordenado de valores.
+Conjunto de valores de mesmo tipo.
 
 ```{r}
 c(1, 6, 11, 16, 21)
@@ -223,7 +219,7 @@ c(1, 6, 11, 16, 21)
 
 # vetores
 
-Com `subsetting` podem escolher partes do vetor
+Com `subsetting` podemos escolher partes do vetor
 
 ```{r}
 vetor <- c(1, 6, 11, 16, 21)
@@ -269,10 +265,17 @@ sum(horas, horas, 25)
 # objetos
 
 ```{r}
-"É assim que incluímos texto no R"
+"É assim que incluímos texto no R, com aspas"
+
+'Podem ser aspas duplas (") ou simples (\')'
 
 paste(ofertante, "oferece curso de R com duração de", horas, "horas")
 ```
+
+---
+background-image: url(https://media.giphy.com/media/fQZX2aoRC1Tqw/giphy.gif)
+background-size: 100%
+class: inverse
 
 ---
 
@@ -384,6 +387,11 @@ is.na(nas)
 ```
 
 ---
+background-image: url(https://media.giphy.com/media/fQZX2aoRC1Tqw/giphy.gif)
+background-size: 100%
+class: inverse
+
+---
 
 # Operações vetoriais
 
@@ -412,6 +420,11 @@ c(1L, 2.4, 3.5) # numérico > inteiro
 
 c(1, 2, 3, "texto") # caracter > numérico
 ```
+
+---
+background-image: url(https://media.giphy.com/media/fQZX2aoRC1Tqw/giphy.gif)
+background-size: 100%
+class: inverse
 
 ---
 

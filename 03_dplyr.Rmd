@@ -1,5 +1,5 @@
 ---
-title: "Introduçao ao R<br>Aula 3"
+title: "Introdução ao R<br>Aula 3"
 output: 
   xaringan::moon_reader:
     lib_dir: libs
@@ -8,6 +8,34 @@ output:
       highlightStyle: github
       highlightLines: true
       countIncrementalSlides: false
+---
+
+# Percurso do curso
+
+1. [Noções](#13) de **R**
+
+2. Como [visualizar](#75) os dados?
+
+3. Como [importar](#30) os dados?
+
+4. Como [transformar](#35) os dados?
+
+---
+
+# Percurso de hoje
+
+1. Motivação
+
+2. Objetos
+
+3. Vetores
+
+4. Comparações lógicas e numéricas
+
+5. Funções
+
+6. Controle de fluxo
+
 ---
 
 class: inverse, center, middle
@@ -20,6 +48,11 @@ background-size: 100%
 class: center
 
 # <a>Ciclo</a> de análise de dados
+
+---
+background-image: url(www/pipe.jpg)
+background-size: 85%
+class: center
 
 ---
 
@@ -40,7 +73,7 @@ simbioticos <- tibble::tibble(
 
 # %>% (pipe)
 
-O <a>pipe</a> está baseado na pintura do artista belga Magritt.
+O <a>pipe</a> está baseado na pintura do artista belga Magritte.
 
 ```{r}
 valores <- rnorm(10, 10, 2)
@@ -61,32 +94,150 @@ valores %>%
 
 ---
 
+# <a>dplyr</a> e <a>tidyr</a>
+
+Uma filosofia comum:
+
+1. O primeiro argumento de cada função é um data.frame
+
+2. Toda função retorna um data.frame
+
+---
+
 # select
 
-Use <a>select()</a> para escolher as variáveis (colunas)
+Use <a>select()</a> para nomear as variáveis (colunas) que quer manter ou 
+remover do data.frame.
+
+```{r, eval = FALSE}
+select(data.frame, coluna1, coluna2)
+
+# ou com o pipe
+data.frame %>% 
+  select(coluna1, coluna2)
+
+data.frame %>% 
+  select(-coluna1)
+```
+
+---
+
+# select
+
+Formas mais comuns de usar o <a>select</a>
 
 ```{r}
-dim(simbioticos) # c(linhas, colunas)
+simbioticos %>% 
+  select(`Subject ID`, GRUPO , Age, vitDin, `Sex M/F`) %>% head(1)
 
-simb <- simbioticos %>% 
-  select(`Subject ID`, GRUPO , `Sex M/F`, Age, vitDin)
+simbioticos %>% 
+  select(-IMC_inicial, -IMC_av1, -IMC_av2) %>% head(1)
+```
 
-head(simb)
+---
+
+# select
+
+Formas mais comuns de usar o <a>select</a>
+
+```{r}
+simbioticos %>% 
+  select(`Subject ID`:`Sex M/F`) %>% head(1)
+
+simbioticos %>% 
+  select(- (`Subject ID`:`Sex M/F`)) %>% head(1)
+```
+
+---
+
+# select
+
+Formas menos comuns de usar o <a>select</a>
+
+```{r}
+simbioticos %>% 
+  select(1, 2, 3) %>% head(1)
+
+simbioticos %>% 
+  select(contains("in")) %>% head(1)
+```
+
+---
+
+# select
+
+Formas menos comuns de usar o <a>select</a>
+
+```{r}
+simbioticos %>% 
+  select(starts_with("IMC") ) %>% head(1)
+
+simbioticos %>% 
+  select(ends_with("O")) %>% head(1)
 ```
 
 ---
 
 # filter
 
-Use <a>filter()</a> para escolher as observações (linhas)
+Use <a>filter()</a> para definir as condições para que as observações 
+(linhas) sejam mantidas no data.frame.
+
+A condição deve ser uma expressão que deve ser avaliada num vetor lógico.
+
+```{r, eval = FALSE}
+filter(data.frame,  condicao)
+
+# ou com pipe
+data.frame %>% 
+  filter(condicao)
+```
+
+Mais de uma condições podem ser passadas. Neste caso apenas as observações 
+que satisfaçam todas as condições serão mantidas.
+
+---
+
+# filter
 
 ```{r}
-simb %>% 
-  filter(Age > 90)
+simbioticos %>% 
+  filter(`Sex M/F` == "H")
 
-simb %>% 
-  filter(Age == max(Age))
+simbioticos %>% 
+  filter(Age >= 50)
 ```
+
+---
+
+# filter
+
+```{r}
+simbioticos %>% 
+  filter(`Sex M/F` != "H")
+
+simbioticos %>% 
+  filter(GRUPO %in% c("Gato", "Cão"))
+```
+
+---
+
+# arrange
+
+Use <a>arrange()</a> para reordenar as observações (linhas) de acordo com os 
+valores de algumas colunas. Por padrão as linhas são apresentadas em ordem 
+crescente, mas esse comportamento pode ser alterado usando a função <a>desc</a>.
+
+```{r, eval = FALSE}
+arrange(data.frame, coluna1)
+
+data.frame %>% 
+  arrange(coluna1)
+
+data.frame %>% 
+  arrange(desc(coluna1))
+```
+
 
 ---
 
@@ -95,7 +246,10 @@ simb %>%
 Use <a>arrange()</a> para reordenar as observações (linhas)
 
 ```{r}
-simb %>% 
+simbioticos %>% 
+  arrange(Age)
+
+simbioticos %>% 
   arrange(Age, desc(vitDin))
 ```
 
@@ -106,7 +260,7 @@ simb %>%
 Use <a>mutate()</a> para criar novas variáveis baseadas nas variáveis existentes
 
 ```{r}
-simb %>% 
+simbioticos %>% 
   mutate(Age_final = Age + 5)
 ```
 
@@ -120,7 +274,7 @@ Use <a>group_by()</a> para agrupar os dados e realizar operações para cada gru
 e as ações passam a ocorrer separadamente para cada grupo
 
 ```{r}
-simb %>% 
+simbioticos %>% 
   group_by(GRUPO) %>% 
   filter(vitDin == max(vitDin, na.rm = TRUE))
 ```
@@ -133,10 +287,10 @@ Use <a>summarise()</a> para criar resumos dos dados. As funções passadas devem
 retornar um único valor
 
 ```{r}
-simb %>% 
+simbioticos %>% 
   summarise(mediaDin = mean(vitDin, na.rm = TRUE))
 
-simb %>% 
+simbioticos %>% 
   group_by(GRUPO) %>% 
   summarise(mediaDin = mean(vitDin, na.rm = TRUE))
 ```
@@ -188,14 +342,14 @@ class: center
 
 ---
 background-image: url(www/original-dfs-tidy.png)
-background-size: 85%
+background-size: 60%
 background-position: 50% 90%
 
 # <a>Formas</a> de uma tabela
 
 ---
 background-image: url(www/tidyr-spread-gather.gif)
-background-size: 60%
+background-size: 45%
 background-position: 50% 100%
 
 # <a>Transformações</a> de uma tabela
