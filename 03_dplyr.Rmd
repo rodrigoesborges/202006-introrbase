@@ -177,6 +177,11 @@ simbioticos %>%
 ```
 
 ---
+background-image: url(www/programar.gif)
+background-size: 100%
+class: inverse
+
+---
 
 # filter
 
@@ -221,6 +226,11 @@ simbioticos %>%
 ```
 
 ---
+background-image: url(www/programar.gif)
+background-size: 100%
+class: inverse
+
+---
 
 # arrange
 
@@ -254,6 +264,11 @@ simbioticos %>%
 ```
 
 ---
+background-image: url(www/programar.gif)
+background-size: 100%
+class: inverse
+
+---
 
 # mutate
 
@@ -263,6 +278,11 @@ Use <a>mutate()</a> para criar novas variáveis baseadas nas variáveis existent
 simbioticos %>% 
   mutate(Age_final = Age + 5)
 ```
+
+---
+background-image: url(www/programar.gif)
+background-size: 100%
+class: inverse
 
 ---
 
@@ -280,6 +300,11 @@ simbioticos %>%
 ```
 
 ---
+background-image: url(www/programar.gif)
+background-size: 100%
+class: inverse
+
+---
 
 # summarise
 
@@ -294,6 +319,11 @@ simbioticos %>%
   group_by(GRUPO) %>% 
   summarise(mediaDin = mean(vitDin, na.rm = TRUE))
 ```
+
+---
+background-image: url(www/programar.gif)
+background-size: 100%
+class: inverse
 
 ---
 
@@ -394,6 +424,11 @@ todas as colunas, exceto 'Subject ID' "</a>
 ```
 
 ---
+background-image: url(www/programar.gif)
+background-size: 100%
+class: inverse
+
+---
 
 # <a>Espalhar</a>
 
@@ -409,3 +444,8 @@ spread(simb_tidy, periodo, IMC) %>% head()
 # Não tenha vergonha de pedir ajuda ao R
 ?spread 
 ```
+
+---
+background-image: url(www/programar.gif)
+background-size: 100%
+class: inverse
