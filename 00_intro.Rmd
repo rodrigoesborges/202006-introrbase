@@ -273,7 +273,7 @@ paste(ofertante, "oferece curso de R com duração de", horas, "horas")
 ```
 
 ---
-background-image: url(https://media.giphy.com/media/fQZX2aoRC1Tqw/giphy.gif)
+background-image: url(www/programar.gif)
 background-size: 100%
 class: inverse
 
@@ -387,7 +387,7 @@ is.na(nas)
 ```
 
 ---
-background-image: url(https://media.giphy.com/media/fQZX2aoRC1Tqw/giphy.gif)
+background-image: url(www/programar.gif)
 background-size: 100%
 class: inverse
 
@@ -422,7 +422,7 @@ c(1, 2, 3, "texto") # caracter > numérico
 ```
 
 ---
-background-image: url(https://media.giphy.com/media/fQZX2aoRC1Tqw/giphy.gif)
+background-image: url(www/programar.gif)
 background-size: 100%
 class: inverse
 
