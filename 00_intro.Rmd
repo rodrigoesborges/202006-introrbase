@@ -142,7 +142,9 @@ background-size: 70%
 # <a>RStudio</a>
 
 1. Editor -> Roteiro
+
 2. Console -> Filmagem
+
 3. Output -> Televisão
 
 ---
