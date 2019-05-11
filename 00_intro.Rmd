@@ -114,6 +114,17 @@ background-position: 50% 75%
 
 ![](www/crtl_c.jpg)
 
+---
+
+# Como vamos aprender <a>R</a>?
+
+1. Explicação de conceitos / funções / ideias
+
+2. Escrever e executar os comandos
+
+3. Repetir algumas vezes `1` e `2`
+
+4. Exercícios
 
 ---
 class: inverse, center, middle
@@ -124,7 +135,15 @@ class: inverse, center, middle
 
 ---
 background-image: url(https://raw.githubusercontent.com/hadley/r4ds/master/diagrams/rstudio-editor.png)
-background-size: cover
+background-size: 70%
+
+---
+
+# <a>RStudio</a>
+
+1. Editor -> Roteiro
+2. Console -> Filmagem
+3. Output -> Televisão
 
 ---
 
@@ -228,6 +247,20 @@ vetor[1]
 vetor[c(2, 4)]
 vetor[-1]
 vetor[-c(2, 4)]
+```
+
+---
+
+# vetores
+
+Com `subsetting` podemos escolher partes do vetor
+
+```{r}
+vetor[c(TRUE, FALSE, FALSE, TRUE)]
+
+vetor[!c(TRUE, FALSE, FALSE, TRUE)]
+
+vetor[c(TRUE, FALSE, FALSE, FALSE)]
 ```
 
 ---
@@ -458,6 +491,11 @@ quadrado(c(5, 10)) # vetorizado
 ```
 
 ---
+background-image: url(www/programar.gif)
+background-size: 100%
+class: inverse
+
+---
 
 # Controles de fluxo
 
@@ -470,6 +508,28 @@ if(idade >= 18) {
   "Não pode fazer autoescola"
 }
 ```
+
+---
+
+# Controles de fluxo
+
+```{r}
+nomes <- c("Ana", "João", "Maria")
+
+for (cada_nome in nomes) {
+  print(paste("Olá ", cada_nome, "!", sep = ""))
+}
+```
+
+### Atenção!
+
+Devemos preferir operações vetorizadas aos loops ou laços (for) no <a>R</a>.
+Apesar disso, eles também tem seu espaço.
+
+---
+background-image: url(www/programar.gif)
+background-size: 100%
+class: inverse
 
 ---
 
