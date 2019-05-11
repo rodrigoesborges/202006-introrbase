@@ -10,6 +10,12 @@ output:
       countIncrementalSlides: false
 ---
 
+<style>
+.pull-left > p > img, .pull-right > p > img {
+  height: 250px
+}
+</style>
+
 # Percurso do curso
 
 1. [Noções](#13) de **R**
@@ -100,7 +106,31 @@ Uma filosofia comum:
 
 1. O primeiro argumento de cada função é um data.frame
 
-2. Toda função retorna um data.frame
+2. Os argumentos posteriores descrever o que fazer com o data.frame, usando o nome das variáveis (sem aspas).
+
+3. Toda função retorna um data.frame
+
+.pull-left.img[
+  ![](www/dplyr.png)
+]
+
+.pull-right.img[
+  ![](www/tidyr.png)
+]
+
+---
+
+# dplyr: principais verbos
+
+1. Pegar as observações por seus valores (filter()).
+
+2. Reordenar as linhas (arrange()).
+
+3. Pegar variáveis por seus nomes (select()).
+
+4. Criar novas criáveis com base em variáveis existentes (mutate()).
+
+5. Reduzir muitos valores à um sumário (summarise()).
 
 ---
 
@@ -128,10 +158,7 @@ Formas mais comuns de usar o <a>select</a>
 
 ```{r}
 simbioticos %>% 
-  select(`Subject ID`, GRUPO , Age, vitDin, `Sex M/F`) %>% head(1)
-
-simbioticos %>% 
-  select(-IMC_inicial, -IMC_av1, -IMC_av2) %>% head(1)
+  select(`Subject ID`, GRUPO , Age, vitDin, `Sex M/F`)
 ```
 
 ---
@@ -142,10 +169,29 @@ Formas mais comuns de usar o <a>select</a>
 
 ```{r}
 simbioticos %>% 
-  select(`Subject ID`:`Sex M/F`) %>% head(1)
+  select(-IMC_inicial, -IMC_av1, -IMC_av2)
+```
 
+---
+
+# select
+
+Formas mais comuns de usar o <a>select</a>
+
+```{r}
 simbioticos %>% 
-  select(- (`Subject ID`:`Sex M/F`)) %>% head(1)
+  select(`Subject ID`:`Sex M/F`)
+```
+
+---
+
+# select
+
+Formas mais comuns de usar o <a>select</a>
+
+```{r}
+simbioticos %>% 
+  select(- (`Subject ID`:`Sex M/F`))
 ```
 
 ---
@@ -156,10 +202,7 @@ Formas menos comuns de usar o <a>select</a>
 
 ```{r}
 simbioticos %>% 
-  select(1, 2, 3) %>% head(1)
-
-simbioticos %>% 
-  select(contains("in")) %>% head(1)
+  select(1, 2, 3)
 ```
 
 ---
@@ -170,10 +213,29 @@ Formas menos comuns de usar o <a>select</a>
 
 ```{r}
 simbioticos %>% 
-  select(starts_with("IMC") ) %>% head(1)
+  select(contains("in"))
+```
 
+---
+
+# select
+
+Formas menos comuns de usar o <a>select</a>
+
+```{r}
 simbioticos %>% 
-  select(ends_with("O")) %>% head(1)
+  select(starts_with("IMC") )
+```
+
+---
+
+# select
+
+Formas menos comuns de usar o <a>select</a>
+
+```{r}
+simbioticos %>% 
+  select(ends_with("O"))
 ```
 
 ---
@@ -208,7 +270,13 @@ que satisfaçam todas as condições serão mantidas.
 ```{r}
 simbioticos %>% 
   filter(`Sex M/F` == "H")
+```
 
+---
+
+# filter
+
+```{r}
 simbioticos %>% 
   filter(Age >= 50)
 ```
@@ -220,7 +288,13 @@ simbioticos %>%
 ```{r}
 simbioticos %>% 
   filter(`Sex M/F` != "H")
+```
 
+---
+
+# filter
+
+```{r}
 simbioticos %>% 
   filter(GRUPO %in% c("Gato", "Cão"))
 ```
@@ -258,7 +332,15 @@ Use <a>arrange()</a> para reordenar as observações (linhas)
 ```{r}
 simbioticos %>% 
   arrange(Age)
+```
 
+---
+
+# arrange
+
+Use <a>arrange()</a> para reordenar as observações (linhas)
+
+```{r}
 simbioticos %>% 
   arrange(Age, desc(vitDin))
 ```
@@ -267,6 +349,24 @@ simbioticos %>%
 background-image: url(www/programar.gif)
 background-size: 100%
 class: inverse
+
+---
+
+# mutate
+
+Use <a>mutate()</a> para criar novas variáveis baseadas nas variáveis existentes
+
+```{r, eval = FALSE}
+mutate(data.frame, coluna_nova = coluna_velha + 3)
+
+data.frame %>% 
+  mutate(coluna_nova = coluna_velha + 3)
+
+# É possível usar as variáveis recém criadas
+data.frame %>% 
+  mutate(coluna_nova = coluna_velha + 3,
+         coluna_mais_nova = 2 * coluna_nova)
+```
 
 ---
 
@@ -283,6 +383,26 @@ simbioticos %>%
 background-image: url(www/programar.gif)
 background-size: 100%
 class: inverse
+
+---
+
+# group_by
+
+Use <a>group_by()</a> para agrupar os dados e realizar operações para cada grupo
+
+É usado em conjunto com outros verbos. Ele qualifica os demais verbos 
+e as ações passam a ocorrer separadamente para cada grupo
+
+```{r, eval = FALSE}
+group_by(data.frame, coluna1)
+
+data.frame %>% 
+  group_by(coluna1)
+
+# Os grupos podem ser compostos por mais de uma coluna
+data.frame %>% 
+  group_by(coluna1, coluna2)
+```
 
 ---
 
@@ -311,14 +431,61 @@ class: inverse
 Use <a>summarise()</a> para criar resumos dos dados. As funções passadas devem 
 retornar um único valor
 
+```{r, eval = FALSE}
+summarise(data.frame, media = mean(coluna1))
+
+data.frame %>% 
+  summarise(media = mean(coluna1))
+
+data.frame %>% 
+  summarise(media = mean(coluna1),
+            maximo = max(coluna1))
+```
+
+---
+
+# summarise
+
+Use <a>summarise()</a> para criar resumos dos dados. As funções passadas devem 
+retornar um único valor
+
 ```{r}
 simbioticos %>% 
   summarise(mediaDin = mean(vitDin, na.rm = TRUE))
+```
 
+---
+
+# summarise
+
+Use <a>summarise()</a> para criar resumos dos dados. As funções passadas devem 
+retornar um único valor
+
+```{r}
 simbioticos %>% 
   group_by(GRUPO) %>% 
   summarise(mediaDin = mean(vitDin, na.rm = TRUE))
 ```
+
+---
+
+# summarise
+
+Algumas funções frequentemente usadas com summarise:
+
+1. `mean()`: Média do vetor
+
+2. `sd()`: Desvio padrão do vetor
+
+3. `median()`: Mediana do vetor
+
+4. `max()`: Maior valor do vetor
+
+5. `min()`: Menor valor do vetor
+
+6. `n()`: Conta a quantidade de valores do vetor
+
+7. `n_distinct()`: Conta a quantidade de valores únicos do valores
 
 ---
 background-image: url(www/programar.gif)
@@ -388,6 +555,17 @@ background-position: 50% 100%
 
 # <a>Juntar</a>
 
+```{r, eval=FALSE}
+gather(data.frame, 
+       key = como_chamar_o_nome_das_colunas, 
+       value = como_chamar_o_variavel_com_valores, 
+       listar_colunas:que_serao_unidas)
+```
+
+---
+
+# <a>Juntar</a>
+
 ```{r}
 simb2 <- simbioticos %>% 
   select(`Subject ID`, IMC_inicial, IMC_av1, IMC_av2)
@@ -432,8 +610,26 @@ class: inverse
 
 # <a>Espalhar</a>
 
+```{r, eval=FALSE}
+spread(data.frame, 
+       key = separe_de_acordo_com_essa_coluna, 
+       value = separe_os_valores_dessa_coluna)
+```
+
+---
+
+# <a>Espalhar</a>
+
 ```{r}
-spread(simb_tidy, periodo, IMC) %>% head()
+spread(simb_tidy, periodo, IMC)
+```
+
+---
+
+# <a>Espalhar</a>
+
+```{r, eval=FALSE}
+spread(simb_tidy, periodo, IMC)
 ```
 
 ### Como ler
