@@ -14,14 +14,6 @@ output:
 options(htmltools.dir.version = FALSE, max.print = 30, digits = 4)
 knitr::opts_chunk$set(fig.align = "center", fig.width = 10, fig.height = 6)
 library(tidyverse)
-set.seed(123)
-simbioticos <- tibble(
-  Age = round(rnorm(30, 40, 5)), 
-  vitDin = rnorm(30, 2, 0.3), 
-  GRUPO = sample(c("Cão", "Gato"), 30, TRUE),
-  `Sex M/F` = sample(c("H", "M"), 30, TRUE)
-)
-
 ```
 
 # Apresentações
@@ -88,8 +80,8 @@ t.test(extra ~ group, data = sleep)
 2. Gráficos
 
 ```{r, fig.align="center", fig.height=4, fig.width=9, warning = FALSE}
-ggplot(simbioticos, aes(Age, vitDin, col = GRUPO)) +
-  geom_point(size = 2) + geom_smooth(method = "lm", se = FALSE) + theme_classic()
+ggplot(iris, aes(Petal.Width, Petal.Length, col = Species)) +
+  geom_point() + geom_smooth(method = "lm", se = FALSE) + theme_classic()
 ```
 
 ---
