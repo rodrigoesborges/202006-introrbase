@@ -12,13 +12,25 @@ output:
 
 ```{r, include=FALSE}
 library(tidyverse)
-simbioticos <- tibble(
-  Age = round(rnorm(30, 40, 5)), 
-  vitDin = rnorm(30, 2, 0.3), 
-  GRUPO = sample(c("Cão", "Gato"), 30, TRUE),
-  `Sex M/F` = sample(c("H", "M"), 30, TRUE)
-)
-writexl::write_xlsx(simbioticos, "dados/simbioticos.xlsx")
+imdb <- read_rds("dados/imdb.rds")
+
+# csv
+readr::write_csv(imdb, "dados/imdb.csv")
+
+# tsv
+readr::write_tsv(imdb, "dados/imdb.tsv")
+
+# Excel
+writexl::write_xlsx(imdb, "dados/imdb.xlsx")
+
+# SAS
+haven::write_sas(imdb, "dados/imdb.sas7bdat")
+
+# SPSS
+haven::write_sav(imdb, "dados/imdb.sav")
+
+# Stata
+haven::write_dta(imdb, "dados/imdb.dta")
 ```
 
 # Percurso do curso
@@ -53,13 +65,17 @@ Os pacotes são a forma na qual o <a>R</a> é extendido. Para instalar um pacote
 usamos a função <a>install.packages()</a> informando entre aspas o nome do 
 pacote que desejamos instalar.
 
+Instalar um pacote é como comprar um livro. Ele vai para sua estante.
+
 ```{r, eval = FALSE}
 # O "tidyverse" inclui alguns pacotes muito usados no R
 # como "ggplot2", "dplyr", "tidyr" e "readr"
 install.packages("tidyverse")
 ```
 
-<br>
+---
+
+# Pacotes
 
 Para usar as funcionalidades de um pacote devemos pedir ao <a>R</a> que carregue 
 o pacote com a função <a>library()</a>. Isso geralmente é feito no início do 
@@ -68,6 +84,8 @@ script.
 ```{r, eval = FALSE}
 library(tidyverse)
 ```
+
+Carregar um pacote é como tirar o livro da estante e acessar seu conhecimento.
 
 ---
 background-image: url(www/kongfu.jpg)
@@ -136,16 +154,16 @@ getwd()
 
 ```{r, eval = FALSE}
 # Separado por virgula (,)
-virgula <- read_csv("nome_do_arquivo.csv", skip = 4)
+virgula <- read_csv("dados/imdb.csv", skip = 4)
 
 # Separado por ponto e virgula (;)
-ponto_e_virgula <- read_csv2("nome_do_arquivo.csv", skip = 4)
+ponto_e_virgula <- read_csv2("dados/imdb.csv", skip = 4)
 
 # Separado por "tab" (\t)
-tab <- read_tsv("tabela.tsv", locale = locale(decimal_mark = ","))
+tab <- read_tsv("dados/imdb.tsv", locale = locale(decimal_mark = ","))
 
 # Separado por qualquer outra coisa que especificar
-outra_coisa <- read_delim("dados.txt", delim = "|", n_max = 100)
+outra_coisa <- read_delim("dados/imdb.txt", delim = "|", n_max = 100)
 ```
 
 ---
@@ -155,16 +173,16 @@ outra_coisa <- read_delim("dados.txt", delim = "|", n_max = 100)
 
 ```{r, eval = FALSE}
 # Separado por virgula
-write_csv(tabela, "nome_do_arquivo.csv")
+write_csv(tabela, "dados/imdb.csv")
 
 # Separado por ponto e virgula
-write_csv2(tabela, "nome_do_arquivo.csv")
+write_csv2(tabela, "dados/imdb.csv")
 
 # Separado por "tab"
-write_tsv(mtcars, "mtcars.tsv", na = 99999)
+write_tsv(mtcars, "dados/imdb.tsv", na = 99999)
 
 # Separado por qualquer outra coisa que especificar
-write_delim(iris, "iris.txt", "|")
+write_delim(iris, "dados/imdb.txt", "|")
 ```
 
 ---
@@ -175,13 +193,13 @@ write_delim(iris, "iris.txt", "|")
 
 ```{r, eval = FALSE}
 library(readxl)
-read_excel("planilha.xlsx", sheet = 2)
+read_excel("dados/imdb.xlsx", sheet = 2)
 
 # excel 2007 ou supeior
-read_xlsx("recente.xlsx", sheet = "planilha1", na = 9999)
+read_xlsx("dados/imdb.xlsx", sheet = "planilha1", na = 9999)
 
 # excel 2003 ou inferior
-read_xls("antiga.xls", col_names = c("nome", "idade"), 
+read_xls("dados/imdb.xls", col_names = c("nome", "idade"), 
          col_types = c("text", "numeric"))
 ```
 
@@ -189,7 +207,7 @@ read_xls("antiga.xls", col_names = c("nome", "idade"),
 
 ```{r, eval = FALSE}
 library(writexl)
-write_xlsx(tabela, "nome_do_arquivo.xlsx")
+write_xlsx(tabela, "dados/imdb.xlsx")
 ```
 
 ---
@@ -200,16 +218,16 @@ write_xlsx(tabela, "nome_do_arquivo.xlsx")
 library(haven)
 
 # SAS
-read_sas("banco_do_sas.sas7bdat")
-write_sas(iris, "iris.sas7bdat")
+read_sas("dados/imdb.sas7bdat")
+write_sas(iris, "dados/imdb.sas7bdat")
 
 # SPSS
-read_sav("arquivo_do_spss.sav")
-write_sav(mtcars, "mtcars.sav")
+read_sav("dados/imdb.sav")
+write_sav(mtcars, "dados/imdb.sav")
 
 # Stata
-read_dta("banco_stata.dta")
-write_dta(tabela, "tabela.dta")
+read_dta("dados/imdb.dta")
+write_dta(tabela, "dados/imdb.dta")
 ```
 
 ---
@@ -219,15 +237,15 @@ write_dta(tabela, "tabela.dta")
 ## Exportar
 
 ```{r, eval = FALSE}
-write_rds(mtcars, "mtcars.rds")
-saveRDS(iris, "iris.rds") # R base
+write_rds(imdb, "dados/imdb.rds")
+saveRDS(imdb, "dados/imdb.rds") # R base
 ```
 
 ## Importar
 
 ```{r, eval = FALSE}
-iris_rds <- read_rds("iris.rds")
-mtcars_rds <- readRDS("mtcars.rds") # R base
+imdb <- read_rds("dados/imdb.rds")
+imdb <- readRDS("dados/imdb.rds") # R base
 ```
 
 ---
@@ -283,14 +301,3 @@ tabela
 tabela_completa <- collect(tabela)
 tabela_completa
 ```
-
-<!-- --- -->
-
-<!-- # Exportação: <a>excel</a> -->
-
-<!-- Para importar [os dados](dados/simbioticos.xlsx) que usaremos hoje: -->
-
-<!-- ```{r} -->
-<!-- simbioticos <- readxl::read_xlsx("dados/simbioticos.xlsx", na = "99999") -->
-<!-- str(simbioticos, max.level = 0) -->
-<!-- ``` -->
