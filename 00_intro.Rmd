@@ -1,5 +1,4 @@
 ---
-title: "Introdução ao R<br>Aula 1"
 output: 
   xaringan::moon_reader:
     lib_dir: libs
@@ -9,6 +8,15 @@ output:
       highlightLines: true
       countIncrementalSlides: false
 ---
+background-image: url(www/slide1.png)
+background-size: cover
+
+<link rel="stylesheet" type="text/css" href="enap.css">
+
+
+---
+
+
 
 ```{r setup, include=FALSE}
 options(htmltools.dir.version = FALSE, max.print = 30, digits = 4)
