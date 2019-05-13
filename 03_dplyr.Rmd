@@ -64,16 +64,7 @@ class: center
 
 ```{r, include = FALSE}
 library(tidyverse)
-simbioticos <- tibble::tibble(
-  `Subject ID` = 1:30,
-  Age = round(rnorm(30, 40, 5)), 
-  vitDin = rnorm(30, 2, 0.3), 
-  GRUPO = sample(c("Cão", "Gato"), 30, TRUE),
-  `Sex M/F` = sample(c("H", "M"), 30, TRUE),
-  IMC_inicial= round(rnorm(30, 40, 5)), 
-  IMC_av1 = rnorm(30, 2, 0.3), 
-  IMC_av2 = round(rnorm(30, 40, 5))
-)
+imdb <- read_rds("dados/imdb.rds")
 ```
 
 
@@ -92,6 +83,8 @@ Vejamos a mesma operação com o <a>pipe</a>
 
 ```{r}
 # Ceci n'est pas une "operador"
+library(magrittr)
+
 valores %>% 
   diff() %>% 
   abs() %>% 
@@ -157,8 +150,8 @@ data.frame %>%
 Formas mais comuns de usar o <a>select</a>
 
 ```{r}
-simbioticos %>% 
-  select(`Subject ID`, GRUPO , Age, vitDin, `Sex M/F`)
+imdb %>% 
+  select(titulo, ano, diretor, duracao)
 ```
 
 ---
@@ -168,8 +161,8 @@ simbioticos %>%
 Formas mais comuns de usar o <a>select</a>
 
 ```{r}
-simbioticos %>% 
-  select(-IMC_inicial, -IMC_av1, -IMC_av2)
+imdb %>% 
+  select(-likes_facebook, -ator_1, -ator_2, -ator_3)
 ```
 
 ---
@@ -179,8 +172,8 @@ simbioticos %>%
 Formas mais comuns de usar o <a>select</a>
 
 ```{r}
-simbioticos %>% 
-  select(`Subject ID`:`Sex M/F`)
+imdb %>% 
+  select(titulo:duracao)
 ```
 
 ---
@@ -190,8 +183,8 @@ simbioticos %>%
 Formas mais comuns de usar o <a>select</a>
 
 ```{r}
-simbioticos %>% 
-  select(- (`Subject ID`:`Sex M/F`))
+imdb %>% 
+  select(- (likes_facebook:ator_3))
 ```
 
 ---
@@ -201,7 +194,7 @@ simbioticos %>%
 Formas menos comuns de usar o <a>select</a>
 
 ```{r}
-simbioticos %>% 
+imdb %>% 
   select(1, 2, 3)
 ```
 
@@ -212,8 +205,8 @@ simbioticos %>%
 Formas menos comuns de usar o <a>select</a>
 
 ```{r}
-simbioticos %>% 
-  select(contains("in"))
+imdb %>% 
+  select(contains("ator"))
 ```
 
 ---
@@ -223,8 +216,8 @@ simbioticos %>%
 Formas menos comuns de usar o <a>select</a>
 
 ```{r}
-simbioticos %>% 
-  select(starts_with("IMC") )
+imdb %>% 
+  select(starts_with("d") )
 ```
 
 ---
@@ -234,8 +227,8 @@ simbioticos %>%
 Formas menos comuns de usar o <a>select</a>
 
 ```{r}
-simbioticos %>% 
-  select(ends_with("O"))
+imdb %>% 
+  select(ends_with("o"))
 ```
 
 ---
@@ -268,8 +261,8 @@ que satisfaçam todas as condições serão mantidas.
 # filter
 
 ```{r}
-simbioticos %>% 
-  filter(`Sex M/F` == "H")
+imdb %>% 
+  filter(diretor ==  "James Cameron")
 ```
 
 ---
@@ -277,8 +270,8 @@ simbioticos %>%
 # filter
 
 ```{r}
-simbioticos %>% 
-  filter(Age >= 50)
+imdb %>% 
+  filter(ano >= 2015)
 ```
 
 ---
@@ -286,8 +279,8 @@ simbioticos %>%
 # filter
 
 ```{r}
-simbioticos %>% 
-  filter(`Sex M/F` != "H")
+imdb %>% 
+  filter(cor != "Color")
 ```
 
 ---
@@ -295,8 +288,8 @@ simbioticos %>%
 # filter
 
 ```{r}
-simbioticos %>% 
-  filter(GRUPO %in% c("Gato", "Cão"))
+imdb %>% 
+  filter(diretor %in% c("Tim Burton", "Spike Lee"))
 ```
 
 ---
@@ -330,8 +323,8 @@ data.frame %>%
 Use <a>arrange()</a> para reordenar as observações (linhas)
 
 ```{r}
-simbioticos %>% 
-  arrange(Age)
+imdb %>% 
+  arrange(nota_imdb)
 ```
 
 ---
@@ -341,8 +334,8 @@ simbioticos %>%
 Use <a>arrange()</a> para reordenar as observações (linhas)
 
 ```{r}
-simbioticos %>% 
-  arrange(Age, desc(vitDin))
+imdb %>% 
+  arrange(ano, desc(nota_imdb))
 ```
 
 ---
@@ -375,8 +368,8 @@ data.frame %>%
 Use <a>mutate()</a> para criar novas variáveis baseadas nas variáveis existentes
 
 ```{r}
-simbioticos %>% 
-  mutate(Age_final = Age + 5)
+imdb %>% 
+  mutate(orcamento = orcamento / 1000000) # em milhoes
 ```
 
 ---
@@ -414,9 +407,9 @@ Use <a>group_by()</a> para agrupar os dados e realizar operações para cada gru
 e as ações passam a ocorrer separadamente para cada grupo
 
 ```{r}
-simbioticos %>% 
-  group_by(GRUPO) %>% 
-  filter(vitDin == max(vitDin, na.rm = TRUE))
+imdb %>% 
+  group_by(diretor) %>% 
+  filter(nota_imdb == max(nota_imdb, na.rm = TRUE))
 ```
 
 ---
@@ -450,8 +443,8 @@ Use <a>summarise()</a> para criar resumos dos dados. As funções passadas devem
 retornar um único valor
 
 ```{r}
-simbioticos %>% 
-  summarise(mediaDin = mean(vitDin, na.rm = TRUE))
+imdb %>% 
+  summarise(media = mean(nota_imdb, na.rm = TRUE))
 ```
 
 ---
@@ -462,9 +455,10 @@ Use <a>summarise()</a> para criar resumos dos dados. As funções passadas devem
 retornar um único valor
 
 ```{r}
-simbioticos %>% 
-  group_by(GRUPO) %>% 
-  summarise(mediaDin = mean(vitDin, na.rm = TRUE))
+imdb %>% 
+  group_by(diretor) %>% 
+  summarise(media = mean(nota_imdb, na.rm = TRUE)) %>% 
+  arrange(desc(media))
 ```
 
 ---
@@ -567,18 +561,21 @@ gather(data.frame,
 # <a>Juntar</a>
 
 ```{r}
-simb2 <- simbioticos %>% 
-  select(`Subject ID`, IMC_inicial, IMC_av1, IMC_av2)
-simb2
+atores <- imdb %>% 
+  mutate(id = seq_along(titulo)) %>% 
+  select(id, titulo, ator_1:ator_3)
+  
+atores
 ```
 
 ---
 # <a>Juntar</a>
 
 ```{r}
-simb_tidy <- gather(simb2, key = periodo, 
-                    value = IMC, -`Subject ID`)
-simb_tidy
+atores_tidy <- gather(atores, key = papel, value = ator,
+                      -id, -titulo) %>% 
+  filter(!is.na(ator))
+atores_tidy
 ```
 
 ---
@@ -586,19 +583,19 @@ simb_tidy
 # <a>Juntar</a>
 
 ```{r, eval = FALSE}
-simb_tidy <- gather(simb2, key = periodo, 
-                    value = IMC, -`Subject ID`)
-simb_tidy
+atores_tidy <- gather(atores, key = papel, value = ator,
+                      -id, -titulo) %>% 
+  filter(!is.na(ator))
+atores_tidy
 ```
 
 ### Como ler
 
-<a>"Quero juntar os dados de **simb2** em **periodo** e **IMC**. Vou juntar
-todas as colunas, exceto 'Subject ID' "</a>
+<a>"Quero juntar todas as colunas de **atores**, exceto 'id' e 'titulo', em **papel** e **ator**."</a>
 
 ```{r, eval = FALSE}
 # Não tenha vergonha de pedir ajuda ao R
-?gather 
+?gather
 ```
 
 ---
@@ -621,7 +618,7 @@ spread(data.frame,
 # <a>Espalhar</a>
 
 ```{r}
-spread(simb_tidy, periodo, IMC)
+spread(atores_tidy, papel, ator)
 ```
 
 ---
@@ -629,12 +626,12 @@ spread(simb_tidy, periodo, IMC)
 # <a>Espalhar</a>
 
 ```{r, eval=FALSE}
-spread(simb_tidy, periodo, IMC)
+spread(atores_tidy, papel, ator)
 ```
 
 ### Como ler
 
-<a>"Quero espalhar o **IMC** contido **simb_tidy** de acordo com os **períodos**."</a>
+<a>"Em **atores_tidy**, quero espalhar para cada tipo de **papel** os valores de **ator**."</a>
 
 ```{r, eval = FALSE}
 # Não tenha vergonha de pedir ajuda ao R
