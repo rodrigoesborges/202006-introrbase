@@ -11,10 +11,8 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-library(ggplot2)
-library(dplyr)
+library(tidyverse)
 library(knitr)
-library(tidyr)
 options(scipen = 999)
 knitr::opts_chunk$set(
   warning = FALSE, message = FALSE, fig.align = "center", fig.height = 5
@@ -28,7 +26,7 @@ anscombe_tidy <- anscombe %>%
   spread(variavel, value) %>% 
   select(-row)
 
-dados <- readRDS('dados/pam2.RDS')
+imdb <- readRDS('dados/imdb.rds')
 ```
 
 # Percurso do curso
@@ -62,12 +60,55 @@ dados <- readRDS('dados/pam2.RDS')
 ## Visualização de dados 
 
 ```{r, echo = FALSE, warning = FALSE}
-ggplot(dados, aes(cultura, area_variacao)) + 
-  geom_violin(aes(fill = cultura), scale = "width") +
-  geom_jitter() +
-  theme_minimal() + 
-  labs(title = "", x = "Variação da área planatada  (1994-2016)", 
-       y = "Variação da Produtividade  (1994-2016)", fill = "")
+# imdb %>% 
+#   filter_all(all_vars(!is.na(.))) %>%
+#   filter(classificacao != "Outros") %>% 
+#   ggplot(aes(classificacao, nota_imdb, fill = receita > orcamento)) +
+#   # geom_violin(alpha = 0.7, draw_quantiles = 0.5) +
+#   # geom_jitter(alpha = 0.7, size = 0, position = position_jitter(0.1)) +
+#   theme_minimal() + 
+#   labs(title = "", x = "", y = "", fill = "Lucro")
+# 
+# imdb %>% 
+#   filter(ano > 2013 | ano < 1971) %>%
+#   ggplot(aes(log10(orcamento), nota_imdb, col = ano > 1970)) + 
+#   geom_point(alpha = 0.5) +
+#   geom_smooth(aes(col = ano > 1970), method = "lm", se = FALSE) +
+#   theme_minimal() + 
+#   labs(title = "", x = "Orçamento", y = "Nota", fill = "Lucro")
+# 
+# imdb %>% 
+#   filter(ano > 2011, classificacao %in% c("Livre", "A partir de 18 anos")) %>%
+#   ggplot(aes(duracao, nota_imdb, col = classificacao)) +
+#   geom_point(alpha = 0.3) +
+#   geom_vline(aes(xintercept = 140)) +
+#   facet_wrap(~classificacao) +
+#   theme_classic() + 
+#   labs(title = "", x = "Duração (minutos)", y = "Nota", 
+#        fill = "Classificação") +
+#   guides(colour = guide_legend(override.aes = list(alpha = 1)))
+# 
+# main_dir <- c("Steven Spielberg", "Clint Eastwood", "Martin Scorsese",
+# "Woody Allen", "Spike Lee", "Renny Harlin", "Ridley Scott", "Steven Soderbergh",
+# "Tim Burton", "Barry Levinson", "Robert Zemeckis", "Kevin Smith",
+# "Michael Bay", "Robert Rodriguez", "Ron Howard", "Francis Ford Coppola"
+# )
+# 
+# imdb %>%
+#   filter(diretor %in% main_dir) %>%
+#   ggplot(aes(duracao, nota_imdb)) +
+#   geom_point() +
+#   geom_smooth(method = "lm") +
+#   facet_wrap(~diretor)
+
+imdb %>% 
+  filter(diretor %in% c("Ron Howard", "Woody Allen")) %>% 
+  ggplot(aes(duracao, nota_imdb, col = diretor)) +
+  geom_point(alpha = 0.7, size = 2) +
+  geom_smooth(method = "lm", se = FALSE) +
+  theme_classic() + 
+  labs(title = "", x = "Duração (minutos)", 
+       y = "Nota no IMDb", col = "Diretor")
 ```
 
 ---
@@ -169,10 +210,11 @@ Lembre-se que tabelas do tipo _long_ são mais amigáveis ao ggplot2.
 
 ```{r carga}
 # importa dados
-dados <- readRDS('dados/pam2.RDS')
-feijao <- filter(dados, cultura == "Feijão")
-# conhecer sua estrutura e campos
-str(dados)
+imdb <- readRDS('dados/imdb.rds')
+filmes_recentes <- imdb %>% 
+  filter(ano >= 2015) %>% 
+  mutate(orcamento = orcamento / 1000000,
+         receita = receita / 1000000) # em milhões
 ```
 
 ---
@@ -202,7 +244,7 @@ shape | Forma
 ## Representando dados
 
 ```{r}
-ggplot(feijao, aes(x = area_variacao, y = quantidade_variacao)) +
+ggplot(filmes_recentes, aes(x = duracao, y = orcamento)) +
   geom_point()
 ```
 
@@ -210,15 +252,23 @@ ggplot(feijao, aes(x = area_variacao, y = quantidade_variacao)) +
 
 ## Representando dados
 
-Imagine que você fosse desenhar um gráfico. Como você decidiria até onde deve ir a barra ou onde ficariam os pontos? O computador também precisa de critérios para decidir como representar os dados, como o Valor Bruto da Produção agropecuária (VBP) de uma região, em um gráfico.
+Imagine que você fosse desenhar um gráfico. Como você decidiria até onde deve ir
+a barra ou onde ficariam os pontos? O computador também precisa de critérios para
+decidir como representar os dados, como o orçamento de um filme, em um gráfico.
 
-Assim, o VBP pode ser representado no eixo vertical ou os faixas de valores podem aparecer como cores ou formas (até R$ 50 milhões: triângulos; entre 50 e 100: quadrados; e maiores que 100: circulos).
+Assim, o orçamento pode ser representado no eixo vertical ou os faixas de valores podem aparecer como cores ou formas (até USD 50 milhões: triângulos; entre 50 e 100: quadrados; e maiores que 100: circulos).
 
 ---
 
 ## Mapeando variáveis em estéticas
 
-É diferente **mapear** uma estética e **atribuir um valor** a um aspecto estético. Mapear uma variável em uma estética é dizer que a cor **vermelha** representa o Centro-Oeste e a cor **azul** o Sudeste. Isto é diferente de definir a cor de pontos ou barras como **verde**. Para poder fazer isso, precisamos carregar o pacote `ggplot2`
+É diferente **mapear** uma estética e **atribuir um valor** a um aspecto estético.
+Mapear uma variável em uma estética é dizer que a cor **vermelha** representa 
+filmes para maiores de 18 anos e a cor **azul** filmes livres. 
+Isto é diferente de definir a cor de pontos ou barras como **verde**, 
+sem com isso adicionar qualquer informação ao gráfico. 
+
+Para poder fazer isso, precisamos carregar o pacote `ggplot2`
 
 `libarry(ggplot2)`
 
@@ -227,28 +277,36 @@ Assim, o VBP pode ser representado no eixo vertical ou os faixas de valores pode
 ## Atributos Estéticos - Atribuir cor à elemento estético
 
 ```{r}
-ggplot(feijao, aes(x = area_variacao, y = quantidade_variacao)) +
+ggplot(filmes_recentes, aes(x = duracao, y = orcamento)) +
   geom_point(col = "indianred")
 ```
 
 ---
 
-## Aspectos Estéticos - Mapear a cultura na cor
+## Aspectos Estéticos - Mapear a classificaçãp na cor
 
 ```{r}
-ggplot(dados , aes(x = area_variacao,
-                    y = quantidade_variacao, col = cultura)) +
+ggplot(filmes_recentes, aes(duracao, orcamento, col = classificacao)) +
   geom_point()
 ```
 
 ---
 
-## Aspectos Estéticos - Mapear VBP no tamanho
+## Aspectos Estéticos - Mapear a classificaçãp na cor
 
 ```{r}
-ggplot(feijao , aes(x = area_variacao, y = quantidade_variacao)) +
-  geom_point(aes(size = produtividade_variacao),
-             col = "darkgreen", alpha = 0.5)
+ggplot(filmes_recentes, aes(duracao, orcamento, col = classificacao)) +
+  geom_point() +
+  facet_wrap(~classificacao)
+```
+
+---
+
+## Aspectos Estéticos - Mapear receita no tamanho
+
+```{r}
+ggplot(filmes_recentes , aes(duracao, orcamento)) +
+  geom_point(aes(size = receita), col = "darkgreen", alpha = 0.5)
 ```
 
 ---
@@ -280,8 +338,7 @@ Fonte: www.datacamp.com
 ## Aspectos Estéticos - Variáveis contínuas
 
 ```{r}
-ggplot(feijao, aes(x = area_variacao, y = quantidade_variacao,
-                   col = produtividade_variacao)) +
+ggplot(filmes_recentes, aes(duracao, orcamento, col = nota_imdb)) +
   geom_point(size = 2)
 ```
 
@@ -315,9 +372,8 @@ Fonte: www.datacamp.com
 ## Aspectos Estéticos - Variáveis categóricas
 
 ```{r}
-ggplot(dados, aes(x = area_variacao, y = quantidade_variacao,
-                   shape = cultura)) +
-  geom_point(size = 2)
+ggplot(filmes_recentes, aes(duracao, orcamento, shape = classificacao)) +
+  geom_point()
 ```
 
 ---
@@ -325,8 +381,7 @@ ggplot(dados, aes(x = area_variacao, y = quantidade_variacao,
 ## Aspectos Estéticos - Variáveis categóricas
 
 ```{r}
-ggplot(dados, aes(x = area_variacao, y = quantidade_variacao,
-                  col = cultura)) +
+ggplot(filmes_recentes, aes(duracao, orcamento, col = classificacao)) +
   geom_point()
 ```
 
@@ -351,7 +406,7 @@ Vamos ver como usar estas geometrias no `ggplot2`.
 ## geom_point()
 
 ```{r geom_point}
-ggplot(feijao, aes(x = area_variacao, y = quantidade_variacao)) +
+ggplot(filmes_recentes, aes(duracao, receita)) +
   geom_point()
 ```
 
@@ -360,9 +415,9 @@ ggplot(feijao, aes(x = area_variacao, y = quantidade_variacao)) +
 ## geom_smooth()
 
 ```{r}
-ggplot(dados, aes(x = area_variacao, y = quantidade_variacao)) +
+ggplot(filmes_recentes, aes(duracao, orcamento)) +
   geom_point() + 
-  geom_smooth(aes(col = cultura), se = FALSE, method = "lm")
+  geom_smooth(se = FALSE, method = "lm")
 ```
 
 ---
@@ -370,8 +425,9 @@ ggplot(dados, aes(x = area_variacao, y = quantidade_variacao)) +
 ## geom_col() ou geom_bar()
 
 ```{r geom_bar}
-medias <- dados %>% group_by(cultura) %>%
-  summarise(variacao_area = mean(area_variacao, na.rm = TRUE))
+quantidades <- imdb %>% 
+  group_by(classificacao) %>%
+  summarise(media = mean(orcamento, na.rm = TRUE))
 ```
 
 ---
@@ -379,7 +435,16 @@ medias <- dados %>% group_by(cultura) %>%
 ## geom_col() ou geom_bar()
 
 ```{r}
-ggplot(medias, aes(x = cultura, y = variacao_area)) +
+ggplot(quantidades, aes(classificacao, media)) +
+  geom_col() # ou geom_bar(stat = "identity")
+```
+
+---
+
+## geom_col() ou geom_bar()
+
+```{r}
+ggplot(quantidades, aes(fct_reorder(classificacao, media), media)) +
   geom_col() # ou geom_bar(stat = "identity")
 ```
 
@@ -387,12 +452,22 @@ ggplot(medias, aes(x = cultura, y = variacao_area)) +
 
 ## geom_line() 
 
-```{r geom_line}
-# ggplot(PR, aes(Ano, area_plantada)) +
-#   geom_line(aes(col = cultura, group = cultura),
-#             size = 2)
+```{r}
+scorsese <- imdb %>% 
+  filter(diretor == "Martin Scorsese") 
 
-# Achar exemplo bom com conjunto de dados atual
+media_scorsese <- scorsese %>% 
+  group_by(ano) %>% 
+  summarise(nota = mean(nota_imdb, na.rm = TRUE))
+```
+
+---
+
+## geom_line() 
+
+```{r geom_line}
+ggplot(media_scorsese, aes(ano, nota)) +
+  geom_line()
 ```
 
 ---
@@ -400,7 +475,7 @@ ggplot(medias, aes(x = cultura, y = variacao_area)) +
 ## geom_histogram()
 
 ```{r geom_histogram, warning=FALSE}
-ggplot(dados, aes(x = produtividade_variacao)) +
+ggplot(imdb, aes(nota_imdb)) +
   geom_histogram(fill = "indianred") # definir intervalos
 ```
 
@@ -409,7 +484,9 @@ ggplot(dados, aes(x = produtividade_variacao)) +
 ## Ou então geom_density()
 
 ```{r geom_density}
-ggplot(dados, aes(x = produtividade_variacao, fill = cultura)) +
+imdb %>% 
+  filter(!is.na(cor)) %>% 
+  ggplot(aes(nota_imdb, fill = cor)) +
   geom_density(alpha= 0.7)
 ```
 
@@ -418,8 +495,19 @@ ggplot(dados, aes(x = produtividade_variacao, fill = cultura)) +
 ## geom_boxplot()
 
 ```{r geom_boxplot}
-ggplot(dados, aes(x = cultura, y = produtividade_variacao)) +
-  geom_boxplot(aes(fill = cultura))
+ggplot(imdb, aes(x = cor, y = nota_imdb)) +
+  geom_boxplot()
+```
+
+---
+
+## geom_boxplot()
+
+```{r}
+ggplot(imdb, aes(x = cor, y = nota_imdb)) +
+  geom_boxplot() +
+  labs(title = "Um diagrama de caixa simples", x = "Filme colorido?",
+       y = "Nota no IMDb")
 ```
 
 ---
@@ -427,36 +515,40 @@ ggplot(dados, aes(x = cultura, y = produtividade_variacao)) +
 ## ...ou geom_violin()
 
 ```{r}
-ggplot(dados, aes(x = cultura, y = produtividade_variacao,
-               fill = cultura)) +
+ggplot(imdb, aes(classificacao, nota_imdb, fill = classificacao)) +
   geom_violin(draw_quantiles = 0.5)
+```
+
+---
+
+## ...ou geom_violin()
+
+```{r}
+ggplot(imdb, aes(classificacao, nota_imdb)) +
+  geom_violin(draw_quantiles = 0.5) +
+  theme(axis.text.x = element_text(angle = 30))
 ```
 
 ---
 
 ## Exercícios
 
-1. Desenhe um gráfico de violino da produtividade com o conjunto de dados a sua escolha. Adicione uma camada representando as observações com pontos. Dê uma olhada em `?geom_jitter`, pode ser útil.
+1. a
 
-2. Há grande diferença entre a relação área colhida / área plantada entre as regiões? E Entre as culturas? Responda construindo gráficos. Utilize o conjunto `dados` para esta questão.
+2. b
 
 ---
 
 ## Exercícios
 
-3. Desenhe um gráfico de dispersão com a produtividade em um eixo e a área plantada em outro. Utilize os dados de produção do feijão. Adicione uma reta de regressão para todo o conjunto de dados. Adicione nova camada com uma regressão para região (utilize a cor para diferenciar os grupos). A regressão geral representa bem a relação entre área e produtividade para os subconjuntos?
-
-Extra: Parta do mesmo gráfico de dispersão anterior (produtividade x área). Tente adiconar mais informações no mesmo gráfico mapeando outras variáveis. Busque identificar em que momento as informações idicionais poluem o gráfico.
+3. a
 
 ---
 
 ## Solução 1
 
 ```{r}
-ggplot(dados, aes(x = cultura, y = produtividade_variacao, 
-                   fill = cultura)) +
-  geom_violin() +
-  geom_jitter()
+
 ```
 
 ---
@@ -464,10 +556,7 @@ ggplot(dados, aes(x = cultura, y = produtividade_variacao,
 ## Soluções 2 - a
 
 ```{r}
-# ggplot(dados) +
-#   geom_density(aes(x = area_colhida / area_plantada,
-#                    fill = regiao)) +
-#   facet_wrap(~regiao)
+
 ```
 
 ---
@@ -475,9 +564,7 @@ ggplot(dados, aes(x = cultura, y = produtividade_variacao,
 ## Soluções 2 - b
 
 ```{r}
-# ggplot(dados, aes(x = cultura,
-#                   y = area_colhida / area_plantada)) +
-#   geom_point(alpha = 0.4, position = "jitter")
+
 ```
 
 ---
@@ -485,13 +572,7 @@ ggplot(dados, aes(x = cultura, y = produtividade_variacao,
 ## Solução 3
 
 ```{r, eval = FALSE}
-# ggplot(feijao, aes(x = area_plantada,
-#                    y = produtividade)) +
-#   geom_point() +
-#   geom_smooth(aes(col = regiao),method = "lm",
-#               se = FALSE, size = 2) +
-#   geom_smooth(group = 1, col = "blue",
-#               method = "lm", se = FALSE)
+
 ```
 
 ---
@@ -499,13 +580,7 @@ ggplot(dados, aes(x = cultura, y = produtividade_variacao,
 ## Solução 3
 
 ```{r, echo  = FALSE}
-# ggplot(feijao, aes(x = area_plantada,
-#                    y = produtividade)) +
-#   geom_point() +
-#   geom_smooth(aes(col = regiao),method = "lm",
-#               se = FALSE, size = 2) +
-#   geom_smooth(group = 1, col = "blue",
-#               method = "lm", se = FALSE)
+
 ```
 
 ---
@@ -513,7 +588,5 @@ ggplot(dados, aes(x = cultura, y = produtividade_variacao,
 ## Extra
 
 ```{r diamonds, echo=FALSE}
-# ggplot(dados, aes(x = produtividade, y = area_plantada, col = regiao)) +
-#   geom_point(aes(size = VBP)) +
-#   facet_wrap(~cultura, nrow = 2, scales = "free")
+
 ```
