@@ -65,7 +65,7 @@ library(tidyverse)
 
 ---
 
-class: inverse, center, middle
+class: center, middle
 
 # Para que aprender <a>R</a>?
 
@@ -93,7 +93,7 @@ ggplot(iris, aes(Petal.Width, Petal.Length, col = Species)) +
 ```
 
 ---
-class: center, inverse, bottom
+class: center, bottom, inverse
 background-image: url(www/decepcao.gif)
 background-size: 100%
 background-position: 50% 75%
@@ -127,7 +127,7 @@ background-position: 50% 75%
 4. Exercícios
 
 ---
-class: inverse, center, middle
+class: center, middle
 
 # <a>RStudio</a>
 
@@ -140,6 +140,9 @@ background-size: 70%
 ---
 
 # <a>RStudio</a>
+
+<br/>
+<br/>
 
 1. Editor -> Roteiro
 
@@ -175,7 +178,7 @@ background-size: 70%
 * R: função <a>help(problema)</a> ou <a>?problema</a>
 
 ---
-class: inverse, center, middle
+class: center, middle
 
 # <a>Introdução ao **R**</a>
 
@@ -310,7 +313,6 @@ paste(ofertante, "oferece curso de R com duração de", horas, "horas")
 ---
 background-image: url(www/programar.gif)
 background-size: 100%
-class: inverse
 
 ---
 
@@ -424,7 +426,6 @@ is.na(nas)
 ---
 background-image: url(www/programar.gif)
 background-size: 100%
-class: inverse
 
 ---
 
@@ -459,7 +460,6 @@ c(1, 2, 3, "texto") # caracter > numérico
 ---
 background-image: url(www/programar.gif)
 background-size: 100%
-class: inverse
 
 ---
 
@@ -495,7 +495,6 @@ quadrado(c(5, 10)) # vetorizado
 ---
 background-image: url(www/programar.gif)
 background-size: 100%
-class: inverse
 
 ---
 
@@ -532,34 +531,4 @@ Apesar disso, eles também tem seu espaço.
 background-image: url(www/programar.gif)
 background-size: 100%
 class: inverse
-
----
-
-# Exercícios
-
-Utilize o vetor <a>exercicio</a> para responder as perguntas abaixo
-
-```{r}
-set.seed(123)
-exercicio <- rnorm(100, 50, 10)
-```
-
-<br>
-
-> 1. Qual a <a>soma</a> do conjunto?
-
-> 2. Qual a <a>média</a> do conjunto?
-
-> 3. Qual o <a>desvio padrão</a> do conjunto de dados?
-
-> 4. Qual é o <a>maior</a> valor? E o <a>menor</a>?
-
-> 5. Quantos valores estão <a>acima de 50</a>?
-
-> 6. Existem valores <a>menores de 30</a>?
-
-> 7. Todos os valores estão <a>abaixo de 80</a>?
-
-
-
 
