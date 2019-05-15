@@ -1,18 +1,24 @@
 h1 {
   background: url(www/enap_slide1.png);
   background-size: 220px 160px;
-  background-position: 0 -10px;
   background-repeat: no-repeat; 
-  padding: 40px 0 75px 220px;
-  margin: -20px 0 -50px -100px;
+  background-attachment: fixed;
+  background-position: top left; 
+  padding: 40px 0 75px 0;
+  margin: -20px -100px -50px -100px;
+  text-align: center;
+}
+
+a {
+  color: darkgreen;
 }
 
 .remark-slide-number {
   background: url(www/enap_slide2.png);
   background-size: 106px 56px;
-  background-position: 10px 30px;
   background-repeat: no-repeat;
-  padding: 0 70px 70px 30px;
-  margin: 0 -50px -15px 0;
+  background-position: bottom left;
+  padding: 30px 20px 60px 30px;
+  margin: 0 -15px -5px 0;
 }
 
