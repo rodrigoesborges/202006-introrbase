@@ -1,5 +1,4 @@
 ---
-title: "Introdução ao R<br>Aula 2"
 output: 
   xaringan::moon_reader:
     lib_dir: libs
@@ -9,31 +8,24 @@ output:
       highlightLines: true
       countIncrementalSlides: false
 ---
+background-image: url(www/slide1.png)
+background-size: cover
 
-```{r, include=FALSE}
+<link rel="stylesheet" type="text/css" href="enap.css">
+
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE, max.print = 30, digits = 4)
+knitr::opts_chunk$set(fig.align = "center", fig.width = 10, fig.height = 6)
 library(tidyverse)
 imdb <- read_rds("dados/imdb.rds")
-
-# csv
-readr::write_csv(imdb, "dados/imdb.csv")
-
-# tsv
-readr::write_tsv(imdb, "dados/imdb.tsv")
-
-# Excel
-writexl::write_xlsx(imdb, "dados/imdb.xlsx")
-
-# SAS
-haven::write_sas(imdb, "dados/imdb.sas7bdat")
-
-# SPSS
-haven::write_sav(imdb, "dados/imdb.sav")
-
-# Stata
-haven::write_dta(imdb, "dados/imdb.dta")
 ```
 
 # Percurso do curso
+
+<br/>
+<br/>
 
 1. [Noções](#13) de **R**
 
@@ -46,6 +38,9 @@ haven::write_dta(imdb, "dados/imdb.dta")
 ---
 
 # Percurso de hoje
+
+<br/>
+<br/>
 
 1. Pacotes
 
@@ -93,7 +88,7 @@ background-size: 100%
 class: center
 
 ---
-class: inverse, center, middle
+class: center, middle
 
 # Como <a>importar</a> os dados
 
@@ -105,15 +100,22 @@ class: center
 # <a>Ciclo</a> de análise de dados
 
 ---
+background-image: url(www/tidyverse.png)
+background-size: cover
+class: center
 
-# O que é importar os dados?
+---
+
+# O que é <a>importar</a> os dados?
 
 1. Existência da informação em arquivo - fora do R - <a>persistente</a>
 
 2. Trazer a informação do arquivo para dentro da memória RAM - dentro do R - 
 <a>volátil</a>
 
-# O que é exportar os dados?
+<br/>
+
+# O que é <a>exportar</a> os dados?
 
 1. Existência da informação na memória RAM - dentro do R  - <a>volátil</a>
 
@@ -127,11 +129,11 @@ class: center
 
 ---
 
-# Importação e exportação: como se referir aos <a>arquivos</a>
+# Como se referir aos <a>arquivos</a>
 
 ```{r, eval = FALSE}
 # Caminho absoluto
-"c:/meu_usuario/pasta_maluca/subpasta/arquivo.txt"
+"c:/meu_usuario/pasta/subpasta/arquivo.txt"
 
 # Caminho relativo
 # Na pasta que estou tem um arquivo com esse nome
@@ -212,7 +214,9 @@ write_xlsx(tabela, "dados/imdb.xlsx")
 
 ---
 
-# Importação e exportação: <a>outros softwares</a> estatísticos.
+# Importação e exportação: <a>outros softwares</a>
+
+<br/> 
 
 ```{r, eval = FALSE}
 library(haven)
@@ -234,18 +238,18 @@ write_dta(tabela, "dados/imdb.dta")
 
 # Importação e exportação: <a>binários do R</a>.
 
-## Exportar
-
-```{r, eval = FALSE}
-write_rds(imdb, "dados/imdb.rds")
-saveRDS(imdb, "dados/imdb.rds") # R base
-```
-
 ## Importar
 
 ```{r, eval = FALSE}
 imdb <- read_rds("dados/imdb.rds")
 imdb <- readRDS("dados/imdb.rds") # R base
+```
+
+## Exportar
+
+```{r, eval = FALSE}
+write_rds(imdb, "dados/imdb.rds")
+saveRDS(imdb, "dados/imdb.rds") # R base
 ```
 
 ---
@@ -301,3 +305,7 @@ tabela
 tabela_completa <- collect(tabela)
 tabela_completa
 ```
+
+---
+background-image: url(www/programar.gif)
+background-size: 100%
