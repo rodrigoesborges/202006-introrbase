@@ -22,3 +22,11 @@ a {
   margin: 0 -15px 0 0;
 }
 
+.pull-left > p > img, .pull-right > p > img {
+  height: 250px;
+  margin-left: -30px;
+}
+
+.pull-left > p > img {
+  margin-left: 310px;
+}

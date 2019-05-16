@@ -29,11 +29,12 @@ imdb <- read_rds("dados/imdb.rds")
 
 1. [Noções](#13) de **R**
 
-2. Como [visualizar](#75) os dados?
+2. Como [importar](#30) os dados?
 
-3. Como [importar](#30) os dados?
+3. Como [transformar](#35) os dados?
 
-4. Como [transformar](#35) os dados?
+4. Como [visualizar](#75) os dados?
+
 
 ---
 

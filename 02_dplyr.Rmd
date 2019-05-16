@@ -1,5 +1,4 @@
 ---
-title: "Introdução ao R<br>Aula 3"
 output: 
   xaringan::moon_reader:
     lib_dir: libs
@@ -9,41 +8,50 @@ output:
       highlightLines: true
       countIncrementalSlides: false
 ---
+background-image: url(www/slide1.png)
+background-size: cover
 
-<style>
-.pull-left > p > img, .pull-right > p > img {
-  height: 250px
-}
-</style>
+<link rel="stylesheet" type="text/css" href="enap.css">
+
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE, max.print = 30, digits = 4)
+knitr::opts_chunk$set(fig.align = "center", fig.width = 10, fig.height = 6)
+library(tidyverse)
+```
 
 # Percurso do curso
 
+<br/>
+<br/>
+
 1. [Noções](#13) de **R**
 
-2. Como [visualizar](#75) os dados?
+2. Como [importar](#30) os dados?
 
-3. Como [importar](#30) os dados?
+3. Como [transformar](#35) os dados?
 
-4. Como [transformar](#35) os dados?
+4. Como [visualizar](#75) os dados?
+
 
 ---
-
 # Percurso de hoje
 
-1. Motivação
+<br/>
+<br/>
 
-2. Objetos
+1. Manipulação de linhas
 
-3. Vetores
+2. Manipulação de colunas
 
-4. Comparações lógicas e numéricas
+3. Criar sumários
 
-5. Funções
+4. Unir tabelas
 
-6. Controle de fluxo
+5. Pivotear tabelas
 
 ---
-
 class: inverse, center, middle
 
 # Como <a>transformar</a> os dados
@@ -113,17 +121,127 @@ Uma filosofia comum:
 
 ---
 
-# dplyr: principais verbos
+# dplyr: principais <a>verbos</a>
 
-1. Pegar as observações por seus valores (filter()).
+<br/>
+<br/>
 
-2. Reordenar as linhas (arrange()).
+1. Pegar as observações por seus valores (<a>filter()</a>).
 
-3. Pegar variáveis por seus nomes (select()).
+2. Reordenar as linhas (<a>arrange()</a>).
 
-4. Criar novas criáveis com base em variáveis existentes (mutate()).
+3. Pegar variáveis por seus nomes (<a>select()</a>).
 
-5. Reduzir muitos valores à um sumário (summarise()).
+4. Criar novas criáveis com base em variáveis existentes (<a>mutate()</a>).
+
+5. Reduzir muitos valores à um sumário (<a>summarise()</a>).
+
+---
+
+# filter
+
+Use <a>filter()</a> para definir as condições para que as observações 
+(linhas) sejam mantidas no data.frame.
+
+A condição deve ser uma expressão que deve ser avaliada num vetor lógico.
+
+```{r, eval = FALSE}
+filter(data.frame,  condicao)
+
+# ou com pipe
+data.frame %>% 
+  filter(condicao)
+```
+
+Mais de uma condições podem ser passadas. Neste caso apenas as observações 
+que satisfaçam todas as condições serão mantidas.
+
+---
+
+# filter
+
+```{r}
+imdb %>% 
+  filter(diretor ==  "Walter Salles")
+```
+
+---
+
+# filter
+
+```{r}
+imdb %>% 
+  filter(ano >= 2015)
+```
+
+---
+
+# filter
+
+```{r}
+imdb %>% 
+  filter(cor != "Color")
+```
+
+---
+
+# filter
+
+```{r}
+imdb %>% 
+  filter(diretor %in% c("Tim Burton", "Spike Lee"))
+```
+
+---
+background-image: url(www/programar.gif)
+background-size: 100%
+class: inverse
+
+---
+
+# arrange
+
+Use <a>arrange()</a> para reordenar as observações (linhas) de acordo com os 
+valores de algumas colunas. Por padrão as linhas são apresentadas em ordem 
+crescente, mas esse comportamento pode ser alterado usando a função <a>desc</a>.
+
+```{r, eval = FALSE}
+arrange(data.frame, coluna1)
+
+data.frame %>% 
+  arrange(coluna1)
+
+data.frame %>% 
+  arrange(desc(coluna1))
+```
+
+
+---
+
+# arrange
+
+Use <a>arrange()</a> para reordenar as observações (linhas)
+
+```{r}
+imdb %>% 
+  arrange(nota_imdb)
+```
+
+---
+
+# arrange
+
+Use <a>arrange()</a> para reordenar as observações (linhas)
+
+```{r}
+imdb %>% 
+  arrange(ano, desc(nota_imdb))
+```
+
+---
+background-image: url(www/programar.gif)
+background-size: 100%
+class: inverse
 
 ---
 
@@ -229,113 +347,6 @@ Formas menos comuns de usar o <a>select</a>
 ```{r}
 imdb %>% 
   select(ends_with("o"))
-```
-
----
-background-image: url(www/programar.gif)
-background-size: 100%
-class: inverse
-
----
-
-# filter
-
-Use <a>filter()</a> para definir as condições para que as observações 
-(linhas) sejam mantidas no data.frame.
-
-A condição deve ser uma expressão que deve ser avaliada num vetor lógico.
-
-```{r, eval = FALSE}
-filter(data.frame,  condicao)
-
-# ou com pipe
-data.frame %>% 
-  filter(condicao)
-```
-
-Mais de uma condições podem ser passadas. Neste caso apenas as observações 
-que satisfaçam todas as condições serão mantidas.
-
----
-
-# filter
-
-```{r}
-imdb %>% 
-  filter(diretor ==  "James Cameron")
-```
-
----
-
-# filter
-
-```{r}
-imdb %>% 
-  filter(ano >= 2015)
-```
-
----
-
-# filter
-
-```{r}
-imdb %>% 
-  filter(cor != "Color")
-```
-
----
-
-# filter
-
-```{r}
-imdb %>% 
-  filter(diretor %in% c("Tim Burton", "Spike Lee"))
-```
-
----
-background-image: url(www/programar.gif)
-background-size: 100%
-class: inverse
-
----
-
-# arrange
-
-Use <a>arrange()</a> para reordenar as observações (linhas) de acordo com os 
-valores de algumas colunas. Por padrão as linhas são apresentadas em ordem 
-crescente, mas esse comportamento pode ser alterado usando a função <a>desc</a>.
-
-```{r, eval = FALSE}
-arrange(data.frame, coluna1)
-
-data.frame %>% 
-  arrange(coluna1)
-
-data.frame %>% 
-  arrange(desc(coluna1))
-```
-
-
----
-
-# arrange
-
-Use <a>arrange()</a> para reordenar as observações (linhas)
-
-```{r}
-imdb %>% 
-  arrange(nota_imdb)
-```
-
----
-
-# arrange
-
-Use <a>arrange()</a> para reordenar as observações (linhas)
-
-```{r}
-imdb %>% 
-  arrange(ano, desc(nota_imdb))
 ```
 
 ---
@@ -487,27 +498,6 @@ background-size: 100%
 class: inverse
 
 ---
-
-# Exercícios
-
-<br>
-
-> 1. <a>Quantos</a> pacientes possuiam vitamina D inicial 
-<a>maior do que 50</a>?
-
-> 2. <a>Quantos</a> pacientes tinham idade <a>inferior a 70</a> anos?
-
-> 3. Qual o <a>ID</a> do paciente com <a>maior altura</a>?
-
-> 4. Qual o <a>sexo</a> no pacitente <a>mais baixo</a>?
-
-> 5. Que <a>grupo</a> de pacientes possui a <a>maior idade média</a>?
-
-> 6. Qual o <a>paciente mais velho</a> que teve <a>aumento de vitamina D</a>?
-
-> 7. Qual foi a <a>variação média de altura</a> em cada grupo?
-
----
 class: inverse, center, middle
 
 # Como <a>organizar</a> os dados
@@ -521,7 +511,7 @@ class: center
 
 ---
 
-# <a>Principios</a>
+# <a>Princípios</a>
 
 <br><br>
 
@@ -530,6 +520,22 @@ class: center
 2. Cada <a>observação</a> tem sua própria <a>linha</a>
 
 3. Cada <a>unidade observacional</a> tem sua própria <a>tabela</a>
+
+---
+
+# <a>Princípios</a>
+
+<br><br>
+
+> Famílias felizes são todas iguais, cada família infeliz é infeliz 
+à sua maneira
+
+.pull.right[Leon Tolstoy]
+
+> Dados arrumados são todos iguais, cada dado bagunçado é bagunçado 
+à sua maneira
+
+.pull.right[Hadley Wickham]
 
 ---
 background-image: url(www/original-dfs-tidy.png)
