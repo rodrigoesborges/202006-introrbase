@@ -1,10 +1,10 @@
 h1 {
   background: url(www/enap_slide1.png);
-  background-size: 220px 160px;
+  background-size: 200px 200px;
   background-repeat: no-repeat; 
   background-attachment: fixed;
   background-position: top left; 
-  padding: 40px 0 75px 0;
+  padding: 60px 0 80px 0;
   margin: -20px -100px -50px -100px;
   text-align: center;
 }
@@ -18,7 +18,7 @@ a {
   background-size: 106px 56px;
   background-repeat: no-repeat;
   background-position: bottom left;
-  padding: 30px 20px 60px 30px;
-  margin: 0 -15px -5px 0;
+  padding: 30px 30px 60px 30px;
+  margin: 0 -15px 0 0;
 }
 
