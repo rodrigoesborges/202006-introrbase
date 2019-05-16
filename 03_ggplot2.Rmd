@@ -1,5 +1,4 @@
 ---
-title: "Introdução ao R<br>Aula 4"
 output: 
   xaringan::moon_reader:
     lib_dir: libs
@@ -9,13 +8,20 @@ output:
       highlightLines: true
       countIncrementalSlides: false
 ---
+background-image: url(www/slide1.png)
+background-size: cover
+
+<link rel="stylesheet" type="text/css" href="enap.css">
+
+---
 
 ```{r setup, include=FALSE}
 library(tidyverse)
 library(knitr)
 options(scipen = 999)
 knitr::opts_chunk$set(
-  warning = FALSE, message = FALSE, fig.align = "center", fig.height = 5
+  warning = FALSE, message = FALSE, fig.align = "center", fig.height = 5, 
+  fig.callout = TRUE
 )
 
 anscombe_tidy <- anscombe %>% 
@@ -31,33 +37,34 @@ imdb <- readRDS('dados/imdb.rds')
 
 # Percurso do curso
 
+<br/>
+<br/>
+
 1. [Noções](#13) de **R**
 
-2. Como [visualizar](#75) os dados?
+2. Como [importar](#30) os dados?
 
-3. Como [importar](#30) os dados?
+3. Como [transformar](#35) os dados?
 
-4. Como [transformar](#35) os dados?
+4. Como [visualizar](#75) os dados?
 
 ---
-
 # Percurso de hoje
 
-1. Motivação
+<br/>
+<br/>
 
-2. Objetos
+1. Importância da visualização de dados
 
-3. Vetores
+2. Dados para os gráficos
 
-4. Comparações lógicas e numéricas
+3. Mapear estéticas
 
-5. Funções
-
-6. Controle de fluxo
+4. Geometrias
 
 ---
 
-## Visualização de dados 
+# Visualização de dados 
 
 ```{r, echo = FALSE, warning = FALSE}
 # imdb %>% 
@@ -113,11 +120,7 @@ imdb %>%
 
 ---
 
-# A gramática dos gráficos
-
----
-
-## Quarteto de Anscombe
+# Quarteto de Anscombe
 
 ```{r, echo = FALSE}
 knitr::kable(anscombe[, c(1,5,2,6,3,7,4,8)], "html")
@@ -125,7 +128,7 @@ knitr::kable(anscombe[, c(1,5,2,6,3,7,4,8)], "html")
 
 ---
 
-## Quarteto de Anscombe
+# Quarteto de Anscombe
 
 ```{r,  echo = FALSE}
 ggplot(anscombe_tidy, aes(x,y)) +
@@ -136,37 +139,53 @@ ggplot(anscombe_tidy, aes(x,y)) +
 
 ---
 
-## Tipos de gráficos
+# Tipos de gráficos
 
-O gráfico é um meio de comunicação e deve ser adequado ao seu público. 
-É diferente preparar um **gráfico de apresentação** para apresentar conclusões 
-ou fazer um **gráfico exploratório** para você mesmo. Ambos diferem em **público** 
-e em **objetivo**.
+<br/>
+<br/>
 
----
+```{r, echo=FALSE}
+tipos <- tribble(
+  ~ Tipo, ~ Público, ~Objetivo,
+  "Exploratório", "Você", "Descobrir, testar",
+  "Apresentação", "Outras pessoas", "Apresentar achados"
+)
 
-## Concepção do ggplot2
-
-<!-- O ggplot2 é mais do que um pacote para fazer gráficos; ele é uma tentativa 
-(muito bem sucedida) trazer para o dia-a-dia dos técnicos uma **gramática dos 
-gráficos em camadas**. -->
-
-### Por que uma **gramática** dos gráficos?
-
-Através dela podemos definir **sistematicamente** quais são os componentes de um 
-gráfico e como eles se interelacionam.
-
-Veja mais informações em [http://docs.ggplot2.org/](http://docs.ggplot2.org/current/).
+knitr::kable(tipos, "html")
+```
 
 ---
 
-## A gramática dos gráficos
+# A gramática dos gráficos
 
-![](www/camadas.png)
+```{r, echo = FALSE}
+dados <- tibble(id = rep(1:7, each = 4),
+                x = rep(c(1, 2, 3, 2), 7),) %>%
+  mutate(
+    y = c(1, 0, 1, 2) + id,
+    id = factor(id)
+  )
+  
+etiquetas <- tibble(
+  x = 2.3, y = 1:7 + 0.6, label = c(
+    "Dados", "Estéticas", "Geometrias", "Facetas", 
+    "Estatísticas", "Coordenadas", "Temas"
+  )
+)
+
+camadas <- ggplot(dados, aes(x, y)) +
+  geom_polygon(aes(group = id, fill = id), alpha = 0.95) +
+  geom_text(aes(x, y, label = label), data = etiquetas,
+            size = 6, angle = 15, col = "gray30", fontface = "bold") +
+  theme_void() +
+  theme(legend.position = "none")
+
+camadas
+```
 
 ---
 
-## A gramática dos gráficos
+# A gramática dos gráficos
 
 |       elemento       |        exemplos         |
 |:--------------------:|:-----------------------:|
@@ -182,7 +201,7 @@ Veja mais informações em [http://docs.ggplot2.org/](http://docs.ggplot2.org/cu
 
 ---
 
-## Sintaxe do ggplot2
+# Sintaxe do ggplot2
 
 ```{r, eval = FALSE}
 ggplot(um_data_frame, aes(estética1 = variável1,
@@ -197,11 +216,15 @@ Note que cada função cria uma (ou mais) camadas e que usamos o `+` para ir adi
 
 ---
 
-# A camada de dados
+# Dados
+
+```{r,echo = FALSE}
+camadas
+```
 
 ---
 
-## Dados
+# Dados
 
 > Atrás de todo gráfico legal existe um data frame organizado.
 
@@ -214,16 +237,21 @@ imdb <- readRDS('dados/imdb.rds')
 filmes_recentes <- imdb %>% 
   filter(ano >= 2015) %>% 
   mutate(orcamento = orcamento / 1000000,
-         receita = receita / 1000000) # em milhões
+         receita = receita / 1000000, # em milhões
+         lucro = receita - orcamento) 
 ```
 
 ---
 
 # Aspectos Estéticos
 
+```{r,echo = FALSE}
+camadas
+```
+
 ---
 
-## Aspectos Estéticos
+# Aspectos Estéticos
 
 Os principais aspectos estéticos são:
 
@@ -241,7 +269,7 @@ shape | Forma
 
 ---
 
-## Representando dados
+# Representando dados
 
 ```{r}
 ggplot(filmes_recentes, aes(x = duracao, y = orcamento)) +
@@ -250,31 +278,30 @@ ggplot(filmes_recentes, aes(x = duracao, y = orcamento)) +
 
 ---
 
-## Representando dados
+# Representando dados
 
 Imagine que você fosse desenhar um gráfico. Como você decidiria até onde deve ir
 a barra ou onde ficariam os pontos? O computador também precisa de critérios para
 decidir como representar os dados, como o orçamento de um filme, em um gráfico.
 
-Assim, o orçamento pode ser representado no eixo vertical ou os faixas de valores podem aparecer como cores ou formas (até USD 50 milhões: triângulos; entre 50 e 100: quadrados; e maiores que 100: circulos).
+Assim, o orçamento pode ser representado no eixo vertical ou os faixas de valores
+podem aparecer como cores ou formas (até USD 50 milhões: triângulos; entre 50 e 100:
+quadrados; e maiores que 100: circulos).
 
 ---
 
-## Mapeando variáveis em estéticas
+# Estética e informação
 
-É diferente **mapear** uma estética e **atribuir um valor** a um aspecto estético.
-Mapear uma variável em uma estética é dizer que a cor **vermelha** representa 
-filmes para maiores de 18 anos e a cor **azul** filmes livres. 
-Isto é diferente de definir a cor de pontos ou barras como **verde**, 
-sem com isso adicionar qualquer informação ao gráfico. 
+<br/>
+<br/>
 
-Para poder fazer isso, precisamos carregar o pacote `ggplot2`
+* Definir um atributo estético
 
-`libarry(ggplot2)`
+* Mapear informação em estética
 
 ---
 
-## Atributos Estéticos - Atribuir cor à elemento estético
+# Atributos Estéticos - Atribuir cor à elemento estético
 
 ```{r}
 ggplot(filmes_recentes, aes(x = duracao, y = orcamento)) +
@@ -283,7 +310,7 @@ ggplot(filmes_recentes, aes(x = duracao, y = orcamento)) +
 
 ---
 
-## Aspectos Estéticos - Mapear a classificaçãp na cor
+# Aspectos Estéticos - Mapear a classificaçãp na cor
 
 ```{r}
 ggplot(filmes_recentes, aes(duracao, orcamento, col = classificacao)) +
@@ -292,7 +319,7 @@ ggplot(filmes_recentes, aes(duracao, orcamento, col = classificacao)) +
 
 ---
 
-## Aspectos Estéticos - Mapear a classificaçãp na cor
+# Aspectos Estéticos - Mapear a classificaçãp na cor
 
 ```{r}
 ggplot(filmes_recentes, aes(duracao, orcamento, col = classificacao)) +
@@ -302,7 +329,7 @@ ggplot(filmes_recentes, aes(duracao, orcamento, col = classificacao)) +
 
 ---
 
-## Aspectos Estéticos - Mapear receita no tamanho
+# Aspectos Estéticos - Mapear receita no tamanho
 
 ```{r}
 ggplot(filmes_recentes , aes(duracao, orcamento)) +
@@ -311,7 +338,9 @@ ggplot(filmes_recentes , aes(duracao, orcamento)) +
 
 ---
 
-## Aspectos Estéticos - Variáveis contínuas
+# Aspectos Estéticos - Variáveis contínuas
+
+<br/>
 
 Estética | Descrição
 ---------|----------------------------------------
@@ -324,18 +353,7 @@ alpha | Transparência
 
 ---
 
-## Aspectos Estéticos - Variáveis contínuas
-
-.center[
-  ![](www/decod_continuas.png)
-]
-
-
-Fonte: www.datacamp.com
-
----
-
-## Aspectos Estéticos - Variáveis contínuas
+# Aspectos Estéticos - Variáveis contínuas
 
 ```{r}
 ggplot(filmes_recentes, aes(duracao, orcamento, col = nota_imdb)) +
@@ -344,7 +362,9 @@ ggplot(filmes_recentes, aes(duracao, orcamento, col = nota_imdb)) +
 
 ---
 
-## Aspectos Estéticos - Variáveis categóricas
+# Aspectos Estéticos - Variáveis categóricas
+
+<br/>
 
 Estética | Descrição
 ----------|----------------------------------------
@@ -358,18 +378,7 @@ shape | Forma
 
 ---
 
-## Atributos Estéticos - Variáveis categóricas
-
-.center[
-  ![](www/decod_categoricas.png)
-]
-
-
-Fonte: www.datacamp.com
-
----
-
-## Aspectos Estéticos - Variáveis categóricas
+# Aspectos Estéticos - Variáveis categóricas
 
 ```{r}
 ggplot(filmes_recentes, aes(duracao, orcamento, shape = classificacao)) +
@@ -378,7 +387,7 @@ ggplot(filmes_recentes, aes(duracao, orcamento, shape = classificacao)) +
 
 ---
 
-## Aspectos Estéticos - Variáveis categóricas
+# Aspectos Estéticos - Variáveis categóricas
 
 ```{r}
 ggplot(filmes_recentes, aes(duracao, orcamento, col = classificacao)) +
@@ -389,7 +398,16 @@ ggplot(filmes_recentes, aes(duracao, orcamento, col = classificacao)) +
 
 # Geometrias
 
-Além de ter dados e mapeá-los em atributos estéticos, você deve escolher com que geometrias quer aprensentar seus dados.
+```{r,echo = FALSE}
+camadas
+```
+
+---
+
+# Geometrias
+
+Além de ter dados e mapeá-los em atributos estéticos, você deve escolher com 
+que geometrias quer aprensentar seus dados.
 
 As geometrias mais comuns são:
 
@@ -403,7 +421,7 @@ Vamos ver como usar estas geometrias no `ggplot2`.
 
 ---
 
-## geom_point()
+# geom_point()
 
 ```{r geom_point}
 ggplot(filmes_recentes, aes(duracao, receita)) +
@@ -412,7 +430,7 @@ ggplot(filmes_recentes, aes(duracao, receita)) +
 
 ---
 
-## geom_smooth()
+# geom_smooth()
 
 ```{r}
 ggplot(filmes_recentes, aes(duracao, orcamento)) +
@@ -422,7 +440,7 @@ ggplot(filmes_recentes, aes(duracao, orcamento)) +
 
 ---
 
-## geom_col() ou geom_bar()
+# geom_col() ou geom_bar()
 
 ```{r geom_bar}
 quantidades <- imdb %>% 
@@ -432,7 +450,7 @@ quantidades <- imdb %>%
 
 ---
 
-## geom_col() ou geom_bar()
+# geom_col() ou geom_bar()
 
 ```{r}
 ggplot(quantidades, aes(classificacao, media)) +
@@ -441,7 +459,7 @@ ggplot(quantidades, aes(classificacao, media)) +
 
 ---
 
-## geom_col() ou geom_bar()
+# geom_col() ou geom_bar()
 
 ```{r}
 ggplot(quantidades, aes(fct_reorder(classificacao, media), media)) +
@@ -450,7 +468,7 @@ ggplot(quantidades, aes(fct_reorder(classificacao, media), media)) +
 
 ---
 
-## geom_line() 
+# geom_line() 
 
 ```{r}
 scorsese <- imdb %>% 
@@ -463,7 +481,7 @@ media_scorsese <- scorsese %>%
 
 ---
 
-## geom_line() 
+# geom_line() 
 
 ```{r geom_line}
 ggplot(media_scorsese, aes(ano, nota)) +
@@ -472,7 +490,17 @@ ggplot(media_scorsese, aes(ano, nota)) +
 
 ---
 
-## geom_histogram()
+# geom_line() 
+
+```{r}
+ggplot(media_scorsese, aes(ano, nota)) +
+  geom_line() + 
+  geom_point(col = "limegreen")
+```
+
+---
+
+# geom_histogram()
 
 ```{r geom_histogram, warning=FALSE}
 ggplot(imdb, aes(nota_imdb)) +
@@ -481,18 +509,17 @@ ggplot(imdb, aes(nota_imdb)) +
 
 ---
 
-## Ou então geom_density()
+# Ou então geom_density()
 
 ```{r geom_density}
-imdb %>% 
-  filter(!is.na(cor)) %>% 
+imdb %>% filter(!is.na(cor)) %>% 
   ggplot(aes(nota_imdb, fill = cor)) +
   geom_density(alpha= 0.7)
 ```
 
 ---
 
-## geom_boxplot()
+# geom_boxplot()
 
 ```{r geom_boxplot}
 ggplot(imdb, aes(x = cor, y = nota_imdb)) +
@@ -501,7 +528,7 @@ ggplot(imdb, aes(x = cor, y = nota_imdb)) +
 
 ---
 
-## geom_boxplot()
+# geom_boxplot()
 
 ```{r}
 ggplot(imdb, aes(x = cor, y = nota_imdb)) +
@@ -512,16 +539,16 @@ ggplot(imdb, aes(x = cor, y = nota_imdb)) +
 
 ---
 
-## ...ou geom_violin()
+# ...ou geom_violin()
 
 ```{r}
-ggplot(imdb, aes(classificacao, nota_imdb, fill = classificacao)) +
+ggplot(imdb, aes(classificacao, nota_imdb)) +
   geom_violin(draw_quantiles = 0.5)
 ```
 
 ---
 
-## ...ou geom_violin()
+# ...ou geom_violin()
 
 ```{r}
 ggplot(imdb, aes(classificacao, nota_imdb)) +
