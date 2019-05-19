@@ -176,6 +176,24 @@ imdb %>%
 
 ---
 
+# Atenção!
+
+Operações com pontos flutuante (não inteiros) podem causar dor de cabeça.
+
+```{r}
+sqrt(2) ^ 2 == 2
+1 / 49 * 49 == 1
+```
+
+Evite-as com <a>near()</a>.
+
+```{r}
+near(sqrt(2) ^ 2, 2)
+near(1 / 49 * 49, 1)
+```
+
+---
+
 # filter
 
 ```{r}
@@ -311,6 +329,23 @@ imdb %>%
 
 Formas menos comuns de usar o <a>select</a>
 
+1. starts_with("abc"): seleciona variáveis que começam com "abc".
+
+2. ends_with("xyz"): seleciona variáveis que terminam com "xyz".
+
+3. contains("ijk"): seleciona variáveis que contenham "ijk".
+
+4. matches("[a-z]{3}"): seleciona variáveis que satisfaçam a 
+expressão regular "[a-z]{3}". 
+
+5. num_range("x", 1:3): seleciona x1, x2 and x3.
+
+---
+
+# select
+
+Formas menos comuns de usar o <a>select</a>
+
 ```{r}
 imdb %>% 
   select(1, 2, 3)
@@ -384,6 +419,22 @@ imdb %>%
 ```
 
 ---
+
+# mutate
+
+Funções úteis para criar novas variáveis
+
+1. Operadores aritiméticos: <a>+</a>, <a>-</a>, <a>*</a>, <a>/</a> e <a>^</a>;
+
+2. Operadores modulares: <a>%/%</a> (inteiro da divisão) e <a>%%</a> (resto);
+
+3. Operações acumuladas: <a>cumsum()</a>, <a>cumprod()</a>, <a>cummin()</a>, 
+<a>cummax()</a> e <a>cummean()</a>;
+
+4. Operadores lógicos: <a><</a>, <a><=</a>, <a>></a>, <a>>=</a>,  
+<a>!=</a> e <a>==</a>
+
+---
 background-image: url(www/programar.gif)
 background-size: 100%
 class: inverse
@@ -422,11 +473,6 @@ imdb %>%
   group_by(diretor) %>% 
   filter(nota_imdb == max(nota_imdb, na.rm = TRUE))
 ```
-
----
-background-image: url(www/programar.gif)
-background-size: 100%
-class: inverse
 
 ---
 
@@ -477,6 +523,8 @@ imdb %>%
 # summarise
 
 Algumas funções frequentemente usadas com summarise:
+
+0. `sum()`: Soma do vetor
 
 1. `mean()`: Média do vetor
 
@@ -605,11 +653,6 @@ atores_tidy
 ```
 
 ---
-background-image: url(www/programar.gif)
-background-size: 100%
-class: inverse
-
----
 
 # <a>Espalhar</a>
 
@@ -643,8 +686,3 @@ spread(atores_tidy, papel, ator)
 # Não tenha vergonha de pedir ajuda ao R
 ?spread 
 ```
-
----
-background-image: url(www/programar.gif)
-background-size: 100%
-class: inverse
