@@ -1,3 +1,7 @@
+a {
+  color: darkgreen;
+}
+
 h1 {
   background: url(www/enap_slide1.png);
   background-size: 200px 200px;
@@ -9,10 +13,6 @@ h1 {
   text-align: center;
 }
 
-a {
-  color: darkgreen;
-}
-
 .remark-slide-number {
   background: url(www/enap_slide2.png);
   background-size: 106px 56px;
@@ -22,7 +22,7 @@ a {
   margin: 0 -15px 0 0;
 }
 
-.pull-left > p > img, .pull-right > p > img {
+/*.pull-left > p > img, .pull-right > p > img {
   height: 250px;
   margin-left: -30px;
 }
@@ -30,3 +30,4 @@ a {
 .pull-left > p > img {
   margin-left: 310px;
 }
+*/

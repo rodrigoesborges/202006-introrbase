@@ -19,10 +19,34 @@ background-size: cover
 library(tidyverse)
 library(knitr)
 options(scipen = 999)
-knitr::opts_chunk$set(
-  warning = FALSE, message = FALSE, fig.align = "center", fig.height = 5, 
-  fig.callout = TRUE
+
+theme_set(
+  theme_grey() + theme(legend.position = "top")
 )
+
+knitr::opts_chunk$set(
+  warning = FALSE, message = FALSE, 
+  fig.align = "center", fig.retina = 2, cache = TRUE
+)
+
+knitr::opts_hooks$set(fig.callout = function(options) {
+  if (options$fig.callout) {
+    options$echo <- FALSE
+    options$out.width <- "100%"
+    options$out.height <- "97%"
+  }
+  options
+})
+
+knitr::opts_hooks$set(fig.principal = function(options) {
+  if (options$fig.principal) {
+    options$echo <- FALSE
+    options$fig.width <- 10
+    options$fig.height <- 6
+    options$out.width <- "75%"
+  }
+  options
+})
 
 anscombe_tidy <- anscombe %>% 
   gather() %>%
@@ -66,7 +90,7 @@ imdb <- readRDS('dados/imdb.rds')
 
 # Visualização de dados 
 
-```{r, echo = FALSE, warning = FALSE}
+```{r, fig.principal = TRUE}
 # imdb %>% 
 #   filter_all(all_vars(!is.na(.))) %>%
 #   filter(classificacao != "Outros") %>% 
@@ -109,13 +133,14 @@ imdb <- readRDS('dados/imdb.rds')
 #   facet_wrap(~diretor)
 
 imdb %>% 
-  filter(diretor %in% c("Ron Howard", "Woody Allen")) %>% 
+  filter(diretor %in% c("Ron Howard", "Woody Allen", "Barry Levinson")) %>% 
   ggplot(aes(duracao, nota_imdb, col = diretor)) +
-  geom_point(alpha = 0.7, size = 2) +
+  geom_point(alpha = 0.7, size = 3) +
   geom_smooth(method = "lm", se = FALSE) +
-  theme_classic() + 
   labs(title = "", x = "Duração (minutos)", 
-       y = "Nota no IMDb", col = "Diretor")
+       y = "Nota no IMDb", col = "Diretor") + 
+  theme_classic() + 
+  theme(legend.position = "top")
 ```
 
 ---
@@ -130,11 +155,12 @@ knitr::kable(anscombe[, c(1,5,2,6,3,7,4,8)], "html")
 
 # Quarteto de Anscombe
 
-```{r,  echo = FALSE}
+```{r, , fig.principal = TRUE}
 ggplot(anscombe_tidy, aes(x,y)) +
   geom_point() +
   geom_smooth(method = "lm", se = FALSE) +
-  facet_wrap(~ conjunto, nrow = 2) + theme_bw()
+  facet_wrap(~ conjunto, nrow = 2) + 
+  theme_bw()
 ```
 
 ---
@@ -144,7 +170,7 @@ ggplot(anscombe_tidy, aes(x,y)) +
 <br/>
 <br/>
 
-```{r, echo=FALSE}
+```{r, echo = FALSE}
 tipos <- tribble(
   ~ Tipo, ~ Público, ~Objetivo,
   "Exploratório", "Você", "Descobrir, testar",
@@ -158,7 +184,7 @@ knitr::kable(tipos, "html")
 
 # A gramática dos gráficos
 
-```{r, echo = FALSE}
+```{r, fig.principal = TRUE}
 dados <- tibble(id = rep(1:7, each = 4),
                 x = rep(c(1, 2, 3, 2), 7),) %>%
   mutate(
@@ -218,7 +244,7 @@ Note que cada função cria uma (ou mais) camadas e que usamos o `+` para ir adi
 
 # Dados
 
-```{r,echo = FALSE}
+```{r, fig.principal = TRUE}
 camadas
 ```
 
@@ -245,7 +271,7 @@ filmes_recentes <- imdb %>%
 
 # Aspectos Estéticos
 
-```{r,echo = FALSE}
+```{r, fig.principal = TRUE}
 camadas
 ```
 
@@ -271,10 +297,19 @@ shape | Forma
 
 # Representando dados
 
-```{r}
-ggplot(filmes_recentes, aes(x = duracao, y = orcamento)) +
+.pull-left[
+```{r repes-dados, eval=FALSE}
+ggplot(filmes_recentes, 
+       aes(x = duracao, y = orcamento)) +
   geom_point()
 ```
+]
+
+.pull-right[
+```{r, ref.label="repes-dados", echo=FALSE, fig.callout = TRUE}
+
+```
+]
 
 ---
 
@@ -303,19 +338,38 @@ quadrados; e maiores que 100: circulos).
 
 # Atributos Estéticos - Atribuir cor à elemento estético
 
-```{r}
-ggplot(filmes_recentes, aes(x = duracao, y = orcamento)) +
+.pull-left[
+```{r plot-atrib, eval=FALSE}
+ggplot(filmes_recentes, 
+       aes(x = duracao, y = orcamento)) +
   geom_point(col = "indianred")
 ```
+]
+
+.pull-right[
+```{r, ref.label="plot-atrib", fig.callout = TRUE}
+
+```
+]
 
 ---
 
 # Aspectos Estéticos - Mapear a classificação na cor
 
-```{r}
-ggplot(filmes_recentes, aes(duracao, orcamento, col = classificacao)) +
+.pull-left[
+```{r plot-map, eval=FALSE}
+ggplot(filmes_recentes, 
+       aes(duracao, orcamento, 
+           col = classificacao)) +
   geom_point()
 ```
+]
+
+.pull-right[
+```{r, ref.label="plot-map", fig.callout = TRUE}
+
+```
+]
 
 ---
 background-image: url(www/programar.gif)
@@ -325,11 +379,21 @@ background-size: 100%
 
 # Aspectos Estéticos - Mapear a classificação na cor
 
-```{r}
-ggplot(filmes_recentes, aes(duracao, orcamento, col = classificacao)) +
+.pull-left[
+```{r plot-facet, eval=FALSE}
+ggplot(filmes_recentes, 
+       aes(duracao, orcamento, 
+           col = classificacao)) +
   geom_point() +
   facet_wrap(~classificacao)
 ```
+]
+
+.pull-right[
+```{r, ref.label="plot-facet", fig.callout = TRUE}
+
+```
+]
 
 ---
 background-image: url(www/programar.gif)
@@ -339,10 +403,22 @@ background-size: 100%
 
 # Aspectos Estéticos - Mapear receita no tamanho
 
-```{r}
-ggplot(filmes_recentes , aes(duracao, orcamento)) +
-  geom_point(aes(size = receita), col = "darkgreen", alpha = 0.5)
+.pull-left[
+```{r plot-tamanho, eval=FALSE}
+ggplot(filmes_recentes , 
+       aes(duracao, orcamento)) +
+  geom_point(
+    aes(size = receita), 
+    col = "forestgreen", alpha = 0.5
+  )
 ```
+]
+
+.pull-right[
+```{r, ref.label="plot-tamanho", fig.callout = TRUE}
+
+```
+]
 
 ---
 
@@ -363,10 +439,20 @@ alpha | Transparência
 
 # Aspectos Estéticos - Variáveis contínuas
 
-```{r}
-ggplot(filmes_recentes, aes(duracao, orcamento, col = nota_imdb)) +
+.pull-left[
+```{r plot-corcontinua, eval=FALSE}
+ggplot(filmes_recentes, 
+       aes(duracao, orcamento, 
+           col = nota_imdb)) +
   geom_point(size = 2)
 ```
+]
+
+.pull-right[
+```{r, ref.label="plot-corcontinua", fig.callout = TRUE}
+
+```
+]
 
 ---
 background-image: url(www/programar.gif)
@@ -384,7 +470,7 @@ colour | Cor dos pontos ou das linhas das formas
 fill | Cor de preencimento 
 size | Diametro dos pontos e espessura das linhas
 alpha |Transparência
-linetype | Tipo (padrão) da linhas
+linetype | Tipo (padrão) das linhas
 labels | Texto no gráfico ou nos eixos
 shape | Forma
 
@@ -392,19 +478,39 @@ shape | Forma
 
 # Aspectos Estéticos - Variáveis categóricas
 
-```{r}
-ggplot(filmes_recentes, aes(duracao, orcamento, shape = classificacao)) +
+.pull-left[
+```{r plot-shape, eval=FALSE}
+ggplot(filmes_recentes, 
+       aes(duracao, orcamento, 
+           shape = classificacao)) +
   geom_point()
 ```
+]
+
+.pull-right[
+```{r, ref.label="plot-shape", fig.callout = TRUE}
+
+```
+]
 
 ---
 
 # Aspectos Estéticos - Variáveis categóricas
 
-```{r}
-ggplot(filmes_recentes, aes(duracao, orcamento, col = classificacao)) +
+.pull-left[
+```{r plot-corcat, eval=FALSE}
+ggplot(filmes_recentes, 
+       aes(duracao, orcamento, 
+           col = classificacao)) +
   geom_point()
 ```
+]
+
+.pull-right[
+```{r, ref.label="plot-corcat", fig.callout = TRUE}
+
+```
+]
 
 ---
 background-image: url(www/programar.gif)
@@ -414,7 +520,7 @@ background-size: 100%
 
 # Geometrias
 
-```{r,echo = FALSE}
+```{r, fig.principal = TRUE}
 camadas
 ```
 
@@ -439,20 +545,38 @@ Vamos ver como usar estas geometrias no `ggplot2`.
 
 # geom_point()
 
-```{r geom_point}
-ggplot(filmes_recentes, aes(duracao, receita)) +
+.pull-left[
+```{r plot-point, eval=FALSE}
+ggplot(filmes_recentes, 
+       aes(duracao, receita)) +
   geom_point()
 ```
+]
+
+.pull-right[
+```{r, ref.label="plot-point", fig.callout = TRUE}
+
+```
+]
 
 ---
 
 # geom_smooth()
 
-```{r}
-ggplot(filmes_recentes, aes(duracao, orcamento)) +
+.pull-left[
+```{r plot-smooth, eval=FALSE}
+ggplot(filmes_recentes, 
+       aes(duracao, orcamento)) +
   geom_point() + 
   geom_smooth(se = FALSE, method = "lm")
 ```
+]
+
+.pull-right[
+```{r, ref.label="plot-smooth", fig.callout = TRUE}
+
+```
+]
 
 ---
 background-image: url(www/programar.gif)
@@ -462,29 +586,56 @@ background-size: 100%
 
 # geom_col() ou geom_bar()
 
-```{r geom_bar}
+.pull-left[
+```{r plot-bar, eval=FALSE}
 quantidades <- imdb %>% 
   group_by(classificacao) %>%
-  summarise(media = mean(orcamento, na.rm = TRUE))
+  summarise(
+    media = mean(orcamento, na.rm = TRUE)
+  )
+
+ggplot(quantidades, 
+       aes(classificacao, media)) +
+  geom_col() 
+  # ou geom_bar(stat = "identity") 
 ```
+]
+
+.pull-right[
+```{r, ref.label="plot-bar", fig.callout = TRUE}
+
+```
+]
 
 ---
 
 # geom_col() ou geom_bar()
 
-```{r}
-ggplot(quantidades, aes(classificacao, media)) +
-  geom_col() # ou geom_bar(stat = "identity")
+.pull-left[
+```{r plot-bar-ord, eval=FALSE}
+quantidades <- imdb %>% 
+  group_by(classificacao) %>%
+  summarise(
+    media = mean(orcamento, na.rm = TRUE)
+  ) %>% 
+  mutate(
+    classificacao = fct_reorder(
+      classificacao, media
+    )
+  )
+
+ggplot(quantidades, 
+       aes(classificacao, media)) +
+  geom_col() 
+  # ou geom_bar(stat = "identity")
 ```
+]
 
----
+.pull-right[
+```{r, ref.label="plot-bar-ord", fig.callout = TRUE}
 
-# geom_col() ou geom_bar()
-
-```{r}
-ggplot(quantidades, aes(fct_reorder(classificacao, media), media)) +
-  geom_col() # ou geom_bar(stat = "identity")
 ```
+]
 
 ---
 background-image: url(www/programar.gif)
@@ -494,33 +645,53 @@ background-size: 100%
 
 # geom_line() 
 
-```{r}
-scorsese <- imdb %>% 
-  filter(diretor == "Martin Scorsese") 
-
-media_scorsese <- scorsese %>% 
+.pull-left[
+```{r plot-linha, eval=FALSE}
+media_scorsese <- imdb %>% 
+  filter(diretor == "Martin Scorsese") %>% 
   group_by(ano) %>% 
-  summarise(nota = mean(nota_imdb, na.rm = TRUE))
-```
+  summarise(
+    nota = mean(nota_imdb, na.rm = TRUE)
+  )
 
----
-
-# geom_line() 
-
-```{r geom_line}
-ggplot(media_scorsese, aes(ano, nota)) +
+ggplot(media_scorsese, 
+       aes(ano, nota)) +
   geom_line()
 ```
+]
+
+.pull-right[
+```{r, ref.label="plot-linha", fig.callout = TRUE}
+
+```
+]
 
 ---
 
 # geom_line() 
 
-```{r}
-ggplot(media_scorsese, aes(ano, nota)) +
+.pull-left[
+```{r plot-linha-ponto, eval=FALSE}
+media_scorsese <- imdb %>% 
+  filter(diretor == "Martin Scorsese") %>% 
+  group_by(ano) %>% 
+  summarise(
+    nota = mean(nota_imdb, na.rm = TRUE)
+  )
+
+ggplot(media_scorsese, 
+       aes(ano, nota)) +
   geom_line() + 
-  geom_point(col = "limegreen")
+  geom_point(col = "darkgreen", 
+             size = 2)
 ```
+]
+
+.pull-right[
+```{r, ref.label="plot-linha-ponto", fig.callout = TRUE}
+
+```
+]
 
 ---
 background-image: url(www/programar.gif)
@@ -530,59 +701,133 @@ background-size: 100%
 
 # geom_histogram()
 
-```{r geom_histogram, warning=FALSE}
+.pull-left[
+```{r plot-hist, eval=FALSE}
 ggplot(imdb, aes(nota_imdb)) +
-  geom_histogram(fill = "indianred") # definir intervalos
+  geom_histogram(fill = "indianred")
 ```
+]
+
+.pull-right[
+```{r, ref.label="plot-hist", fig.callout = TRUE}
+
+```
+]
+
+---
+
+# geom_histogram()
+
+.pull-left[
+```{r plot-hist-bin, eval=FALSE}
+ggplot(imdb, aes(nota_imdb)) +
+  geom_histogram(fill = "indianred",
+                 binwidth = 1) 
+```
+]
+
+.pull-right[
+```{r, ref.label="plot-hist-bin", fig.callout = TRUE}
+
+```
+]
 
 ---
 
 # Ou então geom_density()
 
-```{r geom_density}
-imdb %>% filter(!is.na(cor)) %>% 
+.pull-left[
+```{r plot-densidade, eval=FALSE}
+imdb %>% 
+  filter(!is.na(cor)) %>% 
   ggplot(aes(nota_imdb, fill = cor)) +
   geom_density(alpha= 0.7)
 ```
+]
+
+.pull-right[
+```{r, ref.label="plot-densidade", fig.callout = TRUE}
+
+```
+]
 
 ---
 
 # geom_boxplot()
 
-```{r geom_boxplot}
+.pull-left[
+```{r plot-boxplot, eval=FALSE}
 ggplot(imdb, aes(x = cor, y = nota_imdb)) +
   geom_boxplot()
 ```
+]
+
+.pull-right[
+```{r, ref.label="plot-boxplot", fig.callout = TRUE}
+
+```
+]
 
 ---
 
 # geom_boxplot()
 
-```{r}
+.pull-left[
+```{r plot-boxplot-lab, eval=FALSE}
 ggplot(imdb, aes(x = cor, y = nota_imdb)) +
   geom_boxplot() +
-  labs(title = "Um diagrama de caixa simples", x = "Filme colorido?",
+  labs(title = "Um diagrama de caixa simples", 
+       x = "Filme colorido?",
        y = "Nota no IMDb")
 ```
+]
+
+.pull-right[
+```{r, ref.label="plot-boxplot-lab", fig.callout = TRUE}
+
+```
+]
 
 ---
 
 # ...ou geom_violin()
 
-```{r}
-ggplot(imdb, aes(classificacao, nota_imdb)) +
+.pull-left[
+```{r plot-violin, eval=FALSE}
+ggplot(imdb, 
+       aes(classificacao, nota_imdb)) +
   geom_violin(draw_quantiles = 0.5)
 ```
+]
+
+.pull-right[
+```{r, ref.label="plot-violin", fig.callout = TRUE}
+
+```
+]
 
 ---
 
 # ...ou geom_violin()
 
-```{r}
-ggplot(imdb, aes(classificacao, nota_imdb)) +
+.pull-left[
+```{r plot-violin-tema, eval=FALSE}
+ggplot(imdb, 
+       aes(classificacao, nota_imdb)) +
   geom_violin(draw_quantiles = 0.5) +
-  theme(axis.text.x = element_text(angle = 30))
+  theme(
+    axis.text.x = element_text(
+      angle = 30
+    )
+  )
 ```
+]
+
+.pull-right[
+```{r, ref.label="plot-violin-tema", fig.callout = TRUE}
+
+```
+]
 
 ---
 background-image: url(www/programar.gif)
