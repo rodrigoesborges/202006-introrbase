@@ -70,6 +70,11 @@ install.packages("tidyverse")
 ```
 
 ---
+background-image: url(www/tidyverse.png)
+background-size: cover
+class: center
+
+---
 
 # Pacotes
 
@@ -99,11 +104,6 @@ background-size: 100%
 class: center
 
 # <a>Ciclo</a> de análise de dados
-
----
-background-image: url(www/tidyverse.png)
-background-size: cover
-class: center
 
 ---
 
@@ -157,16 +157,32 @@ getwd()
 
 ```{r, eval = FALSE}
 # Separado por virgula (,)
-virgula <- read_csv("dados/imdb.csv", skip = 4)
+imdb <- read_csv("dados/imdb.csv", skip = 0)
 
 # Separado por ponto e virgula (;)
-ponto_e_virgula <- read_csv2("dados/imdb.csv", skip = 4)
+imdb <- read_csv2("dados/imdb.csv", skip = 0)
 
 # Separado por "tab" (\t)
-tab <- read_tsv("dados/imdb.tsv", locale = locale(decimal_mark = ","))
+imdb <- read_tsv("dados/imdb.tsv", locale = locale(decimal_mark = ","))
 
 # Separado por qualquer outra coisa que especificar
-outra_coisa <- read_delim("dados/imdb.txt", delim = "|", n_max = 100)
+imdb <- read_delim("dados/imdb.txt", delim = "|", n_max = 100)
+```
+
+---
+
+# O que importamos?
+
+```{r}
+imdb
+```
+
+---
+
+# O que importamos?
+
+```{r}
+glimpse(imdb)
 ```
 
 ---
@@ -176,16 +192,16 @@ outra_coisa <- read_delim("dados/imdb.txt", delim = "|", n_max = 100)
 
 ```{r, eval = FALSE}
 # Separado por virgula
-write_csv(tabela, "dados/imdb.csv")
+write_csv(imdb, "dados/imdb.csv")
 
 # Separado por ponto e virgula
-write_csv2(tabela, "dados/imdb.csv")
+write_csv2(imdb, "dados/imdb.csv")
 
 # Separado por "tab"
-write_tsv(mtcars, "dados/imdb.tsv", na = 99999)
+write_tsv(imdb, "dados/imdb.tsv", na = 99999)
 
 # Separado por qualquer outra coisa que especificar
-write_delim(iris, "dados/imdb.txt", "|")
+write_delim(imdb, "dados/imdb.txt", "|")
 ```
 
 ---
@@ -196,7 +212,7 @@ write_delim(iris, "dados/imdb.txt", "|")
 
 ```{r, eval = FALSE}
 library(readxl)
-read_excel("dados/imdb.xlsx", sheet = 2)
+read_excel("dados/imdb.xlsx", sheet = 1)
 
 # excel 2007 ou supeior
 read_xlsx("dados/imdb.xlsx", sheet = "planilha1", na = 9999)
@@ -224,15 +240,15 @@ library(haven)
 
 # SAS
 read_sas("dados/imdb.sas7bdat")
-write_sas(iris, "dados/imdb.sas7bdat")
+write_sas(imdb, "dados/imdb.sas7bdat")
 
 # SPSS
 read_sav("dados/imdb.sav")
-write_sav(mtcars, "dados/imdb.sav")
+write_sav(imdb, "dados/imdb.sav")
 
 # Stata
 read_dta("dados/imdb.dta")
-write_dta(tabela, "dados/imdb.dta")
+write_dta(imdb, "dados/imdb.dta")
 ```
 
 ---
