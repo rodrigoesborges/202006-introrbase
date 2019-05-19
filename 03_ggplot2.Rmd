@@ -310,7 +310,7 @@ ggplot(filmes_recentes, aes(x = duracao, y = orcamento)) +
 
 ---
 
-# Aspectos Estéticos - Mapear a classificaçãp na cor
+# Aspectos Estéticos - Mapear a classificação na cor
 
 ```{r}
 ggplot(filmes_recentes, aes(duracao, orcamento, col = classificacao)) +
@@ -318,14 +318,22 @@ ggplot(filmes_recentes, aes(duracao, orcamento, col = classificacao)) +
 ```
 
 ---
+background-image: url(www/programar.gif)
+background-size: 100%
 
-# Aspectos Estéticos - Mapear a classificaçãp na cor
+---
+
+# Aspectos Estéticos - Mapear a classificação na cor
 
 ```{r}
 ggplot(filmes_recentes, aes(duracao, orcamento, col = classificacao)) +
   geom_point() +
   facet_wrap(~classificacao)
 ```
+
+---
+background-image: url(www/programar.gif)
+background-size: 100%
 
 ---
 
@@ -361,6 +369,10 @@ ggplot(filmes_recentes, aes(duracao, orcamento, col = nota_imdb)) +
 ```
 
 ---
+background-image: url(www/programar.gif)
+background-size: 100%
+
+---
 
 # Aspectos Estéticos - Variáveis categóricas
 
@@ -393,6 +405,10 @@ ggplot(filmes_recentes, aes(duracao, orcamento, shape = classificacao)) +
 ggplot(filmes_recentes, aes(duracao, orcamento, col = classificacao)) +
   geom_point()
 ```
+
+---
+background-image: url(www/programar.gif)
+background-size: 100%
 
 ---
 
@@ -439,6 +455,10 @@ ggplot(filmes_recentes, aes(duracao, orcamento)) +
 ```
 
 ---
+background-image: url(www/programar.gif)
+background-size: 100%
+
+---
 
 # geom_col() ou geom_bar()
 
@@ -465,6 +485,10 @@ ggplot(quantidades, aes(classificacao, media)) +
 ggplot(quantidades, aes(fct_reorder(classificacao, media), media)) +
   geom_col() # ou geom_bar(stat = "identity")
 ```
+
+---
+background-image: url(www/programar.gif)
+background-size: 100%
 
 ---
 
@@ -497,6 +521,10 @@ ggplot(media_scorsese, aes(ano, nota)) +
   geom_line() + 
   geom_point(col = "limegreen")
 ```
+
+---
+background-image: url(www/programar.gif)
+background-size: 100%
 
 ---
 
@@ -556,3 +584,6 @@ ggplot(imdb, aes(classificacao, nota_imdb)) +
   theme(axis.text.x = element_text(angle = 30))
 ```
 
+---
+background-image: url(www/programar.gif)
+background-size: 100%
