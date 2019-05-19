@@ -382,12 +382,21 @@ horas < 5
 
 # menor ou igual
 horas <= 5
+```
 
+---
+
+# comparação
+
+```{r, eval = FALSE}
 # igual
 horas == 2
 
 # diferente
 horas != 2
+
+# presente em
+c(2, 10) %in% 1:5
 ```
 
 ---
@@ -395,12 +404,24 @@ horas != 2
 # operadores lógicos
 
 ```{r}
+# ou 
 TRUE | FALSE
+
+# e
 TRUE & FALSE
+
+# todos
 all(1:5 > 2)
+
+# algum (pelo menos um)
 any(1:5 <= 2)
-c(2, 10) %in% 1:5
 ```
+
+---
+
+# operadores lógicos
+
+![](www/transform-logical.png)
 
 ---
 
@@ -485,12 +506,34 @@ seq(by = 3, 1, 10) # usando mistura de nome e ordem
 O <a>R</a> nos permite criar nossas próprias funções
 
 ```{r}
-quadrado <- function(x) {
-  x ^ 2
+quadrado <- function(x) { # nome e argumentos
+  x ^ 2 # corpo da função
 }
 
 quadrado(5)
 quadrado(c(5, 10)) # vetorizado
+```
+
+---
+
+# Identação
+
+Arrumar o código para provilegiar sua leitura.
+
+Lembre-se que você pode ter que **ler amanhã**, ou daqui 2 anos, o código que 
+**escreveu hoje**.
+
+```{r, eval=FALSE}
+funcao_gigante(primeiro_argumento, nome_do_argumento = segundo_argumento, terceiro_argumento, argumento_quarto)
+
+# Ou, com identação (ctrl + i)
+funcao_gigante(primeiro_argumento, nome_do_argumento = segundo_argumento, 
+               terceiro_argumento, argumento_quarto)
+
+funcao_gigante(
+  primeiro_argumento, nome_do_argumento = segundo_argumento, 
+  terceiro_argumento, argumento_quarto
+)
 ```
 
 ---
