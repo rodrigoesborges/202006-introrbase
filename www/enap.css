@@ -3,7 +3,7 @@ a {
 }
 
 h1 {
-  background: url(www/enap_slide1.png);
+  background: url(enap_slide1.png);
   background-size: 200px 200px;
   background-repeat: no-repeat; 
   background-attachment: fixed;
@@ -14,7 +14,7 @@ h1 {
 }
 
 .remark-slide-number {
-  background: url(www/enap_slide2.png);
+  background: url(enap_slide2.png);
   background-size: 106px 56px;
   background-repeat: no-repeat;
   background-position: bottom left;
