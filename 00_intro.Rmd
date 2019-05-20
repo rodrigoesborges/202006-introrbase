@@ -130,6 +130,13 @@ background-position: 50% 75%
 ---
 class: center, middle
 
+# <a>R</a>
+
+[download](https://cloud.r-project.org/)
+
+---
+class: center, middle
+
 # <a>RStudio</a>
 
 [download](https://www.rstudio.com/products/rstudio/download/)
@@ -190,7 +197,7 @@ class: center, middle
 > Tudo que existe é um objeto. Tudo o que acontece é o chamado de uma função.
 
 .pull-right[
-  John Chambers, criador do **R**
+  John Chambers, criador do **S**
 ]
 
 <br>
@@ -231,46 +238,6 @@ ofertante
 
 ---
 
-# vetores
-
-Conjunto de valores de mesmo tipo.
-
-```{r}
-c(1, 6, 11, 16, 21)
-1:5
-```
-
----
-
-# vetores
-
-Com `subsetting` podemos escolher partes do vetor
-
-```{r}
-vetor <- c(1, 6, 11, 16, 21)
-
-vetor[1]
-vetor[c(2, 4)]
-vetor[-1]
-vetor[-c(2, 4)]
-```
-
----
-
-# vetores
-
-Com `subsetting` podemos escolher partes do vetor
-
-```{r}
-vetor[c(TRUE, FALSE, FALSE, TRUE)]
-
-vetor[!c(TRUE, FALSE, FALSE, TRUE)]
-
-vetor[c(TRUE, FALSE, FALSE, FALSE)]
-```
-
----
-
 # objetos: tipos
 
 ```{r}
@@ -283,7 +250,7 @@ class(ofertante) # caracteres (strings)
 # objetos: tipos
 
 ```{r}
-iris[1:5, ]
+head(iris)
 class(iris) # data.frame (bases de dados)
 ```
 
@@ -317,6 +284,46 @@ background-size: 100%
 
 ---
 
+# vetores
+
+Conjunto de valores de mesmo tipo.
+
+```{r}
+c(1, 6, 11, 16, 21)
+1:5
+```
+
+---
+
+# vetores
+
+Com `subsetting` podemos escolher partes do vetor
+
+```{r}
+vetor <- c(1, 6, 11, 16)
+
+vetor[1]
+vetor[c(2, 4)]
+vetor[-1]
+vetor[-c(2, 4)]
+```
+
+---
+
+# vetores
+
+Com `subsetting` podemos escolher partes do vetor
+
+```{r}
+vetor[c(TRUE, FALSE, FALSE, TRUE)]
+
+vetor[!c(TRUE, FALSE, FALSE, TRUE)]
+
+vetor[c(TRUE, FALSE, FALSE, FALSE)]
+```
+
+---
+
 # erros: sintaxe
 
 .center[
@@ -330,7 +337,6 @@ Iingua
 Lingua
 lingua
 ```
-
 
 ---
 
@@ -367,10 +373,14 @@ ofertante + horas
 **Leia as mensagens**: elas ajudam a identificar erros.
 
 ---
+background-image: url(www/programar.gif)
+background-size: 100%
+
+---
 
 # comparação
 
-```{r, eval = FALSE}
+```{r}
 # maior
 2 + 2 > 4
 
@@ -388,7 +398,7 @@ horas <= 5
 
 # comparação
 
-```{r, eval = FALSE}
+```{r}
 # igual
 horas == 2
 
@@ -410,6 +420,15 @@ TRUE | FALSE
 # e
 TRUE & FALSE
 
+# negação / não
+!FALSE
+```
+
+---
+
+# operadores lógicos
+
+```{r}
 # todos
 all(1:5 > 2)
 
@@ -566,13 +585,28 @@ for (cada_nome in nomes) {
 }
 ```
 
+---
+
+# Controles de fluxo
+
+```{r, eval = FALSE}
+nomes <- c("Ana", "João", "Maria")
+
+for (cada_nome in nomes) {
+  print(paste("Olá ", cada_nome, "!", sep = ""))
+}
+```
+
 ### Atenção!
 
 Devemos preferir operações vetorizadas aos loops ou laços (for) no <a>R</a>.
 Apesar disso, eles também tem seu espaço.
 
+```{r}
+paste("Olá ", nomes, "!", sep = "")
+```
+
 ---
 background-image: url(www/programar.gif)
 background-size: 100%
 class: inverse
-
