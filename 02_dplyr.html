@@ -1,0 +1,1216 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <title>02_dplyr.utf8.md</title>
+    <meta charset="utf-8" />
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/remark-css/default-fonts.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+
+background-image: url(www/slide1.png)
+background-size: cover
+
+&lt;link rel="stylesheet" type="text/css" href="enap.css"&gt;
+
+---
+
+
+
+# Percurso do curso
+
+&lt;br/&gt;
+&lt;br/&gt;
+
+1. [Noções](#13) de **R**
+
+2. Como [importar](#30) os dados?
+
+3. Como [transformar](#35) os dados?
+
+4. Como [visualizar](#75) os dados?
+
+
+---
+# Percurso de hoje
+
+&lt;br/&gt;
+&lt;br/&gt;
+
+1. Manipulação de linhas
+
+2. Manipulação de colunas
+
+3. Criar sumários
+
+4. Unir tabelas
+
+5. Pivotear tabelas
+
+---
+class: inverse, center, middle
+
+# Como &lt;a&gt;transformar&lt;/a&gt; os dados
+
+---
+background-image: url(www/data-science.png)
+background-size: 100%
+class: center
+
+# &lt;a&gt;Ciclo&lt;/a&gt; de análise de dados
+
+---
+background-image: url(www/pipe.jpg)
+background-size: 85%
+class: center
+
+---
+
+
+
+
+# %&gt;% (pipe)
+
+O &lt;a&gt;pipe&lt;/a&gt; está baseado na pintura do artista belga Magritte.
+
+
+```r
+valores &lt;- rnorm(10, 10, 2)
+mean(abs(diff(valores)))
+```
+
+```
+## [1] 2.22
+```
+
+&lt;br&gt;
+
+Vejamos a mesma operação com o &lt;a&gt;pipe&lt;/a&gt;
+
+
+```r
+# Ceci n'est pas une "operador"
+library(magrittr)
+```
+
+```
+## 
+## Attaching package: 'magrittr'
+```
+
+```
+## The following object is masked from 'package:purrr':
+## 
+##     set_names
+```
+
+```
+## The following object is masked from 'package:tidyr':
+## 
+##     extract
+```
+
+```r
+valores %&gt;% 
+  diff() %&gt;% 
+  abs() %&gt;% 
+  mean()
+```
+
+```
+## [1] 2.22
+```
+
+---
+
+# &lt;a&gt;dplyr&lt;/a&gt; e &lt;a&gt;tidyr&lt;/a&gt;
+
+Uma filosofia comum:
+
+1. O primeiro argumento de cada função é um data.frame
+
+2. Os argumentos posteriores descrever o que fazer com o data.frame, usando o nome das variáveis (sem aspas).
+
+3. Toda função retorna um data.frame
+
+.pull-left.img[
+  ![](www/dplyr.png)
+]
+
+.pull-right.img[
+  ![](www/tidyr.png)
+]
+
+---
+
+# dplyr: principais &lt;a&gt;verbos&lt;/a&gt;
+
+&lt;br/&gt;
+&lt;br/&gt;
+
+1. Pegar as observações por seus valores (&lt;a&gt;filter()&lt;/a&gt;).
+
+2. Reordenar as linhas (&lt;a&gt;arrange()&lt;/a&gt;).
+
+3. Pegar variáveis por seus nomes (&lt;a&gt;select()&lt;/a&gt;).
+
+4. Criar novas criáveis com base em variáveis existentes (&lt;a&gt;mutate()&lt;/a&gt;).
+
+5. Reduzir muitos valores à um sumário (&lt;a&gt;summarise()&lt;/a&gt;).
+
+---
+
+# filter
+
+Use &lt;a&gt;filter()&lt;/a&gt; para definir as condições para que as observações 
+(linhas) sejam mantidas no data.frame.
+
+A condição deve ser uma expressão que deve ser avaliada num vetor lógico.
+
+
+```r
+filter(data.frame,  condicao)
+
+# ou com pipe
+data.frame %&gt;% 
+  filter(condicao)
+```
+
+Mais de uma condições podem ser passadas. Neste caso apenas as observações 
+que satisfaçam todas as condições serão mantidas.
+
+---
+
+# filter
+
+
+```r
+imdb %&gt;% 
+  filter(diretor ==  "Walter Salles")
+```
+
+```
+## # A tibble: 1 x 15
+##   titulo   ano diretor duracao cor   generos pais  classificacao orcamento
+##   &lt;chr&gt;  &lt;int&gt; &lt;chr&gt;     &lt;int&gt; &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;             &lt;int&gt;
+## 1 Dark …  2005 Walter…     103 Color Drama|… USA   A partir de …  30000000
+## # … with 6 more variables: receita &lt;int&gt;, nota_imdb &lt;dbl&gt;,
+## #   likes_facebook &lt;int&gt;, ator_1 &lt;chr&gt;, ator_2 &lt;chr&gt;, ator_3 &lt;chr&gt;
+```
+
+---
+
+# filter
+
+
+```r
+imdb %&gt;% 
+  filter(ano &gt;= 2015)
+```
+
+```
+## # A tibble: 248 x 15
+##    titulo   ano diretor duracao cor   generos pais  classificacao orcamento
+##    &lt;chr&gt;  &lt;int&gt; &lt;chr&gt;     &lt;int&gt; &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;             &lt;int&gt;
+##  1 Aveng…  2015 Joss W…     141 Color Action… USA   A partir de … 250000000
+##  2 Batma…  2016 Zack S…     183 Color Action… USA   A partir de … 250000000
+##  3 Capta…  2016 Anthon…     147 Color Action… USA   A partir de … 250000000
+##  4 Juras…  2015 Colin …     124 Color Action… USA   A partir de … 150000000
+##  5 Furio…  2015 James …     140 Color Action… USA   A partir de … 190000000
+##  6 The G…  2015 Peter …      93 Color Advent… USA   Livre                NA
+##  7 Star …  2016 Justin…     122 Color Action… USA   A partir de … 185000000
+##  8 Jupit…  2015 Lana W…     127 Color Action… USA   A partir de … 176000000
+##  9 The L…  2016 David …     110 Color Action… USA   A partir de … 180000000
+## 10 X-Men…  2016 Bryan …     144 Color Action… USA   A partir de … 178000000
+## # … with 238 more rows, and 6 more variables: receita &lt;int&gt;,
+## #   nota_imdb &lt;dbl&gt;, likes_facebook &lt;int&gt;, ator_1 &lt;chr&gt;, ator_2 &lt;chr&gt;,
+## #   ator_3 &lt;chr&gt;
+```
+
+---
+
+# Atenção!
+
+Operações com pontos flutuante (não inteiros) podem causar dor de cabeça.
+
+
+```r
+sqrt(2) ^ 2 == 2
+```
+
+```
+## [1] FALSE
+```
+
+```r
+1 / 49 * 49 == 1
+```
+
+```
+## [1] FALSE
+```
+
+Evite-as com &lt;a&gt;near()&lt;/a&gt;.
+
+
+```r
+near(sqrt(2) ^ 2, 2)
+```
+
+```
+## [1] TRUE
+```
+
+```r
+near(1 / 49 * 49, 1)
+```
+
+```
+## [1] TRUE
+```
+
+---
+
+# filter
+
+
+```r
+imdb %&gt;% 
+  filter(cor != "Color")
+```
+
+```
+## # A tibble: 149 x 15
+##    titulo   ano diretor duracao cor   generos pais  classificacao orcamento
+##    &lt;chr&gt;  &lt;int&gt; &lt;chr&gt;     &lt;int&gt; &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;             &lt;int&gt;
+##  1 Pearl…  2001 Michae…     184 Blac… Action… USA   A partir de … 140000000
+##  2 The A…  2004 Martin…     170 Blac… Biogra… USA   A partir de … 110000000
+##  3 Ali     2001 Michae…     165 Blac… Biogra… USA   A partir de … 107000000
+##  4 Erago…  2006 Stefen…     104 Blac… Action… USA   Livre         100000000
+##  5 Seabi…  2003 Gary R…     140 Blac… Drama|… USA   A partir de …  87000000
+##  6 Bewit…    NA &lt;NA&gt;         25 Blac… Comedy… USA   Outros               NA
+##  7 Nine    2009 Rob Ma…     118 Blac… Drama|… USA   A partir de …  80000000
+##  8 The L…  2003 Stephe…     110 Blac… Action… USA   A partir de …  78000000
+##  9 War H…  2011 Steven…     146 Blac… Drama|… USA   A partir de …  66000000
+## 10 Space…  2000 Clint …     130 Blac… Action… USA   A partir de …  65000000
+## # … with 139 more rows, and 6 more variables: receita &lt;int&gt;,
+## #   nota_imdb &lt;dbl&gt;, likes_facebook &lt;int&gt;, ator_1 &lt;chr&gt;, ator_2 &lt;chr&gt;,
+## #   ator_3 &lt;chr&gt;
+```
+
+---
+
+# filter
+
+
+```r
+imdb %&gt;% 
+  filter(diretor %in% c("Tim Burton", "Spike Lee"))
+```
+
+```
+## # A tibble: 32 x 15
+##    titulo   ano diretor duracao cor   generos pais  classificacao orcamento
+##    &lt;chr&gt;  &lt;int&gt; &lt;chr&gt;     &lt;int&gt; &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;             &lt;int&gt;
+##  1 Alice…  2010 Tim Bu…     108 Color Advent… USA   Livre         200000000
+##  2 Charl…  2005 Tim Bu…     115 Color Advent… USA   Livre         150000000
+##  3 Dark …  2012 Tim Bu…     113 Color Comedy… USA   A partir de … 100000000
+##  4 Plane…  2001 Tim Bu…     119 Color Action… USA   A partir de … 100000000
+##  5 Batma…  1992 Tim Bu…     126 Color Action  USA   A partir de …  80000000
+##  6 Mars …  1996 Tim Bu…     106 Color Action… USA   A partir de …  70000000
+##  7 Big F…  2003 Tim Bu…     125 Color Advent… USA   A partir de …  70000000
+##  8 Insid…  2006 Spike …     129 Color Crime|… USA   A partir de …  45000000
+##  9 Mirac…  2008 Spike …     160 Color Action… USA   A partir de …  45000000
+## 10 Frank…  2012 Tim Bu…      87 Blac… Animat… USA   Livre          39000000
+## # … with 22 more rows, and 6 more variables: receita &lt;int&gt;,
+## #   nota_imdb &lt;dbl&gt;, likes_facebook &lt;int&gt;, ator_1 &lt;chr&gt;, ator_2 &lt;chr&gt;,
+## #   ator_3 &lt;chr&gt;
+```
+
+---
+background-image: url(www/programar.gif)
+background-size: 100%
+class: inverse
+
+---
+
+# arrange
+
+Use &lt;a&gt;arrange()&lt;/a&gt; para reordenar as observações (linhas) de acordo com os 
+valores de algumas colunas. Por padrão as linhas são apresentadas em ordem 
+crescente, mas esse comportamento pode ser alterado usando a função &lt;a&gt;desc&lt;/a&gt;.
+
+
+```r
+arrange(data.frame, coluna1)
+
+data.frame %&gt;% 
+  arrange(coluna1)
+
+data.frame %&gt;% 
+  arrange(desc(coluna1))
+```
+
+
+---
+
+# arrange
+
+Use &lt;a&gt;arrange()&lt;/a&gt; para reordenar as observações (linhas)
+
+
+```r
+imdb %&gt;% 
+  arrange(nota_imdb)
+```
+
+```
+## # A tibble: 3,807 x 15
+##    titulo   ano diretor duracao cor   generos pais  classificacao orcamento
+##    &lt;chr&gt;  &lt;int&gt; &lt;chr&gt;     &lt;int&gt; &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;             &lt;int&gt;
+##  1 Justi…  2011 Jon M.…     115 Color Docume… USA   Outros         13000000
+##  2 Foodf…  2012 Lawren…      91 Color Action… USA   Livre          65000000
+##  3 Disas…  2008 Jason …      88 Color Comedy  USA   A partir de …  25000000
+##  4 The H…  2005 A. Rav…      97 Color Action… USA   A partir de …   1000000
+##  5 Who's…  2007 Don Mi…      93 Color Comedy… USA   A partir de …   7000000
+##  6 From …  2003 Robert…      90 Color Comedy… USA   Livre          12000000
+##  7 Glitt…  2001 Vondie…     104 Color Drama|… USA   A partir de …  22000000
+##  8 Cross…  2006 Presto…      95 Color Action… USA   A partir de …   5600000
+##  9 Son o…  2005 Lawren…      94 Color Comedy… USA   Livre          84000000
+## 10 Snow …  2012 David …      83 Color Horror  USA   A partir de …   1000000
+## # … with 3,797 more rows, and 6 more variables: receita &lt;int&gt;,
+## #   nota_imdb &lt;dbl&gt;, likes_facebook &lt;int&gt;, ator_1 &lt;chr&gt;, ator_2 &lt;chr&gt;,
+## #   ator_3 &lt;chr&gt;
+```
+
+---
+
+# arrange
+
+Use &lt;a&gt;arrange()&lt;/a&gt; para reordenar as observações (linhas)
+
+
+```r
+imdb %&gt;% 
+  arrange(ano, desc(nota_imdb))
+```
+
+```
+## # A tibble: 3,807 x 15
+##    titulo   ano diretor duracao cor   generos pais  classificacao orcamento
+##    &lt;chr&gt;  &lt;int&gt; &lt;chr&gt;     &lt;int&gt; &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;             &lt;int&gt;
+##  1 Intol…  1916 D.W. G…     123 Blac… Drama|… USA   Outros           385907
+##  2 Over …  1920 Harry …     110 Blac… Crime|… USA   Outros           100000
+##  3 The B…  1925 King V…     151 Blac… Drama|… USA   Outros           245000
+##  4 The B…  1929 Harry …     100 Blac… Musica… USA   Outros           379000
+##  5 Hell'…  1930 Howard…      96 Blac… Drama|… USA   Outros          3950000
+##  6 A Far…  1932 Frank …      79 Blac… Drama|… USA   Outros           800000
+##  7 42nd …  1933 Lloyd …      89 Blac… Comedy… USA   Outros           439000
+##  8 She D…  1933 Lowell…      66 Blac… Comedy… USA   Outros           200000
+##  9 It Ha…  1934 Frank …      65 Blac… Comedy… USA   Outros           325000
+## 10 Top H…  1935 Mark S…      81 Blac… Comedy… USA   Outros           609000
+## # … with 3,797 more rows, and 6 more variables: receita &lt;int&gt;,
+## #   nota_imdb &lt;dbl&gt;, likes_facebook &lt;int&gt;, ator_1 &lt;chr&gt;, ator_2 &lt;chr&gt;,
+## #   ator_3 &lt;chr&gt;
+```
+
+---
+background-image: url(www/programar.gif)
+background-size: 100%
+class: inverse
+
+---
+
+# select
+
+Use &lt;a&gt;select()&lt;/a&gt; para nomear as variáveis (colunas) que quer manter ou 
+remover do data.frame.
+
+
+```r
+select(data.frame, coluna1, coluna2)
+
+# ou com o pipe
+data.frame %&gt;% 
+  select(coluna1, coluna2)
+
+data.frame %&gt;% 
+  select(-coluna1)
+```
+
+---
+
+# select
+
+Formas mais comuns de usar o &lt;a&gt;select&lt;/a&gt;
+
+
+```r
+imdb %&gt;% 
+  select(titulo, ano, diretor, duracao)
+```
+
+```
+## # A tibble: 3,807 x 4
+##    titulo                                      ano diretor          duracao
+##    &lt;chr&gt;                                     &lt;int&gt; &lt;chr&gt;              &lt;int&gt;
+##  1 Avatar                                     2009 James Cameron        178
+##  2 Pirates of the Caribbean: At World's End   2007 Gore Verbinski       169
+##  3 The Dark Knight Rises                      2012 Christopher Nol…     164
+##  4 John Carter                                2012 Andrew Stanton       132
+##  5 Spider-Man 3                               2007 Sam Raimi            156
+##  6 Tangled                                    2010 Nathan Greno         100
+##  7 Avengers: Age of Ultron                    2015 Joss Whedon          141
+##  8 Batman v Superman: Dawn of Justice         2016 Zack Snyder          183
+##  9 Superman Returns                           2006 Bryan Singer         169
+## 10 Pirates of the Caribbean: Dead Man's Che…  2006 Gore Verbinski       151
+## # … with 3,797 more rows
+```
+
+---
+
+# select
+
+Formas mais comuns de usar o &lt;a&gt;select&lt;/a&gt;
+
+
+```r
+imdb %&gt;% 
+  select(-likes_facebook, -ator_1, -ator_2, -ator_3)
+```
+
+```
+## # A tibble: 3,807 x 11
+##    titulo   ano diretor duracao cor   generos pais  classificacao orcamento
+##    &lt;chr&gt;  &lt;int&gt; &lt;chr&gt;     &lt;int&gt; &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;             &lt;int&gt;
+##  1 Avata…  2009 James …     178 Color Action… USA   A partir de … 237000000
+##  2 Pirat…  2007 Gore V…     169 Color Action… USA   A partir de … 300000000
+##  3 The D…  2012 Christ…     164 Color Action… USA   A partir de … 250000000
+##  4 John …  2012 Andrew…     132 Color Action… USA   A partir de … 263700000
+##  5 Spide…  2007 Sam Ra…     156 Color Action… USA   A partir de … 258000000
+##  6 Tangl…  2010 Nathan…     100 Color Advent… USA   Livre         260000000
+##  7 Aveng…  2015 Joss W…     141 Color Action… USA   A partir de … 250000000
+##  8 Batma…  2016 Zack S…     183 Color Action… USA   A partir de … 250000000
+##  9 Super…  2006 Bryan …     169 Color Action… USA   A partir de … 209000000
+## 10 Pirat…  2006 Gore V…     151 Color Action… USA   A partir de … 225000000
+## # … with 3,797 more rows, and 2 more variables: receita &lt;int&gt;,
+## #   nota_imdb &lt;dbl&gt;
+```
+
+---
+
+# select
+
+Formas mais comuns de usar o &lt;a&gt;select&lt;/a&gt;
+
+
+```r
+imdb %&gt;% 
+  select(titulo:duracao)
+```
+
+```
+## # A tibble: 3,807 x 4
+##    titulo                                      ano diretor          duracao
+##    &lt;chr&gt;                                     &lt;int&gt; &lt;chr&gt;              &lt;int&gt;
+##  1 Avatar                                     2009 James Cameron        178
+##  2 Pirates of the Caribbean: At World's End   2007 Gore Verbinski       169
+##  3 The Dark Knight Rises                      2012 Christopher Nol…     164
+##  4 John Carter                                2012 Andrew Stanton       132
+##  5 Spider-Man 3                               2007 Sam Raimi            156
+##  6 Tangled                                    2010 Nathan Greno         100
+##  7 Avengers: Age of Ultron                    2015 Joss Whedon          141
+##  8 Batman v Superman: Dawn of Justice         2016 Zack Snyder          183
+##  9 Superman Returns                           2006 Bryan Singer         169
+## 10 Pirates of the Caribbean: Dead Man's Che…  2006 Gore Verbinski       151
+## # … with 3,797 more rows
+```
+
+---
+
+# select
+
+Formas mais comuns de usar o &lt;a&gt;select&lt;/a&gt;
+
+
+```r
+imdb %&gt;% 
+  select(- (likes_facebook:ator_3))
+```
+
+```
+## # A tibble: 3,807 x 11
+##    titulo   ano diretor duracao cor   generos pais  classificacao orcamento
+##    &lt;chr&gt;  &lt;int&gt; &lt;chr&gt;     &lt;int&gt; &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;             &lt;int&gt;
+##  1 Avata…  2009 James …     178 Color Action… USA   A partir de … 237000000
+##  2 Pirat…  2007 Gore V…     169 Color Action… USA   A partir de … 300000000
+##  3 The D…  2012 Christ…     164 Color Action… USA   A partir de … 250000000
+##  4 John …  2012 Andrew…     132 Color Action… USA   A partir de … 263700000
+##  5 Spide…  2007 Sam Ra…     156 Color Action… USA   A partir de … 258000000
+##  6 Tangl…  2010 Nathan…     100 Color Advent… USA   Livre         260000000
+##  7 Aveng…  2015 Joss W…     141 Color Action… USA   A partir de … 250000000
+##  8 Batma…  2016 Zack S…     183 Color Action… USA   A partir de … 250000000
+##  9 Super…  2006 Bryan …     169 Color Action… USA   A partir de … 209000000
+## 10 Pirat…  2006 Gore V…     151 Color Action… USA   A partir de … 225000000
+## # … with 3,797 more rows, and 2 more variables: receita &lt;int&gt;,
+## #   nota_imdb &lt;dbl&gt;
+```
+
+---
+
+# select
+
+Formas menos comuns de usar o &lt;a&gt;select&lt;/a&gt;
+
+1. starts_with("abc"): seleciona variáveis que começam com "abc".
+
+2. ends_with("xyz"): seleciona variáveis que terminam com "xyz".
+
+3. contains("ijk"): seleciona variáveis que contenham "ijk".
+
+4. matches("[a-z]{3}"): seleciona variáveis que satisfaçam a 
+expressão regular "[a-z]{3}". 
+
+5. num_range("x", 1:3): seleciona x1, x2 and x3.
+
+---
+
+# select
+
+Formas menos comuns de usar o &lt;a&gt;select&lt;/a&gt;
+
+
+```r
+imdb %&gt;% 
+  select(1, 2, 3)
+```
+
+```
+## # A tibble: 3,807 x 3
+##    titulo                                        ano diretor          
+##    &lt;chr&gt;                                       &lt;int&gt; &lt;chr&gt;            
+##  1 Avatar                                       2009 James Cameron    
+##  2 Pirates of the Caribbean: At World's End     2007 Gore Verbinski   
+##  3 The Dark Knight Rises                        2012 Christopher Nolan
+##  4 John Carter                                  2012 Andrew Stanton   
+##  5 Spider-Man 3                                 2007 Sam Raimi        
+##  6 Tangled                                      2010 Nathan Greno     
+##  7 Avengers: Age of Ultron                      2015 Joss Whedon      
+##  8 Batman v Superman: Dawn of Justice           2016 Zack Snyder      
+##  9 Superman Returns                             2006 Bryan Singer     
+## 10 Pirates of the Caribbean: Dead Man's Chest   2006 Gore Verbinski   
+## # … with 3,797 more rows
+```
+
+---
+
+# select
+
+Formas menos comuns de usar o &lt;a&gt;select&lt;/a&gt;
+
+
+```r
+imdb %&gt;% 
+  select(contains("ator"))
+```
+
+```
+## # A tibble: 3,807 x 3
+##    ator_1          ator_2            ator_3              
+##    &lt;chr&gt;           &lt;chr&gt;             &lt;chr&gt;               
+##  1 CCH Pounder     Joel David Moore  Wes Studi           
+##  2 Johnny Depp     Orlando Bloom     Jack Davenport      
+##  3 Tom Hardy       Christian Bale    Joseph Gordon-Levitt
+##  4 Daryl Sabara    Samantha Morton   Polly Walker        
+##  5 J.K. Simmons    James Franco      Kirsten Dunst       
+##  6 Brad Garrett    Donna Murphy      M.C. Gainey         
+##  7 Chris Hemsworth Robert Downey Jr. Scarlett Johansson  
+##  8 Henry Cavill    Lauren Cohan      Alan D. Purwin      
+##  9 Kevin Spacey    Marlon Brando     Frank Langella      
+## 10 Johnny Depp     Orlando Bloom     Jack Davenport      
+## # … with 3,797 more rows
+```
+
+---
+
+# select
+
+Formas menos comuns de usar o &lt;a&gt;select&lt;/a&gt;
+
+
+```r
+imdb %&gt;% 
+  select(starts_with("d") )
+```
+
+```
+## # A tibble: 3,807 x 2
+##    diretor           duracao
+##    &lt;chr&gt;               &lt;int&gt;
+##  1 James Cameron         178
+##  2 Gore Verbinski        169
+##  3 Christopher Nolan     164
+##  4 Andrew Stanton        132
+##  5 Sam Raimi             156
+##  6 Nathan Greno          100
+##  7 Joss Whedon           141
+##  8 Zack Snyder           183
+##  9 Bryan Singer          169
+## 10 Gore Verbinski        151
+## # … with 3,797 more rows
+```
+
+---
+
+# select
+
+Formas menos comuns de usar o &lt;a&gt;select&lt;/a&gt;
+
+
+```r
+imdb %&gt;% 
+  select(ends_with("o"))
+```
+
+```
+## # A tibble: 3,807 x 5
+##    titulo                            ano duracao classificacao    orcamento
+##    &lt;chr&gt;                           &lt;int&gt;   &lt;int&gt; &lt;chr&gt;                &lt;int&gt;
+##  1 Avatar                           2009     178 A partir de 13 … 237000000
+##  2 Pirates of the Caribbean: At W…  2007     169 A partir de 13 … 300000000
+##  3 The Dark Knight Rises            2012     164 A partir de 13 … 250000000
+##  4 John Carter                      2012     132 A partir de 13 … 263700000
+##  5 Spider-Man 3                     2007     156 A partir de 13 … 258000000
+##  6 Tangled                          2010     100 Livre            260000000
+##  7 Avengers: Age of Ultron          2015     141 A partir de 13 … 250000000
+##  8 Batman v Superman: Dawn of Jus…  2016     183 A partir de 13 … 250000000
+##  9 Superman Returns                 2006     169 A partir de 13 … 209000000
+## 10 Pirates of the Caribbean: Dead…  2006     151 A partir de 13 … 225000000
+## # … with 3,797 more rows
+```
+
+---
+background-image: url(www/programar.gif)
+background-size: 100%
+class: inverse
+
+---
+
+# mutate
+
+Use &lt;a&gt;mutate()&lt;/a&gt; para criar novas variáveis baseadas nas variáveis existentes
+
+
+```r
+mutate(data.frame, coluna_nova = coluna_velha + 3)
+
+data.frame %&gt;% 
+  mutate(coluna_nova = coluna_velha + 3)
+
+# É possível usar as variáveis recém criadas
+data.frame %&gt;% 
+  mutate(coluna_nova = coluna_velha + 3,
+         coluna_mais_nova = 2 * coluna_nova)
+```
+
+---
+
+# mutate
+
+Use &lt;a&gt;mutate()&lt;/a&gt; para criar novas variáveis baseadas nas variáveis existentes
+
+
+```r
+imdb %&gt;% 
+  mutate(orcamento = orcamento / 1000000) # em milhoes
+```
+
+```
+## # A tibble: 3,807 x 15
+##    titulo   ano diretor duracao cor   generos pais  classificacao orcamento
+##    &lt;chr&gt;  &lt;int&gt; &lt;chr&gt;     &lt;int&gt; &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;             &lt;dbl&gt;
+##  1 Avata…  2009 James …     178 Color Action… USA   A partir de …      237 
+##  2 Pirat…  2007 Gore V…     169 Color Action… USA   A partir de …      300 
+##  3 The D…  2012 Christ…     164 Color Action… USA   A partir de …      250 
+##  4 John …  2012 Andrew…     132 Color Action… USA   A partir de …      264.
+##  5 Spide…  2007 Sam Ra…     156 Color Action… USA   A partir de …      258 
+##  6 Tangl…  2010 Nathan…     100 Color Advent… USA   Livre              260 
+##  7 Aveng…  2015 Joss W…     141 Color Action… USA   A partir de …      250 
+##  8 Batma…  2016 Zack S…     183 Color Action… USA   A partir de …      250 
+##  9 Super…  2006 Bryan …     169 Color Action… USA   A partir de …      209 
+## 10 Pirat…  2006 Gore V…     151 Color Action… USA   A partir de …      225 
+## # … with 3,797 more rows, and 6 more variables: receita &lt;int&gt;,
+## #   nota_imdb &lt;dbl&gt;, likes_facebook &lt;int&gt;, ator_1 &lt;chr&gt;, ator_2 &lt;chr&gt;,
+## #   ator_3 &lt;chr&gt;
+```
+
+---
+
+# mutate
+
+Funções úteis para criar novas variáveis
+
+1. Operadores aritiméticos: &lt;a&gt;+&lt;/a&gt;, &lt;a&gt;-&lt;/a&gt;, &lt;a&gt;*&lt;/a&gt;, &lt;a&gt;/&lt;/a&gt; e &lt;a&gt;^&lt;/a&gt;;
+
+2. Operadores modulares: &lt;a&gt;%/%&lt;/a&gt; (inteiro da divisão) e &lt;a&gt;%%&lt;/a&gt; (resto);
+
+3. Operações acumuladas: &lt;a&gt;cumsum()&lt;/a&gt;, &lt;a&gt;cumprod()&lt;/a&gt;, &lt;a&gt;cummin()&lt;/a&gt;, 
+&lt;a&gt;cummax()&lt;/a&gt; e &lt;a&gt;cummean()&lt;/a&gt;;
+
+4. Operadores lógicos: &lt;a&gt;&lt;&lt;/a&gt;, &lt;a&gt;&lt;=&lt;/a&gt;, &lt;a&gt;&gt;&lt;/a&gt;, &lt;a&gt;&gt;=&lt;/a&gt;,  
+&lt;a&gt;!=&lt;/a&gt; e &lt;a&gt;==&lt;/a&gt;
+
+---
+background-image: url(www/programar.gif)
+background-size: 100%
+class: inverse
+
+---
+
+# group_by
+
+Use &lt;a&gt;group_by()&lt;/a&gt; para agrupar os dados e realizar operações para cada grupo
+
+É usado em conjunto com outros verbos. Ele qualifica os demais verbos 
+e as ações passam a ocorrer separadamente para cada grupo
+
+
+```r
+group_by(data.frame, coluna1)
+
+data.frame %&gt;% 
+  group_by(coluna1)
+
+# Os grupos podem ser compostos por mais de uma coluna
+data.frame %&gt;% 
+  group_by(coluna1, coluna2)
+```
+
+---
+
+# group_by
+
+Use &lt;a&gt;group_by()&lt;/a&gt; para agrupar os dados e realizar operações para cada grupo
+
+É usado em conjunto com outros verbos. Ele qualifica os demais verbos 
+e as ações passam a ocorrer separadamente para cada grupo
+
+
+```r
+imdb %&gt;% 
+  group_by(diretor) %&gt;% 
+  filter(nota_imdb == max(nota_imdb, na.rm = TRUE))
+```
+
+```
+## # A tibble: 1,904 x 15
+## # Groups:   diretor [1,813]
+##    titulo   ano diretor duracao cor   generos pais  classificacao orcamento
+##    &lt;chr&gt;  &lt;int&gt; &lt;chr&gt;     &lt;int&gt; &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;             &lt;int&gt;
+##  1 Tangl…  2010 Nathan…     100 Color Advent… USA   Livre         260000000
+##  2 The A…  2012 Joss W…     173 Color Action… USA   A partir de … 220000000
+##  3 Capta…  2016 Anthon…     147 Color Action… USA   A partir de … 250000000
+##  4 Juras…  2015 Colin …     124 Color Action… USA   A partir de … 150000000
+##  5 Monst…  2013 Dan Sc…     104 Color Advent… USA   Outros        200000000
+##  6 Toy S…  2010 Lee Un…     103 Color Advent… USA   Outros        200000000
+##  7 Pacif…  2013 Guille…     131 Color Action… USA   A partir de … 190000000
+##  8 The G…  2015 Peter …      93 Color Advent… USA   Livre                NA
+##  9 Brave   2012 Mark A…      93 Color Advent… USA   Livre         185000000
+## 10 Star …  2016 Justin…     122 Color Action… USA   A partir de … 185000000
+## # … with 1,894 more rows, and 6 more variables: receita &lt;int&gt;,
+## #   nota_imdb &lt;dbl&gt;, likes_facebook &lt;int&gt;, ator_1 &lt;chr&gt;, ator_2 &lt;chr&gt;,
+## #   ator_3 &lt;chr&gt;
+```
+
+---
+
+# summarise
+
+Use &lt;a&gt;summarise()&lt;/a&gt; para criar resumos dos dados. As funções passadas devem 
+retornar um único valor
+
+
+```r
+summarise(data.frame, media = mean(coluna1))
+
+data.frame %&gt;% 
+  summarise(media = mean(coluna1))
+
+data.frame %&gt;% 
+  summarise(media = mean(coluna1),
+            maximo = max(coluna1))
+```
+
+---
+
+# summarise
+
+Use &lt;a&gt;summarise()&lt;/a&gt; para criar resumos dos dados. As funções passadas devem 
+retornar um único valor
+
+
+```r
+imdb %&gt;% 
+  summarise(media = mean(nota_imdb, na.rm = TRUE))
+```
+
+```
+## # A tibble: 1 x 1
+##   media
+##   &lt;dbl&gt;
+## 1  6.37
+```
+
+---
+
+# summarise
+
+Use &lt;a&gt;summarise()&lt;/a&gt; para criar resumos dos dados. As funções passadas devem 
+retornar um único valor
+
+
+```r
+imdb %&gt;% 
+  group_by(diretor) %&gt;% 
+  summarise(media = mean(nota_imdb, na.rm = TRUE)) %&gt;% 
+  arrange(desc(media))
+```
+
+```
+## # A tibble: 1,813 x 2
+##    diretor           media
+##    &lt;chr&gt;             &lt;dbl&gt;
+##  1 Irvin Kershner     8.8 
+##  2 Cary Bell          8.7 
+##  3 Mitchell Altieri   8.7 
+##  4 Charles Chaplin    8.6 
+##  5 Mike Mayhall       8.6 
+##  6 Damien Chazelle    8.5 
+##  7 Milos Forman       8.5 
+##  8 Ron Fricke         8.5 
+##  9 Stanley Kubrick    8.45
+## 10 Christopher Nolan  8.43
+## # … with 1,803 more rows
+```
+
+---
+
+# summarise
+
+Algumas funções frequentemente usadas com summarise:
+
+0. `sum()`: Soma do vetor
+
+1. `mean()`: Média do vetor
+
+2. `sd()`: Desvio padrão do vetor
+
+3. `median()`: Mediana do vetor
+
+4. `max()`: Maior valor do vetor
+
+5. `min()`: Menor valor do vetor
+
+6. `n()`: Conta a quantidade de valores do vetor
+
+7. `n_distinct()`: Conta a quantidade de valores únicos do valores
+
+---
+background-image: url(www/programar.gif)
+background-size: 100%
+class: inverse
+
+---
+class: inverse, center, middle
+
+# Como &lt;a&gt;organizar&lt;/a&gt; os dados
+
+---
+background-image: url(www/data-science.png)
+background-size: 100%
+class: center
+
+# &lt;a&gt;Ciclo&lt;/a&gt; de análise de dados
+
+---
+
+# &lt;a&gt;Princípios&lt;/a&gt;
+
+&lt;br&gt;&lt;br&gt;
+
+1. Cada &lt;a&gt;variável&lt;/a&gt; tem sua própria &lt;a&gt;coluna&lt;/a&gt;
+
+2. Cada &lt;a&gt;observação&lt;/a&gt; tem sua própria &lt;a&gt;linha&lt;/a&gt;
+
+3. Cada &lt;a&gt;unidade observacional&lt;/a&gt; tem sua própria &lt;a&gt;tabela&lt;/a&gt;
+
+---
+
+# &lt;a&gt;Princípios&lt;/a&gt;
+
+&lt;br&gt;&lt;br&gt;
+
+&gt; Famílias felizes são todas iguais, cada família infeliz é infeliz 
+à sua maneira
+
+.pull.right[Leon Tolstoy]
+
+&gt; Dados arrumados são todos iguais, cada dado bagunçado é bagunçado 
+à sua maneira
+
+.pull.right[Hadley Wickham]
+
+---
+background-image: url(www/original-dfs-tidy.png)
+background-size: 60%
+background-position: 50% 90%
+
+# &lt;a&gt;Formas&lt;/a&gt; de uma tabela
+
+---
+background-image: url(www/tidyr-spread-gather.gif)
+background-size: 45%
+background-position: 50% 100%
+
+# &lt;a&gt;Transformações&lt;/a&gt; de uma tabela
+
+---
+
+# &lt;a&gt;Juntar&lt;/a&gt;
+
+
+```r
+gather(data.frame, 
+       key = como_chamar_o_nome_das_colunas, 
+       value = como_chamar_o_variavel_com_valores, 
+       listar_colunas:que_serao_unidas)
+```
+
+---
+
+# &lt;a&gt;Juntar&lt;/a&gt;
+
+
+```r
+atores &lt;- imdb %&gt;% 
+  mutate(id = seq_along(titulo)) %&gt;% 
+  select(id, titulo, ator_1:ator_3)
+  
+atores
+```
+
+```
+## # A tibble: 3,807 x 5
+##       id titulo                      ator_1      ator_2       ator_3       
+##    &lt;int&gt; &lt;chr&gt;                       &lt;chr&gt;       &lt;chr&gt;        &lt;chr&gt;        
+##  1     1 Avatar                      CCH Pounder Joel David … Wes Studi    
+##  2     2 Pirates of the Caribbean: … Johnny Depp Orlando Blo… Jack Davenpo…
+##  3     3 The Dark Knight Rises       Tom Hardy   Christian B… Joseph Gordo…
+##  4     4 John Carter                 Daryl Saba… Samantha Mo… Polly Walker 
+##  5     5 Spider-Man 3                J.K. Simmo… James Franco Kirsten Dunst
+##  6     6 Tangled                     Brad Garre… Donna Murphy M.C. Gainey  
+##  7     7 Avengers: Age of Ultron     Chris Hems… Robert Down… Scarlett Joh…
+##  8     8 Batman v Superman: Dawn of… Henry Cavi… Lauren Cohan Alan D. Purw…
+##  9     9 Superman Returns            Kevin Spac… Marlon Bran… Frank Langel…
+## 10    10 Pirates of the Caribbean: … Johnny Depp Orlando Blo… Jack Davenpo…
+## # … with 3,797 more rows
+```
+
+---
+# &lt;a&gt;Juntar&lt;/a&gt;
+
+
+```r
+atores_tidy &lt;- gather(atores, key = papel, value = ator,
+                      -id, -titulo) %&gt;% 
+  filter(!is.na(ator))
+atores_tidy
+```
+
+```
+## # A tibble: 11,397 x 4
+##       id titulo                                      papel  ator           
+##    &lt;int&gt; &lt;chr&gt;                                       &lt;chr&gt;  &lt;chr&gt;          
+##  1     1 Avatar                                      ator_1 CCH Pounder    
+##  2     2 Pirates of the Caribbean: At World's End    ator_1 Johnny Depp    
+##  3     3 The Dark Knight Rises                       ator_1 Tom Hardy      
+##  4     4 John Carter                                 ator_1 Daryl Sabara   
+##  5     5 Spider-Man 3                                ator_1 J.K. Simmons   
+##  6     6 Tangled                                     ator_1 Brad Garrett   
+##  7     7 Avengers: Age of Ultron                     ator_1 Chris Hemsworth
+##  8     8 Batman v Superman: Dawn of Justice          ator_1 Henry Cavill   
+##  9     9 Superman Returns                            ator_1 Kevin Spacey   
+## 10    10 Pirates of the Caribbean: Dead Man's Chest  ator_1 Johnny Depp    
+## # … with 11,387 more rows
+```
+
+---
+
+# &lt;a&gt;Juntar&lt;/a&gt;
+
+
+```r
+atores_tidy &lt;- gather(atores, key = papel, value = ator,
+                      -id, -titulo) %&gt;% 
+  filter(!is.na(ator))
+atores_tidy
+```
+
+### Como ler
+
+&lt;a&gt;"Quero juntar todas as colunas de **atores**, exceto 'id' e 'titulo', em **papel** e **ator**."&lt;/a&gt;
+
+
+```r
+# Não tenha vergonha de pedir ajuda ao R
+?gather
+```
+
+---
+
+# &lt;a&gt;Espalhar&lt;/a&gt;
+
+
+```r
+spread(data.frame, 
+       key = separe_de_acordo_com_essa_coluna, 
+       value = separe_os_valores_dessa_coluna)
+```
+
+---
+
+# &lt;a&gt;Espalhar&lt;/a&gt;
+
+
+```r
+spread(atores_tidy, papel, ator)
+```
+
+```
+## # A tibble: 3,803 x 5
+##       id titulo                      ator_1      ator_2       ator_3       
+##    &lt;int&gt; &lt;chr&gt;                       &lt;chr&gt;       &lt;chr&gt;        &lt;chr&gt;        
+##  1     1 Avatar                      CCH Pounder Joel David … Wes Studi    
+##  2     2 Pirates of the Caribbean: … Johnny Depp Orlando Blo… Jack Davenpo…
+##  3     3 The Dark Knight Rises       Tom Hardy   Christian B… Joseph Gordo…
+##  4     4 John Carter                 Daryl Saba… Samantha Mo… Polly Walker 
+##  5     5 Spider-Man 3                J.K. Simmo… James Franco Kirsten Dunst
+##  6     6 Tangled                     Brad Garre… Donna Murphy M.C. Gainey  
+##  7     7 Avengers: Age of Ultron     Chris Hems… Robert Down… Scarlett Joh…
+##  8     8 Batman v Superman: Dawn of… Henry Cavi… Lauren Cohan Alan D. Purw…
+##  9     9 Superman Returns            Kevin Spac… Marlon Bran… Frank Langel…
+## 10    10 Pirates of the Caribbean: … Johnny Depp Orlando Blo… Jack Davenpo…
+## # … with 3,793 more rows
+```
+
+---
+
+# &lt;a&gt;Espalhar&lt;/a&gt;
+
+
+```r
+spread(atores_tidy, papel, ator)
+```
+
+### Como ler
+
+&lt;a&gt;"Em **atores_tidy**, quero espalhar para cada tipo de **papel** os valores de **ator**."&lt;/a&gt;
+
+
+```r
+# Não tenha vergonha de pedir ajuda ao R
+?spread 
+```
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();</script>
+
+<script>
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

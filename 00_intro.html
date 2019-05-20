@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <title>00_intro.utf8.md</title>
+    <meta charset="utf-8" />
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/remark-css/default-fonts.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+
+background-image: url(www/slide1.png)
+background-size: cover
+
+&lt;link rel="stylesheet" type="text/css" href="www/enap.css"&gt;
+
+
+---
+
+
+
+# Apresentações
+
+&lt;br&gt;
+
+
+* Tomás de Siervi Barcellos
+
+* &lt;a&gt;Coordenador de Inovação&lt;/a&gt; do Ministério da Agricultura, Pecuária e Abastecimento
+  
+* Dedicado ao estudo do &lt;a&gt;R&lt;/a&gt; há 3 anos
+
+---
+
+# Percurso do curso
+
+&lt;br/&gt;
+&lt;br/&gt;
+
+1. [Noções](#13) de **R**
+
+2. Como [importar](#30) os dados?
+
+3. Como [transformar](#35) os dados?
+
+4. Como [visualizar](#75) os dados?
+
+---
+
+# Percurso de hoje
+
+1. Motivação
+
+2. Objetos
+
+3. Vetores
+
+4. Comparações lógicas e numéricas
+
+5. Funções
+
+6. Controle de fluxo
+
+---
+
+class: center, middle
+
+# Para que aprender &lt;a&gt;R&lt;/a&gt;?
+
+---
+
+# Aprender R para
+
+1. Computação estatística
+
+
+```r
+t.test(extra ~ group, data = sleep)
+```
+
+```
+## 
+## 	Welch Two Sample t-test
+## 
+## data:  extra by group
+## t = -1.9, df = 18, p-value = 0.08
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  -3.3655  0.2055
+## sample estimates:
+## mean in group 1 mean in group 2 
+##            0.75            2.33
+```
+
+---
+
+# Aprender R para
+
+1. Computação estatística
+
+2. Gráficos
+
+
+```r
+ggplot(iris, aes(Petal.Width, Petal.Length, col = Species)) +
+  geom_point() + geom_smooth(method = "lm", se = FALSE) + theme_classic()
+```
+
+&lt;img src="00_intro_files/figure-html/unnamed-chunk-2-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+class: center, bottom, inverse
+background-image: url(www/decepcao.gif)
+background-size: 100%
+background-position: 50% 75%
+
+# Mas tem que aprender a programar?
+
+&lt;br&gt;
+
+---
+
+# Aprender R para
+
+1. Computação estatística
+
+2. Gráficos
+
+3. Pesquisa reprodutível
+
+![](www/crtl_c.jpg)
+
+---
+
+# Como vamos aprender &lt;a&gt;R&lt;/a&gt;?
+
+1. Explicação de conceitos / funções / ideias
+
+2. Escrever e executar os comandos
+
+3. Repetir algumas vezes `1` e `2`
+
+4. Exercícios
+
+---
+class: center, middle
+
+# &lt;a&gt;R&lt;/a&gt;
+
+[download](https://cloud.r-project.org/)
+
+---
+class: center, middle
+
+# &lt;a&gt;RStudio&lt;/a&gt;
+
+[download](https://www.rstudio.com/products/rstudio/download/)
+
+---
+background-image: url(https://raw.githubusercontent.com/hadley/r4ds/master/diagrams/rstudio-editor.png)
+background-size: 70%
+
+---
+
+# &lt;a&gt;RStudio&lt;/a&gt;
+
+&lt;br/&gt;
+&lt;br/&gt;
+
+1. Editor -&gt; Roteiro
+
+2. Console -&gt; Filmagem
+
+3. Output -&gt; Televisão
+
+---
+
+# Atalhos úteis
+
+&lt;br&gt;&lt;br&gt;
+
+|Teclas | O que faz |
+|-------|-----------|
+| Ctrl + Enter | Executa a linha atual do script |
+| Alt + - | Inclui o operador de atribuição (&lt;-) |
+| Ctrl + Shift + M | Inclui o `pipe` (%&gt;%) |
+| Ctrl + 1 | Muda foco para o script |
+| Ctrl + 2 | Muda foco para o console |
+| Alt + Shit + K | Mostra todos os atalhos |
+
+---
+
+# Como pedir ajuda?
+
+&lt;br&gt;&lt;br&gt;
+
+* google: copiar e colar mensagens erros
+
+* [stackoverflow](pt.stackoverflow.com) em português: descrever o problema
+
+* R: função &lt;a&gt;help(problema)&lt;/a&gt; ou &lt;a&gt;?problema&lt;/a&gt;
+
+---
+class: center, middle
+
+# &lt;a&gt;Introdução ao **R**&lt;/a&gt;
+
+---
+
+# Introdução ao &lt;a&gt;R&lt;/a&gt;
+
+&gt; Tudo que existe é um objeto. Tudo o que acontece é o chamado de uma função.
+
+.pull-right[
+  John Chambers, criador do **S**
+]
+
+&lt;br&gt;
+
+ou 
+
+&gt; Tudo o que é existe é um subjetivo. Tudo o que acontece é um verbo.
+
+---
+
+# objetos
+
+Objetos são nomes que guardam informações.
+
+Nomes devem começar com letra. Após essa letra podem ter números, letras, 
+"." ou "_". 
+
+
+```r
+nome
+nome_valido # usaremos esse tipo como convenção
+2nome_invalido
+nome.valido
+nome_valido2
+```
+
+---
+
+# objetos
+
+
+```r
+horas &lt;- 20
+horas
+```
+
+```
+## [1] 20
+```
+
+```r
+ofertante &lt;- "Enap"
+Ofertante
+```
+
+```
+## Error in eval(expr, envir, enclos): objeto 'Ofertante' não encontrado
+```
+
+```r
+ofertante
+```
+
+```
+## [1] "Enap"
+```
+
+---
+
+# objetos: tipos
+
+
+```r
+class(horas) # numéricos
+```
+
+```
+## [1] "numeric"
+```
+
+```r
+class(ofertante) # caracteres (strings)
+```
+
+```
+## [1] "character"
+```
+
+---
+
+# objetos: tipos
+
+
+```r
+head(iris)
+```
+
+```
+##   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+## 1          5.1         3.5          1.4         0.2  setosa
+## 2          4.9         3.0          1.4         0.2  setosa
+## 3          4.7         3.2          1.3         0.2  setosa
+## 4          4.6         3.1          1.5         0.2  setosa
+## 5          5.0         3.6          1.4         0.2  setosa
+## 6          5.4         3.9          1.7         0.4  setosa
+```
+
+```r
+class(iris) # data.frame (bases de dados)
+```
+
+```
+## [1] "data.frame"
+```
+
+---
+
+# objetos
+
+
+```r
+20 + 20
+```
+
+```
+## [1] 40
+```
+
+```r
+horas + horas
+```
+
+```
+## [1] 40
+```
+
+```r
+sum(horas, horas, 25)
+```
+
+```
+## [1] 65
+```
+
+---
+
+# objetos
+
+
+```r
+"É assim que incluímos texto no R, com aspas"
+```
+
+```
+## [1] "É assim que incluímos texto no R, com aspas"
+```
+
+```r
+'Podem ser aspas duplas (") ou simples (\')'
+```
+
+```
+## [1] "Podem ser aspas duplas (\") ou simples (')"
+```
+
+```r
+paste(ofertante, "oferece curso de R com duração de", horas, "horas")
+```
+
+```
+## [1] "Enap oferece curso de R com duração de 20 horas"
+```
+
+---
+background-image: url(www/programar.gif)
+background-size: 100%
+
+---
+
+# vetores
+
+Conjunto de valores de mesmo tipo.
+
+
+```r
+c(1, 6, 11, 16, 21)
+```
+
+```
+## [1]  1  6 11 16 21
+```
+
+```r
+1:5
+```
+
+```
+## [1] 1 2 3 4 5
+```
+
+---
+
+# vetores
+
+Com `subsetting` podemos escolher partes do vetor
+
+
+```r
+vetor &lt;- c(1, 6, 11, 16)
+
+vetor[1]
+```
+
+```
+## [1] 1
+```
+
+```r
+vetor[c(2, 4)]
+```
+
+```
+## [1]  6 16
+```
+
+```r
+vetor[-1]
+```
+
+```
+## [1]  6 11 16
+```
+
+```r
+vetor[-c(2, 4)]
+```
+
+```
+## [1]  1 11
+```
+
+---
+
+# vetores
+
+Com `subsetting` podemos escolher partes do vetor
+
+
+```r
+vetor[c(TRUE, FALSE, FALSE, TRUE)]
+```
+
+```
+## [1]  1 16
+```
+
+```r
+vetor[!c(TRUE, FALSE, FALSE, TRUE)]
+```
+
+```
+## [1]  6 11
+```
+
+```r
+vetor[c(TRUE, FALSE, FALSE, FALSE)]
+```
+
+```
+## [1] 1
+```
+
+---
+
+# erros: sintaxe
+
+.center[
+  ### &lt;a&gt;**ATENÇÃO**&lt;/a&gt;: certifique-se que os comandos estão escritos corretamente
+]
+
+
+
+```r
+lingua &lt;- "português"
+Iingua
+```
+
+```
+## Error in eval(expr, envir, enclos): objeto 'Iingua' não encontrado
+```
+
+```r
+Lingua
+```
+
+```
+## Error in eval(expr, envir, enclos): objeto 'Lingua' não encontrado
+```
+
+```r
+lingua
+```
+
+```
+## [1] "português"
+```
+
+---
+
+# erros: sintaxe
+
+.center[
+  ### &lt;a&gt;**ATENÇÃO**&lt;/a&gt;: Lembre-se de terminar os comandos
+]
+
+![erro](www/erro.png)
+
+O &lt;a&gt;+&lt;/a&gt; no console indica que o &lt;a&gt;R&lt;/a&gt; ainda está esperando instruções.
+Isso pode significar que você enviou apenas parte do comando. 
+
+Aperte &lt;a&gt;ESQ&lt;/a&gt; e insira o comando novamente. Certifique-se que o comando 
+foi devidamente encerrado
+
+---
+
+# erros: semântica
+
+&lt;br&gt;
+
+.center[
+  ### &lt;a&gt;**ATENÇÃO**&lt;/a&gt;: Os comandos devem fazer sentido
+]
+
+&lt;br&gt;
+
+
+```r
+ofertante + horas
+```
+
+```
+## Error in ofertante + horas: argumento não-numérico para operador binário
+```
+
+**Leia as mensagens**: elas ajudam a identificar erros.
+
+---
+background-image: url(www/programar.gif)
+background-size: 100%
+
+---
+
+# comparação
+
+
+```r
+# maior
+2 + 2 &gt; 4
+```
+
+```
+## [1] FALSE
+```
+
+```r
+# maior ou igual
+2 + 2 &gt;= 4
+```
+
+```
+## [1] TRUE
+```
+
+```r
+# menor
+horas &lt; 5
+```
+
+```
+## [1] FALSE
+```
+
+```r
+# menor ou igual
+horas &lt;= 5
+```
+
+```
+## [1] FALSE
+```
+
+---
+
+# comparação
+
+
+```r
+# igual
+horas == 2
+```
+
+```
+## [1] FALSE
+```
+
+```r
+# diferente
+horas != 2
+```
+
+```
+## [1] TRUE
+```
+
+```r
+# presente em
+c(2, 10) %in% 1:5
+```
+
+```
+## [1]  TRUE FALSE
+```
+
+---
+
+# operadores lógicos
+
+
+```r
+# ou 
+TRUE | FALSE
+```
+
+```
+## [1] TRUE
+```
+
+```r
+# e
+TRUE &amp; FALSE
+```
+
+```
+## [1] FALSE
+```
+
+```r
+# negação / não
+!FALSE
+```
+
+```
+## [1] TRUE
+```
+
+---
+
+# operadores lógicos
+
+
+```r
+# todos
+all(1:5 &gt; 2)
+```
+
+```
+## [1] FALSE
+```
+
+```r
+# algum (pelo menos um)
+any(1:5 &lt;= 2)
+```
+
+```
+## [1] TRUE
+```
+
+---
+
+# operadores lógicos
+
+![](www/transform-logical.png)
+
+---
+
+# valores especiais
+
+
+```r
+NA # Not Available / "Não sei"
+```
+
+```
+## [1] NA
+```
+
+```r
+NaN  # Not a Number: 1/0
+```
+
+```
+## [1] NaN
+```
+
+```r
+Inf  # Infinito
+```
+
+```
+## [1] Inf
+```
+
+```r
+NULL # Vazio
+```
+
+```
+## NULL
+```
+
+---
+
+# valores especiais: NA
+
+
+```r
+nas &lt;- c(1, NA, 3)
+nas == 1
+```
+
+```
+## [1]  TRUE    NA FALSE
+```
+
+```r
+nas == NA
+```
+
+```
+## [1] NA NA NA
+```
+
+```r
+is.na(nas)
+```
+
+```
+## [1] FALSE  TRUE FALSE
+```
+
+---
+background-image: url(www/programar.gif)
+background-size: 100%
+
+---
+
+# Operações vetoriais
+
+
+```r
+x &lt;- 1:10
+y &lt;- 1:2
+
+x + 3 # reciclagem
+```
+
+```
+##  [1]  4  5  6  7  8  9 10 11 12 13
+```
+
+```r
+y * 7
+```
+
+```
+## [1]  7 14
+```
+
+```r
+x + 1:3
+```
+
+```
+## Warning in x + 1:3: comprimento do objeto maior não é múltiplo do
+## comprimento do objeto menor
+```
+
+```
+##  [1]  2  4  6  5  7  9  8 10 12 11
+```
+
+---
+
+# Coerção
+
+O &lt;a&gt;R&lt;/a&gt; tenta resolver a heterogeneidade de vetores igualando-os pelo tipo 
+mais complexo.
+
+A complexidade segue esta ordem: caracter &gt; numérico &gt; inteiro &gt; lógico
+
+
+```r
+c(FALSE, TRUE, 1L) # inteiro &gt; lógico
+```
+
+```
+## [1] 0 1 1
+```
+
+```r
+c(1L, 2.4, 3.5) # numérico &gt; inteiro
+```
+
+```
+## [1] 1.0 2.4 3.5
+```
+
+```r
+c(1, 2, 3, "texto") # caracter &gt; numérico
+```
+
+```
+## [1] "1"     "2"     "3"     "texto"
+```
+
+---
+background-image: url(www/programar.gif)
+background-size: 100%
+
+---
+
+# funções
+
+Funções são mini-programas que abstraem as complexidades da tarefa executada.
+
+As funções podem ser "chamadas" usando o nome ou a ordem dos argumentos.
+
+
+```r
+seq(from = 1, to = 10, by = 3) # usando o nome
+```
+
+```
+## [1]  1  4  7 10
+```
+
+```r
+seq(1, 10, 3) # usando a ordem
+```
+
+```
+## [1]  1  4  7 10
+```
+
+```r
+seq(by = 3, 1, 10) # usando mistura de nome e ordem
+```
+
+```
+## [1]  1  4  7 10
+```
+
+---
+
+# funções
+
+O &lt;a&gt;R&lt;/a&gt; nos permite criar nossas próprias funções
+
+
+```r
+quadrado &lt;- function(x) { # nome e argumentos
+  x ^ 2 # corpo da função
+}
+
+quadrado(5)
+```
+
+```
+## [1] 25
+```
+
+```r
+quadrado(c(5, 10)) # vetorizado
+```
+
+```
+## [1]  25 100
+```
+
+---
+
+# Identação
+
+Arrumar o código para provilegiar sua leitura.
+
+Lembre-se que você pode ter que **ler amanhã**, ou daqui 2 anos, o código que 
+**escreveu hoje**.
+
+
+```r
+funcao_gigante(primeiro_argumento, nome_do_argumento = segundo_argumento, terceiro_argumento, argumento_quarto)
+
+# Ou, com identação (ctrl + i)
+funcao_gigante(primeiro_argumento, nome_do_argumento = segundo_argumento, 
+               terceiro_argumento, argumento_quarto)
+
+funcao_gigante(
+  primeiro_argumento, nome_do_argumento = segundo_argumento, 
+  terceiro_argumento, argumento_quarto
+)
+```
+
+---
+background-image: url(www/programar.gif)
+background-size: 100%
+
+---
+
+# Controles de fluxo
+
+
+```r
+if(idade &gt;= 18) {
+  "Pode fazer autoescola"
+} else if(idade &gt;=16 &amp; emancipado) {
+  "Pode fazer autoescola"
+} else {
+  "Não pode fazer autoescola"
+}
+```
+
+---
+
+# Controles de fluxo
+
+
+```r
+nomes &lt;- c("Ana", "João", "Maria")
+
+for (cada_nome in nomes) {
+  print(paste("Olá ", cada_nome, "!", sep = ""))
+}
+```
+
+```
+## [1] "Olá Ana!"
+## [1] "Olá João!"
+## [1] "Olá Maria!"
+```
+
+---
+
+# Controles de fluxo
+
+
+```r
+nomes &lt;- c("Ana", "João", "Maria")
+
+for (cada_nome in nomes) {
+  print(paste("Olá ", cada_nome, "!", sep = ""))
+}
+```
+
+### Atenção!
+
+Devemos preferir operações vetorizadas aos loops ou laços (for) no &lt;a&gt;R&lt;/a&gt;.
+Apesar disso, eles também tem seu espaço.
+
+
+```r
+paste("Olá ", nomes, "!", sep = "")
+```
+
+```
+## [1] "Olá Ana!"   "Olá João!"  "Olá Maria!"
+```
+
+---
+background-image: url(www/programar.gif)
+background-size: 100%
+class: inverse
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();</script>
+
+<script>
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
