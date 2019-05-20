@@ -11,7 +11,7 @@ output:
 background-image: url(www/slide1.png)
 background-size: cover
 
-<link rel="stylesheet" type="text/css" href="enap.css">
+<link rel="stylesheet" type="text/css" href="www/enap.css">
 
 ---
 
