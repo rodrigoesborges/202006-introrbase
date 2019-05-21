@@ -12,7 +12,7 @@
 background-image: url(www/slide1.png)
 background-size: cover
 
-&lt;link rel="stylesheet" type="text/css" href="enap.css"&gt;
+&lt;link rel="stylesheet" type="text/css" href="www/enap.css"&gt;
 
 ---
 
@@ -184,7 +184,7 @@ imdb
 ```
 
 ```
-## # A tibble: 3,807 x 15
+## # A tibble: 3,714 x 16
 ##    titulo   ano diretor duracao cor   generos pais  classificacao orcamento
 ##    &lt;chr&gt;  &lt;int&gt; &lt;chr&gt;     &lt;int&gt; &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;             &lt;int&gt;
 ##  1 Avata…  2009 James …     178 Color Action… USA   A partir de … 237000000
@@ -197,9 +197,9 @@ imdb
 ##  8 Batma…  2016 Zack S…     183 Color Action… USA   A partir de … 250000000
 ##  9 Super…  2006 Bryan …     169 Color Action… USA   A partir de … 209000000
 ## 10 Pirat…  2006 Gore V…     151 Color Action… USA   A partir de … 225000000
-## # … with 3,797 more rows, and 6 more variables: receita &lt;int&gt;,
+## # … with 3,704 more rows, and 7 more variables: receita &lt;int&gt;,
 ## #   nota_imdb &lt;dbl&gt;, likes_facebook &lt;int&gt;, ator_1 &lt;chr&gt;, ator_2 &lt;chr&gt;,
-## #   ator_3 &lt;chr&gt;
+## #   ator_3 &lt;chr&gt;, genero &lt;chr&gt;
 ```
 
 ---
@@ -212,8 +212,8 @@ glimpse(imdb)
 ```
 
 ```
-## Observations: 3,807
-## Variables: 15
+## Observations: 3,714
+## Variables: 16
 ## $ titulo         &lt;chr&gt; "Avatar ", "Pirates of the Caribbean: At World's …
 ## $ ano            &lt;int&gt; 2009, 2007, 2012, 2012, 2007, 2010, 2015, 2016, 2…
 ## $ diretor        &lt;chr&gt; "James Cameron", "Gore Verbinski", "Christopher N…
@@ -229,6 +229,7 @@ glimpse(imdb)
 ## $ ator_1         &lt;chr&gt; "CCH Pounder", "Johnny Depp", "Tom Hardy", "Daryl…
 ## $ ator_2         &lt;chr&gt; "Joel David Moore", "Orlando Bloom", "Christian B…
 ## $ ator_3         &lt;chr&gt; "Wes Studi", "Jack Davenport", "Joseph Gordon-Lev…
+## $ genero         &lt;chr&gt; "homem", NA, "homem", "homem", "homem", "homem", …
 ```
 
 ---

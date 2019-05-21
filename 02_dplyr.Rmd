@@ -13,6 +13,16 @@ background-size: cover
 
 <link rel="stylesheet" type="text/css" href="www/enap.css">
 
+<style>
+  .img > p > img{
+    height: 280px;
+  }
+  
+  .pull-left > p > img {
+    margin-left: 310px;
+  }
+</style>
+
 ---
 
 ```{r setup, include=FALSE}
@@ -52,7 +62,7 @@ library(tidyverse)
 5. Pivotear tabelas
 
 ---
-class: inverse, center, middle
+class: center, middle
 
 # Como <a>transformar</a> os dados
 
@@ -91,8 +101,8 @@ Vejamos a mesma operação com o <a>pipe</a>
 
 ```{r}
 # Ceci n'est pas une "operador"
-library(magrittr)
 
+# library(magrittr)
 valores %>% 
   diff() %>% 
   abs() %>% 
@@ -431,7 +441,7 @@ Funções úteis para criar novas variáveis
 3. Operações acumuladas: <a>cumsum()</a>, <a>cumprod()</a>, <a>cummin()</a>, 
 <a>cummax()</a> e <a>cummean()</a>;
 
-4. Operadores lógicos: <a><</a>, <a><=</a>, <a>></a>, <a>>=</a>,  
+4. Operadores lógicos: <a><</a>, <a><=</a>, <a>></a>, <a>>=</a>, 
 <a>!=</a> e <a>==</a>
 
 ---
@@ -464,9 +474,6 @@ data.frame %>%
 # group_by
 
 Use <a>group_by()</a> para agrupar os dados e realizar operações para cada grupo
-
-É usado em conjunto com outros verbos. Ele qualifica os demais verbos 
-e as ações passam a ocorrer separadamente para cada grupo
 
 ```{r}
 imdb %>% 
@@ -546,7 +553,7 @@ background-size: 100%
 class: inverse
 
 ---
-class: inverse, center, middle
+class: center, middle
 
 # Como <a>organizar</a> os dados
 
