@@ -91,7 +91,7 @@ mean(abs(diff(valores)))
 ```
 
 ```
-## [1] 1.856
+## [1] 2.023
 ```
 
 &lt;br&gt;
@@ -110,7 +110,7 @@ valores %&gt;%
 ```
 
 ```
-## [1] 1.856
+## [1] 2.023
 ```
 
 ---
@@ -185,8 +185,8 @@ imdb %&gt;%
 ## # A tibble: 1 x 16
 ##   titulo   ano diretor duracao cor   generos pais  classificacao orcamento
 ##   &lt;chr&gt;  &lt;int&gt; &lt;chr&gt;     &lt;int&gt; &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;             &lt;int&gt;
-## 1 Dark …  2005 Walter…     103 Color Drama|… USA   A partir de …  30000000
-## # … with 7 more variables: receita &lt;int&gt;, nota_imdb &lt;dbl&gt;,
+## 1 Dark ~  2005 Walter~     103 Color Drama|~ USA   A partir de ~  30000000
+## # ... with 7 more variables: receita &lt;int&gt;, nota_imdb &lt;dbl&gt;,
 ## #   likes_facebook &lt;int&gt;, ator_1 &lt;chr&gt;, ator_2 &lt;chr&gt;, ator_3 &lt;chr&gt;,
 ## #   genero &lt;chr&gt;
 ```
@@ -205,17 +205,17 @@ imdb %&gt;%
 ## # A tibble: 232 x 16
 ##    titulo   ano diretor duracao cor   generos pais  classificacao orcamento
 ##    &lt;chr&gt;  &lt;int&gt; &lt;chr&gt;     &lt;int&gt; &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;             &lt;int&gt;
-##  1 Aveng…  2015 Joss W…     141 Color Action… USA   A partir de … 250000000
-##  2 Batma…  2016 Zack S…     183 Color Action… USA   A partir de … 250000000
-##  3 Capta…  2016 Anthon…     147 Color Action… USA   A partir de … 250000000
-##  4 Juras…  2015 Colin …     124 Color Action… USA   A partir de … 150000000
-##  5 Furio…  2015 James …     140 Color Action… USA   A partir de … 190000000
-##  6 The G…  2015 Peter …      93 Color Advent… USA   Livre                NA
-##  7 Star …  2016 Justin…     122 Color Action… USA   A partir de … 185000000
-##  8 Jupit…  2015 Lana W…     127 Color Action… USA   A partir de … 176000000
-##  9 The L…  2016 David …     110 Color Action… USA   A partir de … 180000000
-## 10 X-Men…  2016 Bryan …     144 Color Action… USA   A partir de … 178000000
-## # … with 222 more rows, and 7 more variables: receita &lt;int&gt;,
+##  1 Aveng~  2015 Joss W~     141 Color Action~ USA   A partir de ~ 250000000
+##  2 Batma~  2016 Zack S~     183 Color Action~ USA   A partir de ~ 250000000
+##  3 Capta~  2016 Anthon~     147 Color Action~ USA   A partir de ~ 250000000
+##  4 Juras~  2015 Colin ~     124 Color Action~ USA   A partir de ~ 150000000
+##  5 Furio~  2015 James ~     140 Color Action~ USA   A partir de ~ 190000000
+##  6 The G~  2015 Peter ~      93 Color Advent~ USA   Livre                NA
+##  7 Star ~  2016 Justin~     122 Color Action~ USA   A partir de ~ 185000000
+##  8 Jupit~  2015 Lana W~     127 Color Action~ USA   A partir de ~ 176000000
+##  9 The L~  2016 David ~     110 Color Action~ USA   A partir de ~ 180000000
+## 10 X-Men~  2016 Bryan ~     144 Color Action~ USA   A partir de ~ 178000000
+## # ... with 222 more rows, and 7 more variables: receita &lt;int&gt;,
 ## #   nota_imdb &lt;dbl&gt;, likes_facebook &lt;int&gt;, ator_1 &lt;chr&gt;, ator_2 &lt;chr&gt;,
 ## #   ator_3 &lt;chr&gt;, genero &lt;chr&gt;
 ```
@@ -276,17 +276,17 @@ imdb %&gt;%
 ## # A tibble: 147 x 16
 ##    titulo   ano diretor duracao cor   generos pais  classificacao orcamento
 ##    &lt;chr&gt;  &lt;int&gt; &lt;chr&gt;     &lt;int&gt; &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;             &lt;int&gt;
-##  1 Pearl…  2001 Michae…     184 Blac… Action… USA   A partir de … 140000000
-##  2 The A…  2004 Martin…     170 Blac… Biogra… USA   A partir de … 110000000
-##  3 Ali     2001 Michae…     165 Blac… Biogra… USA   A partir de … 107000000
-##  4 Erago…  2006 Stefen…     104 Blac… Action… USA   Livre         100000000
-##  5 Seabi…  2003 Gary R…     140 Blac… Drama|… USA   A partir de …  87000000
-##  6 Bewit…    NA &lt;NA&gt;         25 Blac… Comedy… USA   Outros               NA
-##  7 Nine    2009 Rob Ma…     118 Blac… Drama|… USA   A partir de …  80000000
-##  8 The L…  2003 Stephe…     110 Blac… Action… USA   A partir de …  78000000
-##  9 War H…  2011 Steven…     146 Blac… Drama|… USA   A partir de …  66000000
-## 10 Space…  2000 Clint …     130 Blac… Action… USA   A partir de …  65000000
-## # … with 137 more rows, and 7 more variables: receita &lt;int&gt;,
+##  1 Pearl~  2001 Michae~     184 Blac~ Action~ USA   A partir de ~ 140000000
+##  2 The A~  2004 Martin~     170 Blac~ Biogra~ USA   A partir de ~ 110000000
+##  3 Ali     2001 Michae~     165 Blac~ Biogra~ USA   A partir de ~ 107000000
+##  4 Erago~  2006 Stefen~     104 Blac~ Action~ USA   Livre         100000000
+##  5 Seabi~  2003 Gary R~     140 Blac~ Drama|~ USA   A partir de ~  87000000
+##  6 Bewit~    NA &lt;NA&gt;         25 Blac~ Comedy~ USA   Outros               NA
+##  7 Nine    2009 Rob Ma~     118 Blac~ Drama|~ USA   A partir de ~  80000000
+##  8 The L~  2003 Stephe~     110 Blac~ Action~ USA   A partir de ~  78000000
+##  9 War H~  2011 Steven~     146 Blac~ Drama|~ USA   A partir de ~  66000000
+## 10 Space~  2000 Clint ~     130 Blac~ Action~ USA   A partir de ~  65000000
+## # ... with 137 more rows, and 7 more variables: receita &lt;int&gt;,
 ## #   nota_imdb &lt;dbl&gt;, likes_facebook &lt;int&gt;, ator_1 &lt;chr&gt;, ator_2 &lt;chr&gt;,
 ## #   ator_3 &lt;chr&gt;, genero &lt;chr&gt;
 ```
@@ -305,17 +305,17 @@ imdb %&gt;%
 ## # A tibble: 30 x 16
 ##    titulo   ano diretor duracao cor   generos pais  classificacao orcamento
 ##    &lt;chr&gt;  &lt;int&gt; &lt;chr&gt;     &lt;int&gt; &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;             &lt;int&gt;
-##  1 Alice…  2010 Tim Bu…     108 Color Advent… USA   Livre         200000000
-##  2 Charl…  2005 Tim Bu…     115 Color Advent… USA   Livre         150000000
-##  3 Dark …  2012 Tim Bu…     113 Color Comedy… USA   A partir de … 100000000
-##  4 Plane…  2001 Tim Bu…     119 Color Action… USA   A partir de … 100000000
-##  5 Batma…  1992 Tim Bu…     126 Color Action  USA   A partir de …  80000000
-##  6 Mars …  1996 Tim Bu…     106 Color Action… USA   A partir de …  70000000
-##  7 Big F…  2003 Tim Bu…     125 Color Advent… USA   A partir de …  70000000
-##  8 Insid…  2006 Spike …     129 Color Crime|… USA   A partir de …  45000000
-##  9 Mirac…  2008 Spike …     160 Color Action… USA   A partir de …  45000000
-## 10 Frank…  2012 Tim Bu…      87 Blac… Animat… USA   Livre          39000000
-## # … with 20 more rows, and 7 more variables: receita &lt;int&gt;,
+##  1 Alice~  2010 Tim Bu~     108 Color Advent~ USA   Livre         200000000
+##  2 Charl~  2005 Tim Bu~     115 Color Advent~ USA   Livre         150000000
+##  3 Dark ~  2012 Tim Bu~     113 Color Comedy~ USA   A partir de ~ 100000000
+##  4 Plane~  2001 Tim Bu~     119 Color Action~ USA   A partir de ~ 100000000
+##  5 Batma~  1992 Tim Bu~     126 Color Action  USA   A partir de ~  80000000
+##  6 Mars ~  1996 Tim Bu~     106 Color Action~ USA   A partir de ~  70000000
+##  7 Big F~  2003 Tim Bu~     125 Color Advent~ USA   A partir de ~  70000000
+##  8 Insid~  2006 Spike ~     129 Color Crime|~ USA   A partir de ~  45000000
+##  9 Mirac~  2008 Spike ~     160 Color Action~ USA   A partir de ~  45000000
+## 10 Frank~  2012 Tim Bu~      87 Blac~ Animat~ USA   Livre          39000000
+## # ... with 20 more rows, and 7 more variables: receita &lt;int&gt;,
 ## #   nota_imdb &lt;dbl&gt;, likes_facebook &lt;int&gt;, ator_1 &lt;chr&gt;, ator_2 &lt;chr&gt;,
 ## #   ator_3 &lt;chr&gt;, genero &lt;chr&gt;
 ```
@@ -361,17 +361,17 @@ imdb %&gt;%
 ## # A tibble: 3,714 x 16
 ##    titulo   ano diretor duracao cor   generos pais  classificacao orcamento
 ##    &lt;chr&gt;  &lt;int&gt; &lt;chr&gt;     &lt;int&gt; &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;             &lt;int&gt;
-##  1 Justi…  2011 Jon M.…     115 Color Docume… USA   Outros         13000000
-##  2 Foodf…  2012 Lawren…      91 Color Action… USA   Livre          65000000
-##  3 Disas…  2008 Jason …      88 Color Comedy  USA   A partir de …  25000000
-##  4 The H…  2005 A. Rav…      97 Color Action… USA   A partir de …   1000000
-##  5 Who's…  2007 Don Mi…      93 Color Comedy… USA   A partir de …   7000000
-##  6 From …  2003 Robert…      90 Color Comedy… USA   Livre          12000000
-##  7 Glitt…  2001 Vondie…     104 Color Drama|… USA   A partir de …  22000000
-##  8 Cross…  2006 Presto…      95 Color Action… USA   A partir de …   5600000
-##  9 Son o…  2005 Lawren…      94 Color Comedy… USA   Livre          84000000
-## 10 Snow …  2012 David …      83 Color Horror  USA   A partir de …   1000000
-## # … with 3,704 more rows, and 7 more variables: receita &lt;int&gt;,
+##  1 Justi~  2011 Jon M.~     115 Color Docume~ USA   Outros         13000000
+##  2 Foodf~  2012 Lawren~      91 Color Action~ USA   Livre          65000000
+##  3 Disas~  2008 Jason ~      88 Color Comedy  USA   A partir de ~  25000000
+##  4 The H~  2005 A. Rav~      97 Color Action~ USA   A partir de ~   1000000
+##  5 Who's~  2007 Don Mi~      93 Color Comedy~ USA   A partir de ~   7000000
+##  6 From ~  2003 Robert~      90 Color Comedy~ USA   Livre          12000000
+##  7 Glitt~  2001 Vondie~     104 Color Drama|~ USA   A partir de ~  22000000
+##  8 Cross~  2006 Presto~      95 Color Action~ USA   A partir de ~   5600000
+##  9 Son o~  2005 Lawren~      94 Color Comedy~ USA   Livre          84000000
+## 10 Snow ~  2012 David ~      83 Color Horror  USA   A partir de ~   1000000
+## # ... with 3,704 more rows, and 7 more variables: receita &lt;int&gt;,
 ## #   nota_imdb &lt;dbl&gt;, likes_facebook &lt;int&gt;, ator_1 &lt;chr&gt;, ator_2 &lt;chr&gt;,
 ## #   ator_3 &lt;chr&gt;, genero &lt;chr&gt;
 ```
@@ -392,17 +392,17 @@ imdb %&gt;%
 ## # A tibble: 3,714 x 16
 ##    titulo   ano diretor duracao cor   generos pais  classificacao orcamento
 ##    &lt;chr&gt;  &lt;int&gt; &lt;chr&gt;     &lt;int&gt; &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;             &lt;int&gt;
-##  1 Intol…  1916 D.W. G…     123 Blac… Drama|… USA   Outros           385907
-##  2 Over …  1920 Harry …     110 Blac… Crime|… USA   Outros           100000
-##  3 The B…  1925 King V…     151 Blac… Drama|… USA   Outros           245000
-##  4 The B…  1929 Harry …     100 Blac… Musica… USA   Outros           379000
-##  5 Hell'…  1930 Howard…      96 Blac… Drama|… USA   Outros          3950000
-##  6 A Far…  1932 Frank …      79 Blac… Drama|… USA   Outros           800000
-##  7 42nd …  1933 Lloyd …      89 Blac… Comedy… USA   Outros           439000
-##  8 She D…  1933 Lowell…      66 Blac… Comedy… USA   Outros           200000
-##  9 It Ha…  1934 Frank …      65 Blac… Comedy… USA   Outros           325000
-## 10 Top H…  1935 Mark S…      81 Blac… Comedy… USA   Outros           609000
-## # … with 3,704 more rows, and 7 more variables: receita &lt;int&gt;,
+##  1 Intol~  1916 D.W. G~     123 Blac~ Drama|~ USA   Outros           385907
+##  2 Over ~  1920 Harry ~     110 Blac~ Crime|~ USA   Outros           100000
+##  3 The B~  1925 King V~     151 Blac~ Drama|~ USA   Outros           245000
+##  4 The B~  1929 Harry ~     100 Blac~ Musica~ USA   Outros           379000
+##  5 Hell'~  1930 Howard~      96 Blac~ Drama|~ USA   Outros          3950000
+##  6 A Far~  1932 Frank ~      79 Blac~ Drama|~ USA   Outros           800000
+##  7 42nd ~  1933 Lloyd ~      89 Blac~ Comedy~ USA   Outros           439000
+##  8 She D~  1933 Lowell~      66 Blac~ Comedy~ USA   Outros           200000
+##  9 It Ha~  1934 Frank ~      65 Blac~ Comedy~ USA   Outros           325000
+## 10 Top H~  1935 Mark S~      81 Blac~ Comedy~ USA   Outros           609000
+## # ... with 3,704 more rows, and 7 more variables: receita &lt;int&gt;,
 ## #   nota_imdb &lt;dbl&gt;, likes_facebook &lt;int&gt;, ator_1 &lt;chr&gt;, ator_2 &lt;chr&gt;,
 ## #   ator_3 &lt;chr&gt;, genero &lt;chr&gt;
 ```
@@ -449,15 +449,15 @@ imdb %&gt;%
 ##    &lt;chr&gt;                                     &lt;int&gt; &lt;chr&gt;              &lt;int&gt;
 ##  1 Avatar                                     2009 James Cameron        178
 ##  2 Pirates of the Caribbean: At World's End   2007 Gore Verbinski       169
-##  3 The Dark Knight Rises                      2012 Christopher Nol…     164
+##  3 The Dark Knight Rises                      2012 Christopher Nol~     164
 ##  4 John Carter                                2012 Andrew Stanton       132
 ##  5 Spider-Man 3                               2007 Sam Raimi            156
 ##  6 Tangled                                    2010 Nathan Greno         100
 ##  7 Avengers: Age of Ultron                    2015 Joss Whedon          141
 ##  8 Batman v Superman: Dawn of Justice         2016 Zack Snyder          183
 ##  9 Superman Returns                           2006 Bryan Singer         169
-## 10 Pirates of the Caribbean: Dead Man's Che…  2006 Gore Verbinski       151
-## # … with 3,704 more rows
+## 10 Pirates of the Caribbean: Dead Man's Che~  2006 Gore Verbinski       151
+## # ... with 3,704 more rows
 ```
 
 ---
@@ -476,17 +476,17 @@ imdb %&gt;%
 ## # A tibble: 3,714 x 12
 ##    titulo   ano diretor duracao cor   generos pais  classificacao orcamento
 ##    &lt;chr&gt;  &lt;int&gt; &lt;chr&gt;     &lt;int&gt; &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;             &lt;int&gt;
-##  1 Avata…  2009 James …     178 Color Action… USA   A partir de … 237000000
-##  2 Pirat…  2007 Gore V…     169 Color Action… USA   A partir de … 300000000
-##  3 The D…  2012 Christ…     164 Color Action… USA   A partir de … 250000000
-##  4 John …  2012 Andrew…     132 Color Action… USA   A partir de … 263700000
-##  5 Spide…  2007 Sam Ra…     156 Color Action… USA   A partir de … 258000000
-##  6 Tangl…  2010 Nathan…     100 Color Advent… USA   Livre         260000000
-##  7 Aveng…  2015 Joss W…     141 Color Action… USA   A partir de … 250000000
-##  8 Batma…  2016 Zack S…     183 Color Action… USA   A partir de … 250000000
-##  9 Super…  2006 Bryan …     169 Color Action… USA   A partir de … 209000000
-## 10 Pirat…  2006 Gore V…     151 Color Action… USA   A partir de … 225000000
-## # … with 3,704 more rows, and 3 more variables: receita &lt;int&gt;,
+##  1 Avata~  2009 James ~     178 Color Action~ USA   A partir de ~ 237000000
+##  2 Pirat~  2007 Gore V~     169 Color Action~ USA   A partir de ~ 300000000
+##  3 The D~  2012 Christ~     164 Color Action~ USA   A partir de ~ 250000000
+##  4 John ~  2012 Andrew~     132 Color Action~ USA   A partir de ~ 263700000
+##  5 Spide~  2007 Sam Ra~     156 Color Action~ USA   A partir de ~ 258000000
+##  6 Tangl~  2010 Nathan~     100 Color Advent~ USA   Livre         260000000
+##  7 Aveng~  2015 Joss W~     141 Color Action~ USA   A partir de ~ 250000000
+##  8 Batma~  2016 Zack S~     183 Color Action~ USA   A partir de ~ 250000000
+##  9 Super~  2006 Bryan ~     169 Color Action~ USA   A partir de ~ 209000000
+## 10 Pirat~  2006 Gore V~     151 Color Action~ USA   A partir de ~ 225000000
+## # ... with 3,704 more rows, and 3 more variables: receita &lt;int&gt;,
 ## #   nota_imdb &lt;dbl&gt;, genero &lt;chr&gt;
 ```
 
@@ -508,15 +508,15 @@ imdb %&gt;%
 ##    &lt;chr&gt;                                     &lt;int&gt; &lt;chr&gt;              &lt;int&gt;
 ##  1 Avatar                                     2009 James Cameron        178
 ##  2 Pirates of the Caribbean: At World's End   2007 Gore Verbinski       169
-##  3 The Dark Knight Rises                      2012 Christopher Nol…     164
+##  3 The Dark Knight Rises                      2012 Christopher Nol~     164
 ##  4 John Carter                                2012 Andrew Stanton       132
 ##  5 Spider-Man 3                               2007 Sam Raimi            156
 ##  6 Tangled                                    2010 Nathan Greno         100
 ##  7 Avengers: Age of Ultron                    2015 Joss Whedon          141
 ##  8 Batman v Superman: Dawn of Justice         2016 Zack Snyder          183
 ##  9 Superman Returns                           2006 Bryan Singer         169
-## 10 Pirates of the Caribbean: Dead Man's Che…  2006 Gore Verbinski       151
-## # … with 3,704 more rows
+## 10 Pirates of the Caribbean: Dead Man's Che~  2006 Gore Verbinski       151
+## # ... with 3,704 more rows
 ```
 
 ---
@@ -535,17 +535,17 @@ imdb %&gt;%
 ## # A tibble: 3,714 x 12
 ##    titulo   ano diretor duracao cor   generos pais  classificacao orcamento
 ##    &lt;chr&gt;  &lt;int&gt; &lt;chr&gt;     &lt;int&gt; &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;             &lt;int&gt;
-##  1 Avata…  2009 James …     178 Color Action… USA   A partir de … 237000000
-##  2 Pirat…  2007 Gore V…     169 Color Action… USA   A partir de … 300000000
-##  3 The D…  2012 Christ…     164 Color Action… USA   A partir de … 250000000
-##  4 John …  2012 Andrew…     132 Color Action… USA   A partir de … 263700000
-##  5 Spide…  2007 Sam Ra…     156 Color Action… USA   A partir de … 258000000
-##  6 Tangl…  2010 Nathan…     100 Color Advent… USA   Livre         260000000
-##  7 Aveng…  2015 Joss W…     141 Color Action… USA   A partir de … 250000000
-##  8 Batma…  2016 Zack S…     183 Color Action… USA   A partir de … 250000000
-##  9 Super…  2006 Bryan …     169 Color Action… USA   A partir de … 209000000
-## 10 Pirat…  2006 Gore V…     151 Color Action… USA   A partir de … 225000000
-## # … with 3,704 more rows, and 3 more variables: receita &lt;int&gt;,
+##  1 Avata~  2009 James ~     178 Color Action~ USA   A partir de ~ 237000000
+##  2 Pirat~  2007 Gore V~     169 Color Action~ USA   A partir de ~ 300000000
+##  3 The D~  2012 Christ~     164 Color Action~ USA   A partir de ~ 250000000
+##  4 John ~  2012 Andrew~     132 Color Action~ USA   A partir de ~ 263700000
+##  5 Spide~  2007 Sam Ra~     156 Color Action~ USA   A partir de ~ 258000000
+##  6 Tangl~  2010 Nathan~     100 Color Advent~ USA   Livre         260000000
+##  7 Aveng~  2015 Joss W~     141 Color Action~ USA   A partir de ~ 250000000
+##  8 Batma~  2016 Zack S~     183 Color Action~ USA   A partir de ~ 250000000
+##  9 Super~  2006 Bryan ~     169 Color Action~ USA   A partir de ~ 209000000
+## 10 Pirat~  2006 Gore V~     151 Color Action~ USA   A partir de ~ 225000000
+## # ... with 3,704 more rows, and 3 more variables: receita &lt;int&gt;,
 ## #   nota_imdb &lt;dbl&gt;, genero &lt;chr&gt;
 ```
 
@@ -592,7 +592,7 @@ imdb %&gt;%
 ##  8 Batman v Superman: Dawn of Justice           2016 Zack Snyder      
 ##  9 Superman Returns                             2006 Bryan Singer     
 ## 10 Pirates of the Caribbean: Dead Man's Chest   2006 Gore Verbinski   
-## # … with 3,704 more rows
+## # ... with 3,704 more rows
 ```
 
 ---
@@ -621,7 +621,7 @@ imdb %&gt;%
 ##  8 Henry Cavill    Lauren Cohan      Alan D. Purwin      
 ##  9 Kevin Spacey    Marlon Brando     Frank Langella      
 ## 10 Johnny Depp     Orlando Bloom     Jack Davenport      
-## # … with 3,704 more rows
+## # ... with 3,704 more rows
 ```
 
 ---
@@ -650,7 +650,7 @@ imdb %&gt;%
 ##  8 Zack Snyder           183
 ##  9 Bryan Singer          169
 ## 10 Gore Verbinski        151
-## # … with 3,704 more rows
+## # ... with 3,704 more rows
 ```
 
 ---
@@ -669,17 +669,17 @@ imdb %&gt;%
 ## # A tibble: 3,714 x 6
 ##    titulo                      ano duracao classificacao   orcamento genero
 ##    &lt;chr&gt;                     &lt;int&gt;   &lt;int&gt; &lt;chr&gt;               &lt;int&gt; &lt;chr&gt; 
-##  1 Avatar                     2009     178 A partir de 13… 237000000 homem 
-##  2 Pirates of the Caribbean…  2007     169 A partir de 13… 300000000 &lt;NA&gt;  
-##  3 The Dark Knight Rises      2012     164 A partir de 13… 250000000 homem 
-##  4 John Carter                2012     132 A partir de 13… 263700000 homem 
-##  5 Spider-Man 3               2007     156 A partir de 13… 258000000 homem 
+##  1 Avatar                     2009     178 A partir de 13~ 237000000 homem 
+##  2 Pirates of the Caribbean~  2007     169 A partir de 13~ 300000000 &lt;NA&gt;  
+##  3 The Dark Knight Rises      2012     164 A partir de 13~ 250000000 homem 
+##  4 John Carter                2012     132 A partir de 13~ 263700000 homem 
+##  5 Spider-Man 3               2007     156 A partir de 13~ 258000000 homem 
 ##  6 Tangled                    2010     100 Livre           260000000 homem 
-##  7 Avengers: Age of Ultron    2015     141 A partir de 13… 250000000 homem 
-##  8 Batman v Superman: Dawn …  2016     183 A partir de 13… 250000000 homem 
-##  9 Superman Returns           2006     169 A partir de 13… 209000000 homem 
-## 10 Pirates of the Caribbean…  2006     151 A partir de 13… 225000000 &lt;NA&gt;  
-## # … with 3,704 more rows
+##  7 Avengers: Age of Ultron    2015     141 A partir de 13~ 250000000 homem 
+##  8 Batman v Superman: Dawn ~  2016     183 A partir de 13~ 250000000 homem 
+##  9 Superman Returns           2006     169 A partir de 13~ 209000000 homem 
+## 10 Pirates of the Caribbean~  2006     151 A partir de 13~ 225000000 &lt;NA&gt;  
+## # ... with 3,704 more rows
 ```
 
 ---
@@ -722,17 +722,17 @@ imdb %&gt;%
 ## # A tibble: 3,714 x 16
 ##    titulo   ano diretor duracao cor   generos pais  classificacao orcamento
 ##    &lt;chr&gt;  &lt;int&gt; &lt;chr&gt;     &lt;int&gt; &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;             &lt;dbl&gt;
-##  1 Avata…  2009 James …     178 Color Action… USA   A partir de …      237 
-##  2 Pirat…  2007 Gore V…     169 Color Action… USA   A partir de …      300 
-##  3 The D…  2012 Christ…     164 Color Action… USA   A partir de …      250 
-##  4 John …  2012 Andrew…     132 Color Action… USA   A partir de …      264.
-##  5 Spide…  2007 Sam Ra…     156 Color Action… USA   A partir de …      258 
-##  6 Tangl…  2010 Nathan…     100 Color Advent… USA   Livre              260 
-##  7 Aveng…  2015 Joss W…     141 Color Action… USA   A partir de …      250 
-##  8 Batma…  2016 Zack S…     183 Color Action… USA   A partir de …      250 
-##  9 Super…  2006 Bryan …     169 Color Action… USA   A partir de …      209 
-## 10 Pirat…  2006 Gore V…     151 Color Action… USA   A partir de …      225 
-## # … with 3,704 more rows, and 7 more variables: receita &lt;int&gt;,
+##  1 Avata~  2009 James ~     178 Color Action~ USA   A partir de ~      237 
+##  2 Pirat~  2007 Gore V~     169 Color Action~ USA   A partir de ~      300 
+##  3 The D~  2012 Christ~     164 Color Action~ USA   A partir de ~      250 
+##  4 John ~  2012 Andrew~     132 Color Action~ USA   A partir de ~      264.
+##  5 Spide~  2007 Sam Ra~     156 Color Action~ USA   A partir de ~      258 
+##  6 Tangl~  2010 Nathan~     100 Color Advent~ USA   Livre              260 
+##  7 Aveng~  2015 Joss W~     141 Color Action~ USA   A partir de ~      250 
+##  8 Batma~  2016 Zack S~     183 Color Action~ USA   A partir de ~      250 
+##  9 Super~  2006 Bryan ~     169 Color Action~ USA   A partir de ~      209 
+## 10 Pirat~  2006 Gore V~     151 Color Action~ USA   A partir de ~      225 
+## # ... with 3,704 more rows, and 7 more variables: receita &lt;int&gt;,
 ## #   nota_imdb &lt;dbl&gt;, likes_facebook &lt;int&gt;, ator_1 &lt;chr&gt;, ator_2 &lt;chr&gt;,
 ## #   ator_3 &lt;chr&gt;, genero &lt;chr&gt;
 ```
@@ -752,6 +752,144 @@ Funções úteis para criar novas variáveis
 
 4. Operadores lógicos: &lt;a&gt;&lt;&lt;/a&gt;, &lt;a&gt;&lt;=&lt;/a&gt;, &lt;a&gt;&gt;&lt;/a&gt;, &lt;a&gt;&gt;=&lt;/a&gt;, 
 &lt;a&gt;!=&lt;/a&gt; e &lt;a&gt;==&lt;/a&gt;
+
+---
+
+# mutate
+
+Funções úteis para criar novas variáveis com
+texto
+
+1. Tornar o texto maiúsculo:
+&lt;a&gt;str_to_upper&lt;/a&gt;(texto)
+
+2. Tornar o texto minúsculo:
+&lt;a&gt;str_to_lower&lt;/a&gt;(texto)
+
+3. Substituir parte de um texto:
+&lt;a&gt;str_replace&lt;/a&gt;(texto, "o que sai", "o que substitui"). 
+Use &lt;a&gt;str_replace_all&lt;/a&gt; para substituir em todas as ocorrências.
+
+4. Detectar a uma expressão em um texto:
+&lt;a&gt;str_detect&lt;/a&gt;(texto, "padrao")
+
+---
+
+# mutate
+
+
+```r
+imdb %&gt;% 
+  mutate(diretor = str_to_lower(diretor))
+```
+
+```
+## # A tibble: 3,714 x 16
+##    titulo   ano diretor duracao cor   generos pais  classificacao orcamento
+##    &lt;chr&gt;  &lt;int&gt; &lt;chr&gt;     &lt;int&gt; &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;             &lt;int&gt;
+##  1 Avata~  2009 james ~     178 Color Action~ USA   A partir de ~ 237000000
+##  2 Pirat~  2007 gore v~     169 Color Action~ USA   A partir de ~ 300000000
+##  3 The D~  2012 christ~     164 Color Action~ USA   A partir de ~ 250000000
+##  4 John ~  2012 andrew~     132 Color Action~ USA   A partir de ~ 263700000
+##  5 Spide~  2007 sam ra~     156 Color Action~ USA   A partir de ~ 258000000
+##  6 Tangl~  2010 nathan~     100 Color Advent~ USA   Livre         260000000
+##  7 Aveng~  2015 joss w~     141 Color Action~ USA   A partir de ~ 250000000
+##  8 Batma~  2016 zack s~     183 Color Action~ USA   A partir de ~ 250000000
+##  9 Super~  2006 bryan ~     169 Color Action~ USA   A partir de ~ 209000000
+## 10 Pirat~  2006 gore v~     151 Color Action~ USA   A partir de ~ 225000000
+## # ... with 3,704 more rows, and 7 more variables: receita &lt;int&gt;,
+## #   nota_imdb &lt;dbl&gt;, likes_facebook &lt;int&gt;, ator_1 &lt;chr&gt;, ator_2 &lt;chr&gt;,
+## #   ator_3 &lt;chr&gt;, genero &lt;chr&gt;
+```
+
+---
+
+# mutate
+
+
+```r
+imdb %&gt;% 
+  mutate(diretor = str_to_upper(diretor))
+```
+
+```
+## # A tibble: 3,714 x 16
+##    titulo   ano diretor duracao cor   generos pais  classificacao orcamento
+##    &lt;chr&gt;  &lt;int&gt; &lt;chr&gt;     &lt;int&gt; &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;             &lt;int&gt;
+##  1 Avata~  2009 JAMES ~     178 Color Action~ USA   A partir de ~ 237000000
+##  2 Pirat~  2007 GORE V~     169 Color Action~ USA   A partir de ~ 300000000
+##  3 The D~  2012 CHRIST~     164 Color Action~ USA   A partir de ~ 250000000
+##  4 John ~  2012 ANDREW~     132 Color Action~ USA   A partir de ~ 263700000
+##  5 Spide~  2007 SAM RA~     156 Color Action~ USA   A partir de ~ 258000000
+##  6 Tangl~  2010 NATHAN~     100 Color Advent~ USA   Livre         260000000
+##  7 Aveng~  2015 JOSS W~     141 Color Action~ USA   A partir de ~ 250000000
+##  8 Batma~  2016 ZACK S~     183 Color Action~ USA   A partir de ~ 250000000
+##  9 Super~  2006 BRYAN ~     169 Color Action~ USA   A partir de ~ 209000000
+## 10 Pirat~  2006 GORE V~     151 Color Action~ USA   A partir de ~ 225000000
+## # ... with 3,704 more rows, and 7 more variables: receita &lt;int&gt;,
+## #   nota_imdb &lt;dbl&gt;, likes_facebook &lt;int&gt;, ator_1 &lt;chr&gt;, ator_2 &lt;chr&gt;,
+## #   ator_3 &lt;chr&gt;, genero &lt;chr&gt;
+```
+
+---
+
+# mutate
+
+
+```r
+imdb %&gt;% 
+  mutate(diretor = str_replace(titulo, "The ", ""))
+```
+
+```
+## # A tibble: 3,714 x 16
+##    titulo   ano diretor duracao cor   generos pais  classificacao orcamento
+##    &lt;chr&gt;  &lt;int&gt; &lt;chr&gt;     &lt;int&gt; &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;             &lt;int&gt;
+##  1 Avata~  2009 Avatar      178 Color Action~ USA   A partir de ~ 237000000
+##  2 Pirat~  2007 Pirate~     169 Color Action~ USA   A partir de ~ 300000000
+##  3 The D~  2012 Dark K~     164 Color Action~ USA   A partir de ~ 250000000
+##  4 John ~  2012 John C~     132 Color Action~ USA   A partir de ~ 263700000
+##  5 Spide~  2007 Spider~     156 Color Action~ USA   A partir de ~ 258000000
+##  6 Tangl~  2010 Tangle~     100 Color Advent~ USA   Livre         260000000
+##  7 Aveng~  2015 Avenge~     141 Color Action~ USA   A partir de ~ 250000000
+##  8 Batma~  2016 Batman~     183 Color Action~ USA   A partir de ~ 250000000
+##  9 Super~  2006 Superm~     169 Color Action~ USA   A partir de ~ 209000000
+## 10 Pirat~  2006 Pirate~     151 Color Action~ USA   A partir de ~ 225000000
+## # ... with 3,704 more rows, and 7 more variables: receita &lt;int&gt;,
+## #   nota_imdb &lt;dbl&gt;, likes_facebook &lt;int&gt;, ator_1 &lt;chr&gt;, ator_2 &lt;chr&gt;,
+## #   ator_3 &lt;chr&gt;, genero &lt;chr&gt;
+```
+
+---
+
+# mutate
+
+
+```r
+imdb %&gt;% 
+  mutate(
+    acao = str_detect(generos, "Action")
+  )
+```
+
+```
+## # A tibble: 3,714 x 17
+##    titulo   ano diretor duracao cor   generos pais  classificacao orcamento
+##    &lt;chr&gt;  &lt;int&gt; &lt;chr&gt;     &lt;int&gt; &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;             &lt;int&gt;
+##  1 Avata~  2009 James ~     178 Color Action~ USA   A partir de ~ 237000000
+##  2 Pirat~  2007 Gore V~     169 Color Action~ USA   A partir de ~ 300000000
+##  3 The D~  2012 Christ~     164 Color Action~ USA   A partir de ~ 250000000
+##  4 John ~  2012 Andrew~     132 Color Action~ USA   A partir de ~ 263700000
+##  5 Spide~  2007 Sam Ra~     156 Color Action~ USA   A partir de ~ 258000000
+##  6 Tangl~  2010 Nathan~     100 Color Advent~ USA   Livre         260000000
+##  7 Aveng~  2015 Joss W~     141 Color Action~ USA   A partir de ~ 250000000
+##  8 Batma~  2016 Zack S~     183 Color Action~ USA   A partir de ~ 250000000
+##  9 Super~  2006 Bryan ~     169 Color Action~ USA   A partir de ~ 209000000
+## 10 Pirat~  2006 Gore V~     151 Color Action~ USA   A partir de ~ 225000000
+## # ... with 3,704 more rows, and 8 more variables: receita &lt;int&gt;,
+## #   nota_imdb &lt;dbl&gt;, likes_facebook &lt;int&gt;, ator_1 &lt;chr&gt;, ator_2 &lt;chr&gt;,
+## #   ator_3 &lt;chr&gt;, genero &lt;chr&gt;, acao &lt;lgl&gt;
+```
 
 ---
 background-image: url(www/programar.gif)
@@ -797,17 +935,17 @@ imdb %&gt;%
 ## # Groups:   diretor [1,813]
 ##    titulo   ano diretor duracao cor   generos pais  classificacao orcamento
 ##    &lt;chr&gt;  &lt;int&gt; &lt;chr&gt;     &lt;int&gt; &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;             &lt;int&gt;
-##  1 Tangl…  2010 Nathan…     100 Color Advent… USA   Livre         260000000
-##  2 The A…  2012 Joss W…     173 Color Action… USA   A partir de … 220000000
-##  3 Capta…  2016 Anthon…     147 Color Action… USA   A partir de … 250000000
-##  4 Juras…  2015 Colin …     124 Color Action… USA   A partir de … 150000000
-##  5 Monst…  2013 Dan Sc…     104 Color Advent… USA   Outros        200000000
-##  6 Toy S…  2010 Lee Un…     103 Color Advent… USA   Outros        200000000
-##  7 Pacif…  2013 Guille…     131 Color Action… USA   A partir de … 190000000
-##  8 The G…  2015 Peter …      93 Color Advent… USA   Livre                NA
-##  9 Brave   2012 Mark A…      93 Color Advent… USA   Livre         185000000
-## 10 Star …  2016 Justin…     122 Color Action… USA   A partir de … 185000000
-## # … with 1,852 more rows, and 7 more variables: receita &lt;int&gt;,
+##  1 Tangl~  2010 Nathan~     100 Color Advent~ USA   Livre         260000000
+##  2 The A~  2012 Joss W~     173 Color Action~ USA   A partir de ~ 220000000
+##  3 Capta~  2016 Anthon~     147 Color Action~ USA   A partir de ~ 250000000
+##  4 Juras~  2015 Colin ~     124 Color Action~ USA   A partir de ~ 150000000
+##  5 Monst~  2013 Dan Sc~     104 Color Advent~ USA   Outros        200000000
+##  6 Toy S~  2010 Lee Un~     103 Color Advent~ USA   Outros        200000000
+##  7 Pacif~  2013 Guille~     131 Color Action~ USA   A partir de ~ 190000000
+##  8 The G~  2015 Peter ~      93 Color Advent~ USA   Livre                NA
+##  9 Brave   2012 Mark A~      93 Color Advent~ USA   Livre         185000000
+## 10 Star ~  2016 Justin~     122 Color Action~ USA   A partir de ~ 185000000
+## # ... with 1,852 more rows, and 7 more variables: receita &lt;int&gt;,
 ## #   nota_imdb &lt;dbl&gt;, likes_facebook &lt;int&gt;, ator_1 &lt;chr&gt;, ator_2 &lt;chr&gt;,
 ## #   ator_3 &lt;chr&gt;, genero &lt;chr&gt;
 ```
@@ -880,7 +1018,7 @@ imdb %&gt;%
 ##  8 Ron Fricke         8.5 
 ##  9 Stanley Kubrick    8.45
 ## 10 Christopher Nolan  8.43
-## # … with 1,803 more rows
+## # ... with 1,803 more rows
 ```
 
 ---
@@ -993,17 +1131,17 @@ atores
 ## # A tibble: 3,714 x 5
 ##       id titulo                      ator_1      ator_2       ator_3       
 ##    &lt;int&gt; &lt;chr&gt;                       &lt;chr&gt;       &lt;chr&gt;        &lt;chr&gt;        
-##  1     1 Avatar                      CCH Pounder Joel David … Wes Studi    
-##  2     2 Pirates of the Caribbean: … Johnny Depp Orlando Blo… Jack Davenpo…
-##  3     3 The Dark Knight Rises       Tom Hardy   Christian B… Joseph Gordo…
-##  4     4 John Carter                 Daryl Saba… Samantha Mo… Polly Walker 
-##  5     5 Spider-Man 3                J.K. Simmo… James Franco Kirsten Dunst
-##  6     6 Tangled                     Brad Garre… Donna Murphy M.C. Gainey  
-##  7     7 Avengers: Age of Ultron     Chris Hems… Robert Down… Scarlett Joh…
-##  8     8 Batman v Superman: Dawn of… Henry Cavi… Lauren Cohan Alan D. Purw…
-##  9     9 Superman Returns            Kevin Spac… Marlon Bran… Frank Langel…
-## 10    10 Pirates of the Caribbean: … Johnny Depp Orlando Blo… Jack Davenpo…
-## # … with 3,704 more rows
+##  1     1 Avatar                      CCH Pounder Joel David ~ Wes Studi    
+##  2     2 Pirates of the Caribbean: ~ Johnny Depp Orlando Blo~ Jack Davenpo~
+##  3     3 The Dark Knight Rises       Tom Hardy   Christian B~ Joseph Gordo~
+##  4     4 John Carter                 Daryl Saba~ Samantha Mo~ Polly Walker 
+##  5     5 Spider-Man 3                J.K. Simmo~ James Franco Kirsten Dunst
+##  6     6 Tangled                     Brad Garre~ Donna Murphy M.C. Gainey  
+##  7     7 Avengers: Age of Ultron     Chris Hems~ Robert Down~ Scarlett Joh~
+##  8     8 Batman v Superman: Dawn of~ Henry Cavi~ Lauren Cohan Alan D. Purw~
+##  9     9 Superman Returns            Kevin Spac~ Marlon Bran~ Frank Langel~
+## 10    10 Pirates of the Caribbean: ~ Johnny Depp Orlando Blo~ Jack Davenpo~
+## # ... with 3,704 more rows
 ```
 
 ---
@@ -1031,7 +1169,7 @@ atores_tidy
 ##  8     8 Batman v Superman: Dawn of Justice          ator_1 Henry Cavill   
 ##  9     9 Superman Returns                            ator_1 Kevin Spacey   
 ## 10    10 Pirates of the Caribbean: Dead Man's Chest  ator_1 Johnny Depp    
-## # … with 11,108 more rows
+## # ... with 11,108 more rows
 ```
 
 ---
@@ -1080,17 +1218,17 @@ spread(atores_tidy, papel, ator)
 ## # A tibble: 3,710 x 5
 ##       id titulo                      ator_1      ator_2       ator_3       
 ##    &lt;int&gt; &lt;chr&gt;                       &lt;chr&gt;       &lt;chr&gt;        &lt;chr&gt;        
-##  1     1 Avatar                      CCH Pounder Joel David … Wes Studi    
-##  2     2 Pirates of the Caribbean: … Johnny Depp Orlando Blo… Jack Davenpo…
-##  3     3 The Dark Knight Rises       Tom Hardy   Christian B… Joseph Gordo…
-##  4     4 John Carter                 Daryl Saba… Samantha Mo… Polly Walker 
-##  5     5 Spider-Man 3                J.K. Simmo… James Franco Kirsten Dunst
-##  6     6 Tangled                     Brad Garre… Donna Murphy M.C. Gainey  
-##  7     7 Avengers: Age of Ultron     Chris Hems… Robert Down… Scarlett Joh…
-##  8     8 Batman v Superman: Dawn of… Henry Cavi… Lauren Cohan Alan D. Purw…
-##  9     9 Superman Returns            Kevin Spac… Marlon Bran… Frank Langel…
-## 10    10 Pirates of the Caribbean: … Johnny Depp Orlando Blo… Jack Davenpo…
-## # … with 3,700 more rows
+##  1     1 Avatar                      CCH Pounder Joel David ~ Wes Studi    
+##  2     2 Pirates of the Caribbean: ~ Johnny Depp Orlando Blo~ Jack Davenpo~
+##  3     3 The Dark Knight Rises       Tom Hardy   Christian B~ Joseph Gordo~
+##  4     4 John Carter                 Daryl Saba~ Samantha Mo~ Polly Walker 
+##  5     5 Spider-Man 3                J.K. Simmo~ James Franco Kirsten Dunst
+##  6     6 Tangled                     Brad Garre~ Donna Murphy M.C. Gainey  
+##  7     7 Avengers: Age of Ultron     Chris Hems~ Robert Down~ Scarlett Joh~
+##  8     8 Batman v Superman: Dawn of~ Henry Cavi~ Lauren Cohan Alan D. Purw~
+##  9     9 Superman Returns            Kevin Spac~ Marlon Bran~ Frank Langel~
+## 10    10 Pirates of the Caribbean: ~ Johnny Depp Orlando Blo~ Jack Davenpo~
+## # ... with 3,700 more rows
 ```
 
 ---

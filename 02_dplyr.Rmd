@@ -445,6 +445,64 @@ Funções úteis para criar novas variáveis
 <a>!=</a> e <a>==</a>
 
 ---
+
+# mutate
+
+Funções úteis para criar novas variáveis com
+texto
+
+1. Tornar o texto maiúsculo:
+<a>str_to_upper</a>(texto)
+
+2. Tornar o texto minúsculo:
+<a>str_to_lower</a>(texto)
+
+3. Substituir parte de um texto:
+<a>str_replace</a>(texto, "o que sai", "o que substitui"). 
+Use <a>str_replace_all</a> para substituir em todas as ocorrências.
+
+4. Detectar a uma expressão em um texto:
+<a>str_detect</a>(texto, "padrao")
+
+---
+
+# mutate
+
+```{r}
+imdb %>% 
+  mutate(diretor = str_to_lower(diretor))
+```
+
+---
+
+# mutate
+
+```{r}
+imdb %>% 
+  mutate(diretor = str_to_upper(diretor))
+```
+
+---
+
+# mutate
+
+```{r}
+imdb %>% 
+  mutate(diretor = str_replace(titulo, "The ", ""))
+```
+
+---
+
+# mutate
+
+```{r}
+imdb %>% 
+  mutate(
+    acao = str_detect(generos, "Action")
+  )
+```
+
+---
 background-image: url(www/programar.gif)
 background-size: 100%
 class: inverse
@@ -693,3 +751,4 @@ spread(atores_tidy, papel, ator)
 # Não tenha vergonha de pedir ajuda ao R
 ?spread 
 ```
+
