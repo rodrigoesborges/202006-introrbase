@@ -376,26 +376,6 @@ background-image: url(www/programar.gif)
 background-size: 100%
 
 ---
-
-# Aspectos Estéticos - Mapear a classificação na cor
-
-.pull-left[
-```{r plot-facet, eval=FALSE}
-ggplot(filmes_recentes, 
-       aes(duracao, orcamento, 
-           col = classificacao)) +
-  geom_point() +
-  facet_wrap(~classificacao)
-```
-]
-
-.pull-right[
-```{r, ref.label="plot-facet", fig.callout = TRUE}
-
-```
-]
-
----
 background-image: url(www/programar.gif)
 background-size: 100%
 
@@ -829,6 +809,57 @@ ggplot(imdb,
 ```
 ]
 
+---
+background-image: url(www/programar.gif)
+background-size: 100%
+
+---
+
+# Facetas
+
+```{r, fig.principal = TRUE}
+camadas
+```
+
+---
+
+# Facetas
+
+.pull-left[
+```{r plot-facet, eval=FALSE}
+ggplot(filmes_recentes, 
+       aes(duracao, orcamento, 
+           col = classificacao)) +
+  geom_point() +
+  facet_wrap(~classificacao)
+```
+]
+
+.pull-right[
+```{r, ref.label="plot-facet", fig.callout = TRUE}
+
+```
+]
+
+---
+
+# Facetas
+
+.pull-left[
+```{r plot-facet2, eval=FALSE}
+ggplot(filmes_recentes, 
+       aes(duracao, orcamento, 
+           col = classificacao)) +
+  geom_point() +
+  facet_grid(genero~classificacao)
+```
+]
+
+.pull-right[
+```{r, ref.label="plot-facet2", fig.callout = TRUE}
+
+```
+]
 ---
 background-image: url(www/programar.gif)
 background-size: 100%

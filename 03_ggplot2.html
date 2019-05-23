@@ -12,7 +12,7 @@
 background-image: url(www/slide1.png)
 background-size: cover
 
-&lt;link rel="stylesheet" type="text/css" href="enap.css"&gt;
+&lt;link rel="stylesheet" type="text/css" href="www/enap.css"&gt;
 
 ---
 
@@ -385,25 +385,6 @@ background-image: url(www/programar.gif)
 background-size: 100%
 
 ---
-
-# Aspectos Estéticos - Mapear a classificação na cor
-
-.pull-left[
-
-```r
-ggplot(filmes_recentes, 
-       aes(duracao, orcamento, 
-           col = classificacao)) +
-  geom_point() +
-  facet_wrap(~classificacao)
-```
-]
-
-.pull-right[
-&lt;img src="03_ggplot2_files/figure-html/unnamed-chunk-12-1.png" width="100%" height="97%" style="display: block; margin: auto;" /&gt;
-]
-
----
 background-image: url(www/programar.gif)
 background-size: 100%
 
@@ -424,7 +405,7 @@ ggplot(filmes_recentes ,
 ]
 
 .pull-right[
-&lt;img src="03_ggplot2_files/figure-html/unnamed-chunk-13-1.png" width="100%" height="97%" style="display: block; margin: auto;" /&gt;
+&lt;img src="03_ggplot2_files/figure-html/unnamed-chunk-12-1.png" width="100%" height="97%" style="display: block; margin: auto;" /&gt;
 ]
 
 ---
@@ -457,7 +438,7 @@ ggplot(filmes_recentes,
 ]
 
 .pull-right[
-&lt;img src="03_ggplot2_files/figure-html/unnamed-chunk-14-1.png" width="100%" height="97%" style="display: block; margin: auto;" /&gt;
+&lt;img src="03_ggplot2_files/figure-html/unnamed-chunk-13-1.png" width="100%" height="97%" style="display: block; margin: auto;" /&gt;
 ]
 
 ---
@@ -495,7 +476,7 @@ ggplot(filmes_recentes,
 ]
 
 .pull-right[
-&lt;img src="03_ggplot2_files/figure-html/unnamed-chunk-15-1.png" width="100%" height="97%" style="display: block; margin: auto;" /&gt;
+&lt;img src="03_ggplot2_files/figure-html/unnamed-chunk-14-1.png" width="100%" height="97%" style="display: block; margin: auto;" /&gt;
 ]
 
 ---
@@ -513,7 +494,7 @@ ggplot(filmes_recentes,
 ]
 
 .pull-right[
-&lt;img src="03_ggplot2_files/figure-html/unnamed-chunk-16-1.png" width="100%" height="97%" style="display: block; margin: auto;" /&gt;
+&lt;img src="03_ggplot2_files/figure-html/unnamed-chunk-15-1.png" width="100%" height="97%" style="display: block; margin: auto;" /&gt;
 ]
 
 ---
@@ -524,7 +505,7 @@ background-size: 100%
 
 # Geometrias
 
-&lt;img src="03_ggplot2_files/figure-html/unnamed-chunk-17-1.png" width="75%" style="display: block; margin: auto;" /&gt;
+&lt;img src="03_ggplot2_files/figure-html/unnamed-chunk-16-1.png" width="75%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -557,7 +538,7 @@ ggplot(filmes_recentes,
 ]
 
 .pull-right[
-&lt;img src="03_ggplot2_files/figure-html/unnamed-chunk-18-1.png" width="100%" height="97%" style="display: block; margin: auto;" /&gt;
+&lt;img src="03_ggplot2_files/figure-html/unnamed-chunk-17-1.png" width="100%" height="97%" style="display: block; margin: auto;" /&gt;
 ]
 
 ---
@@ -575,7 +556,7 @@ ggplot(filmes_recentes,
 ]
 
 .pull-right[
-&lt;img src="03_ggplot2_files/figure-html/unnamed-chunk-19-1.png" width="100%" height="97%" style="display: block; margin: auto;" /&gt;
+&lt;img src="03_ggplot2_files/figure-html/unnamed-chunk-18-1.png" width="100%" height="97%" style="display: block; margin: auto;" /&gt;
 ]
 
 ---
@@ -603,7 +584,7 @@ ggplot(quantidades,
 ]
 
 .pull-right[
-&lt;img src="03_ggplot2_files/figure-html/unnamed-chunk-20-1.png" width="100%" height="97%" style="display: block; margin: auto;" /&gt;
+&lt;img src="03_ggplot2_files/figure-html/unnamed-chunk-19-1.png" width="100%" height="97%" style="display: block; margin: auto;" /&gt;
 ]
 
 ---
@@ -632,7 +613,7 @@ ggplot(quantidades,
 ]
 
 .pull-right[
-&lt;img src="03_ggplot2_files/figure-html/unnamed-chunk-21-1.png" width="100%" height="97%" style="display: block; margin: auto;" /&gt;
+&lt;img src="03_ggplot2_files/figure-html/unnamed-chunk-20-1.png" width="100%" height="97%" style="display: block; margin: auto;" /&gt;
 ]
 
 ---
@@ -660,7 +641,7 @@ ggplot(media_scorsese,
 ]
 
 .pull-right[
-&lt;img src="03_ggplot2_files/figure-html/unnamed-chunk-22-1.png" width="100%" height="97%" style="display: block; margin: auto;" /&gt;
+&lt;img src="03_ggplot2_files/figure-html/unnamed-chunk-21-1.png" width="100%" height="97%" style="display: block; margin: auto;" /&gt;
 ]
 
 ---
@@ -686,7 +667,7 @@ ggplot(media_scorsese,
 ]
 
 .pull-right[
-&lt;img src="03_ggplot2_files/figure-html/unnamed-chunk-23-1.png" width="100%" height="97%" style="display: block; margin: auto;" /&gt;
+&lt;img src="03_ggplot2_files/figure-html/unnamed-chunk-22-1.png" width="100%" height="97%" style="display: block; margin: auto;" /&gt;
 ]
 
 ---
@@ -706,7 +687,7 @@ ggplot(imdb, aes(nota_imdb)) +
 ]
 
 .pull-right[
-&lt;img src="03_ggplot2_files/figure-html/unnamed-chunk-24-1.png" width="100%" height="97%" style="display: block; margin: auto;" /&gt;
+&lt;img src="03_ggplot2_files/figure-html/unnamed-chunk-23-1.png" width="100%" height="97%" style="display: block; margin: auto;" /&gt;
 ]
 
 ---
@@ -723,7 +704,7 @@ ggplot(imdb, aes(nota_imdb)) +
 ]
 
 .pull-right[
-&lt;img src="03_ggplot2_files/figure-html/unnamed-chunk-25-1.png" width="100%" height="97%" style="display: block; margin: auto;" /&gt;
+&lt;img src="03_ggplot2_files/figure-html/unnamed-chunk-24-1.png" width="100%" height="97%" style="display: block; margin: auto;" /&gt;
 ]
 
 ---
@@ -741,7 +722,7 @@ imdb %&gt;%
 ]
 
 .pull-right[
-&lt;img src="03_ggplot2_files/figure-html/unnamed-chunk-26-1.png" width="100%" height="97%" style="display: block; margin: auto;" /&gt;
+&lt;img src="03_ggplot2_files/figure-html/unnamed-chunk-25-1.png" width="100%" height="97%" style="display: block; margin: auto;" /&gt;
 ]
 
 ---
@@ -757,7 +738,7 @@ ggplot(imdb, aes(x = cor, y = nota_imdb)) +
 ]
 
 .pull-right[
-&lt;img src="03_ggplot2_files/figure-html/unnamed-chunk-27-1.png" width="100%" height="97%" style="display: block; margin: auto;" /&gt;
+&lt;img src="03_ggplot2_files/figure-html/unnamed-chunk-26-1.png" width="100%" height="97%" style="display: block; margin: auto;" /&gt;
 ]
 
 ---
@@ -776,7 +757,7 @@ ggplot(imdb, aes(x = cor, y = nota_imdb)) +
 ]
 
 .pull-right[
-&lt;img src="03_ggplot2_files/figure-html/unnamed-chunk-28-1.png" width="100%" height="97%" style="display: block; margin: auto;" /&gt;
+&lt;img src="03_ggplot2_files/figure-html/unnamed-chunk-27-1.png" width="100%" height="97%" style="display: block; margin: auto;" /&gt;
 ]
 
 ---
@@ -793,7 +774,7 @@ ggplot(imdb,
 ]
 
 .pull-right[
-&lt;img src="03_ggplot2_files/figure-html/unnamed-chunk-29-1.png" width="100%" height="97%" style="display: block; margin: auto;" /&gt;
+&lt;img src="03_ggplot2_files/figure-html/unnamed-chunk-28-1.png" width="100%" height="97%" style="display: block; margin: auto;" /&gt;
 ]
 
 ---
@@ -815,9 +796,56 @@ ggplot(imdb,
 ]
 
 .pull-right[
-&lt;img src="03_ggplot2_files/figure-html/unnamed-chunk-30-1.png" width="100%" height="97%" style="display: block; margin: auto;" /&gt;
+&lt;img src="03_ggplot2_files/figure-html/unnamed-chunk-29-1.png" width="100%" height="97%" style="display: block; margin: auto;" /&gt;
 ]
 
+---
+background-image: url(www/programar.gif)
+background-size: 100%
+
+---
+
+# Facetas
+
+&lt;img src="03_ggplot2_files/figure-html/unnamed-chunk-30-1.png" width="75%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Facetas
+
+.pull-left[
+
+```r
+ggplot(filmes_recentes, 
+       aes(duracao, orcamento, 
+           col = classificacao)) +
+  geom_point() +
+  facet_wrap(~classificacao)
+```
+]
+
+.pull-right[
+&lt;img src="03_ggplot2_files/figure-html/unnamed-chunk-31-1.png" width="100%" height="97%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+
+# Facetas
+
+.pull-left[
+
+```r
+ggplot(filmes_recentes, 
+       aes(duracao, orcamento, 
+           col = classificacao)) +
+  geom_point() +
+  facet_grid(genero~classificacao)
+```
+]
+
+.pull-right[
+&lt;img src="03_ggplot2_files/figure-html/unnamed-chunk-32-1.png" width="100%" height="97%" style="display: block; margin: auto;" /&gt;
+]
 ---
 background-image: url(www/programar.gif)
 background-size: 100%
